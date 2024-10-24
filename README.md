@@ -10,7 +10,6 @@ IHealth Backend is a NestJS application designed to handle various healthcare-re
 - [Configuration](#configuration)
 - [Directory Structure](#directory-structure)
 - [Testing](#testing)
-- [Running the Application](#running-the-application)
 - [Error Handling](#error-handling)
 - [Docker](#docker)
 
@@ -32,6 +31,19 @@ IHealth Backend is a NestJS application designed to handle various healthcare-re
    ```bash
    npm install
    ```
+
+4. **Up the database**
+    ```bash
+    docker compose up -d
+    ```
+5. **Run the migrations**
+    ```bash
+    npm run migration:run
+    ```
+6. **Running the application**
+    ```bash
+    npm run start:dev
+    ```
 
 ## Configuration
 
@@ -63,14 +75,6 @@ IHealth Backend is a NestJS application designed to handle various healthcare-re
    ```bash
    npm run test:e2e
    ```
-
-## Running the Application
-
-1. **Start the application in development mode**:
-   ```bash
-   npm run start:dev
-   ```
-
 ## Error Handling
 
 1. **Global error handling**:
