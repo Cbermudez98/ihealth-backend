@@ -25,7 +25,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
             ResponseAdapter.set(
               exception.getStatus(),
               null,
-              exception.getResponse().toString(),
+              exception.getResponse()?.['message'] ??
+                exception.getResponse().toString(),
             ),
           );
 

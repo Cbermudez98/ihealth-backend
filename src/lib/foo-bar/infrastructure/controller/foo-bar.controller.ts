@@ -16,6 +16,7 @@ import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
 import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
 import { UpdateFooBarUseCase } from '../../application/updateFooBat/UpdateFooBar.useCase';
 import { UpdateFooBarDto } from '../dtos/foo-bar-update.dto';
+import { GetAllFooBarUseCase } from '../../application/getAllFooBar/GetAllFooBar.useCase';
 
 @Controller('foo-bar')
 export class FooBarController {
@@ -26,7 +27,21 @@ export class FooBarController {
     private readonly setFooBarUseCase: SetFooBarUseCase,
     @Inject('UpdateFooBarUseCase')
     private readonly updateFooBarUseCase: UpdateFooBarUseCase,
+    @Inject('GetAllFooBarUseCase')
+    private readonly getAllFooBarUseCase: GetAllFooBarUseCase,
   ) {}
+
+  @Get()
+  public async getAllFoo() {
+    const response = await this.getAllFooBarUseCase.run();
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      response,
+      HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
+      true,
+    );
+  }
+
   @Get('/:id')
   public async foo(@Param('id', ParseIntPipe) id: number) {
     const response = await this.getFooBarUseCase.run(id);

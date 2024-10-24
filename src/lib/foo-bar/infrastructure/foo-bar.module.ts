@@ -7,6 +7,7 @@ import { SetFooBarUseCase } from '../application/setFooBar/SetFooBar.useCase';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Foo } from './entity/foo.entity';
 import { UpdateFooBarUseCase } from '../application/updateFooBat/UpdateFooBar.useCase';
+import { GetAllFooBarUseCase } from '../application/getAllFooBar/GetAllFooBar.useCase';
 
 @Module({
   controllers: [FooBarController],
@@ -19,6 +20,11 @@ import { UpdateFooBarUseCase } from '../application/updateFooBat/UpdateFooBar.us
     {
       provide: 'GetFooBarUseCase',
       useFactory: (service: IFooBarService) => new GetFooBarUseCase(service),
+      inject: ['FooBarService'],
+    },
+    {
+      provide: 'GetAllFooBarUseCase',
+      useFactory: (service: IFooBarService) => new GetAllFooBarUseCase(service),
       inject: ['FooBarService'],
     },
     {

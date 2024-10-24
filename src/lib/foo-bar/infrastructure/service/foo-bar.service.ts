@@ -29,6 +29,16 @@ export class FooBarService implements IFooBarService {
     return fooBar;
   }
 
+  async getAll(): Promise<IFooBar[]> {
+    let fooBars: Foo[] | undefined;
+    try {
+      fooBars = await this.fooRepository.find();
+    } catch (error) {
+      throw new GatewayTimeoutException();
+    }
+    return fooBars;
+  }
+
   async set(fooBardDto: IFooBarDto): Promise<void> {
     try {
       const foo = this.fooRepository.create(fooBardDto);
