@@ -1,0 +1,61 @@
+export enum HTTP_RESPONSE_MESSAGE {
+  // 1xx: Informational Responses
+  HTTP_100_CONTINUE = 'Just keep going!',
+  HTTP_101_SWITCHING_PROTOCOLS = "We're switching things up.",
+  HTTP_102_PROCESSING = "Hang tight, we're working on it.",
+
+  // 2xx: Successful Responses
+  HTTP_200_OK = 'Everything went well!',
+  HTTP_201_CREATED = 'New resource has been created!',
+  HTTP_202_ACCEPTED = "We got it, but we're still working on it.",
+  HTTP_203_NON_AUTHORITATIVE_INFORMATION = 'Here’s your info, but it might be a bit off.',
+  HTTP_204_NO_CONTENT = 'Nothing to see here!',
+  HTTP_205_RESET_CONTENT = 'Go ahead and reset your form.',
+
+  // 3xx: Redirection Messages
+  HTTP_300_MULTIPLE_CHOICES = 'You have some options to choose from.',
+  HTTP_301_MOVED_PERMANENTLY = 'This page has a new home.',
+  HTTP_302_FOUND = 'Temporarily moved, check here.',
+  HTTP_303_SEE_OTHER = 'Check out this other page instead.',
+  HTTP_304_NOT_MODIFIED = 'Nothing has changed.',
+  HTTP_307_TEMPORARY_REDIRECT = 'This page is temporarily elsewhere.',
+  HTTP_308_PERMANENT_REDIRECT = 'This page moved for good.',
+
+  // 4xx: Client Error Responses
+  HTTP_400_BAD_REQUEST = 'Oops, that request didn’t make sense.',
+  HTTP_401_UNAUTHORIZED = 'You need to log in for this.',
+  HTTP_402_PAYMENT_REQUIRED = 'Time to pay up!',
+  HTTP_403_FORBIDDEN = 'You’re not allowed to access this.',
+  HTTP_404_NOT_FOUND = 'We couldn’t find what you’re looking for.',
+  HTTP_405_METHOD_NOT_ALLOWED = 'You can’t do that here.',
+  HTTP_406_NOT_ACCEPTABLE = 'The response isn’t in a format you like.',
+  HTTP_407_PROXY_AUTHENTICATION_REQUIRED = 'You need to authenticate with the proxy.',
+  HTTP_408_REQUEST_TIMEOUT = 'Took too long, try again.',
+  HTTP_409_CONFLICT = "There's a conflict with the request.",
+  HTTP_410_GONE = 'This resource is no longer available.',
+  HTTP_411_LENGTH_REQUIRED = 'We need the content length.',
+  HTTP_412_PRECONDITION_FAILED = "Preconditions weren't met.",
+  HTTP_413_PAYLOAD_TOO_LARGE = "Whoa, that's too much data!",
+  HTTP_414_URI_TOO_LONG = 'The URL is way too long!',
+  HTTP_415_UNSUPPORTED_MEDIA_TYPE = "We don't support this type of data.",
+  HTTP_416_RANGE_NOT_SATISFIABLE = 'Requested range is not available.',
+  HTTP_417_EXPECTATION_FAILED = 'Expectation failed, sorry!',
+  HTTP_418_IM_A_TEAPOT = "I'm a teapot. Short and stout.",
+  HTTP_422_UNPROCESSABLE_ENTITY = "We couldn't process that data.",
+  HTTP_425_TOO_EARLY = "It's too early for that request.",
+  HTTP_426_UPGRADE_REQUIRED = 'You need to upgrade to proceed.',
+  HTTP_428_PRECONDITION_REQUIRED = 'Preconditions must be set.',
+  HTTP_429_TOO_MANY_REQUESTS = "You're sending too many requests!",
+  HTTP_431_REQUEST_HEADER_FIELDS_TOO_LARGE = 'Your headers are too large!',
+  HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS = 'This content is restricted by law.',
+
+  // 5xx: Server Error Responses
+  HTTP_500_INTERNAL_SERVER_ERROR = 'Something went wrong on our end.',
+  HTTP_501_NOT_IMPLEMENTED = "We haven't implemented that yet.",
+  HTTP_502_BAD_GATEWAY = "There's a problem with the gateway.",
+  HTTP_503_SERVICE_UNAVAILABLE = 'Service is temporarily unavailable.',
+  HTTP_504_GATEWAY_TIMEOUT = 'The gateway took too long to respond.',
+  HTTP_505_HTTP_VERSION_NOT_SUPPORTED = 'We don’t support that HTTP version.',
+  HTTP_507_INSUFFICIENT_STORAGE = "We're out of storage space!",
+  HTTP_511_NETWORK_AUTHENTICATION_REQUIRED = 'You need to authenticate to access the network.',
+}
