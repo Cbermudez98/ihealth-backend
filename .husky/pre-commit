@@ -1,3 +1,4 @@
 npm run format
 npm run test
 npm run test:e2e
+git add .
