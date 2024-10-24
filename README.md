@@ -18,7 +18,7 @@ IHealth Backend is a NestJS application designed to handle various healthcare-re
 1. **Clone the repository**:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Cbermudez98/ihealth-backend.git
    ```
 
 2. **Navigate to the project directory**:
@@ -32,7 +32,7 @@ IHealth Backend is a NestJS application designed to handle various healthcare-re
    npm install
    ```
 
-4. **Up the database**
+4. **Create the database**
     ```bash
     docker compose up -d
     ```

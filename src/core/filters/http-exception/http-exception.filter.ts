@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
-import { ResponseAdapter } from 'src/common/response-adapter/response';
+import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
 import { CustomError } from 'src/lib/common/domain/errors/CustomError';
 
 @Catch()

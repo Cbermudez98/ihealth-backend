@@ -3,7 +3,6 @@ import {
   TypeOrmModuleAsyncOptions,
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
-import { globSync } from 'glob';
 import { join } from 'path';
 import { Foo } from 'src/lib/foo-bar/infrastructure/entity/foo.entity';
 
