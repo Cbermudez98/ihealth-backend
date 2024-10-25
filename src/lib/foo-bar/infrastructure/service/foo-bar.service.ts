@@ -5,16 +5,16 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { IFooBarService } from '../../domain/service/IFooBar.service';
 import {
   IFooBar,
   IFooBarDto,
   IFooBarUpdateDto,
 } from '../../domain/interfaces/IFooBar';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Foo } from '../entity/foo.entity';
-import { Repository } from 'typeorm';
-import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
+import { NotFoundError } from './../../../common/domain/errors/NotFoundErrors';
 
 @Injectable()
 export class FooBarService implements IFooBarService {
@@ -24,7 +24,7 @@ export class FooBarService implements IFooBarService {
   async get(id: IFooBar['id']): Promise<IFooBar> {
     const fooBar = await this.fooRepository.findOneBy({ id });
     if (!fooBar) {
-      throw new NotFoundError(HttpStatus.NOT_FOUND, 'Foo bar not found');
+      throw new NotFoundError('Foo bar not found');
     }
     return fooBar;
   }
@@ -67,6 +67,5 @@ export class FooBarService implements IFooBarService {
     } catch (error) {
       throw new UnprocessableEntityException();
     }
-    return;
   }
 }
