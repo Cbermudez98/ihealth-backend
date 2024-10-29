@@ -1,11 +1,7 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
-import { ICareer } from '../../domain/interfaces/ICareer';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { ICareerCreate } from '../../domain/interfaces/ICareer';
 
-export class CareerDto implements ICareer {
-  @IsNotEmpty()
-  @IsInt()
-  id: number;
-
+export class CareerDto implements ICareerCreate {
   @IsNotEmpty()
   @IsString()
   name: string;

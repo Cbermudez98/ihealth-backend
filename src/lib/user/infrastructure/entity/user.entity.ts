@@ -3,6 +3,8 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IUser } from '../../domain/interfaces/IUser';
@@ -33,12 +35,12 @@ export class User implements IUser {
   @Column({ length: 1 })
   gender: string;
 
-  @ManyToOne(() => Auth)
+  @OneToOne(() => Auth)
   auth: IAuth;
 
-  @ManyToOne(() => Direction)
+  @OneToOne(() => Direction)
   direction: IDirection;
 
-  @ManyToMany(() => StudentDetail)
+  @OneToOne(() => StudentDetail)
   student_detail: IStudentDetail;
 }

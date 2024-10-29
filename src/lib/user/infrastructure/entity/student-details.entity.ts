@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { IStudentDetail } from '../../domain/interfaces/IStudentDetail';
 import { ICareer } from '../../domain/interfaces/ICareer';
 import { Career } from './career.entity';
@@ -8,7 +14,7 @@ export class StudentDetail implements IStudentDetail {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Career)
+  @ManyToMany(() => Career)
   career_id: ICareer;
 
   @Column({ type: 'int' })

@@ -1,18 +1,20 @@
 import { IsInt, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
-import { IAuth } from '../../domain/interfaces/IAuth';
-import { IDirection } from '../../domain/interfaces/IDirection';
-import { IStudentDetail } from '../../domain/interfaces/IStudentDetail';
-import { IUser } from '../../domain/interfaces/IUser';
+import { IAuth, IAuthCreate } from '../../domain/interfaces/IAuth';
+import {
+  IDirection,
+  IDirectionCreate,
+} from '../../domain/interfaces/IDirection';
+import {
+  IStudentDetail,
+  IStudentDetailCreate,
+} from '../../domain/interfaces/IStudentDetail';
+import { IUser, IUserCreate } from '../../domain/interfaces/IUser';
 import { Type } from 'class-transformer';
 import { AuthDto } from './auth.dto';
 import { DirectionDto } from './direction.dto';
-import { StudentDetail } from '../entity/user.entity';
+import { StudentDetailDto } from './student-detail.dto';
 
-export class UserDto implements IUser {
-  @IsNotEmpty()
-  @IsInt()
-  id: number;
-
+export class UserDto implements IUserCreate {
   @IsNotEmpty()
   @IsString()
   name: string;
@@ -36,15 +38,15 @@ export class UserDto implements IUser {
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => AuthDto)
-  auth: IAuth;
+  auth: IAuthCreate;
 
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => DirectionDto)
-  direction: IDirection;
+  direction: IDirectionCreate;
 
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => StudentDetail)
-  student_detail: IStudentDetail;
+  @Type(() => StudentDetailDto)
+  student_detail: IStudentDetailCreate;
 }

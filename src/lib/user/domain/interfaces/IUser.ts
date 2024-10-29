@@ -20,3 +20,5 @@ export interface IUserCreate
   direction: IDirectionCreate;
   student_detail: IStudentDetailCreate;
 }
+
+export interface IUserDto extends Omit<IUser, 'id'> {}

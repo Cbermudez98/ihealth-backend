@@ -5,6 +5,11 @@ import {
 } from '@nestjs/typeorm';
 import { join } from 'path';
 import { Foo } from 'src/lib/foo-bar/infrastructure/entity/foo.entity';
+import { Auth } from 'src/lib/user/infrastructure/entity/auth.entity';
+import { Career } from 'src/lib/user/infrastructure/entity/career.entity';
+import { Direction } from 'src/lib/user/infrastructure/entity/direction.entity';
+import { StudentDetail } from 'src/lib/user/infrastructure/entity/student-details.entity';
+import { User } from 'src/lib/user/infrastructure/entity/user.entity';
 
 export default class TypeOrmConfig {
   static getOrmConfig(config: ConfigService): TypeOrmModuleOptions {
@@ -16,7 +21,7 @@ export default class TypeOrmConfig {
       host: config.get<string>('DATABASE_HOST'),
       port: config.get<number>('DATABASE_PORT'),
       database: config.get<string>('DATABASE_NAME'),
-      entities: [Foo],
+      entities: [Foo, Auth, StudentDetail, User, Direction, Career],
       migrationsTableName: config.get<string>('MIGRATION_TABLE'),
       migrations: [join(__dirname, '/../../migrations/**/*.{ts, js}')],
     };

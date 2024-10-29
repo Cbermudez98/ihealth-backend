@@ -1,11 +1,7 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
-import { IDirection } from '../../domain/interfaces/IDirection';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { IDirectionCreate } from '../../domain/interfaces/IDirection';
 
-export class DirectionDto implements IDirection {
-  @IsNotEmpty()
-  @IsInt()
-  id: number;
-
+export class DirectionDto implements IDirectionCreate {
   @IsNotEmpty()
   @IsString()
   neighborhood: string;
