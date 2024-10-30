@@ -1,12 +1,4 @@
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IUser } from '../../domain/interfaces/IUser';
 import { IAuth } from '../../domain/interfaces/IAuth';
 import { IDirection } from '../../domain/interfaces/IDirection';
@@ -30,7 +22,7 @@ export class User implements IUser {
   age: number;
 
   @Column()
-  code: string;
+  code: number;
 
   @Column({ length: 1 })
   gender: string;

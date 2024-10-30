@@ -10,7 +10,6 @@ export class MailService {
     @InjectQueue('mail') private readonly mailQueue: Queue,
   ) {}
 
-  // Método para enviar un correo electrónico
   async sendEmail(to: string, subject: string, template: string, context: any) {
     return await this.mailQueue.add({
       to,
