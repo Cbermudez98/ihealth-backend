@@ -7,7 +7,7 @@ export interface IUser {
   name: string;
   last_name: string;
   age: number;
-  code: string;
+  code: number;
   gender: string;
   auth: IAuth;
   direction: IDirection;
