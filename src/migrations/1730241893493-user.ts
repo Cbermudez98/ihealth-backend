@@ -17,7 +17,7 @@ export class User1730241893493 implements MigrationInterface {
       `CREATE TABLE \`student_details\` (\`id\` int NOT NULL AUTO_INCREMENT, \`semester\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `CREATE TABLE \`person\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`last_name\` varchar(255) NOT NULL, \`age\` timestamp NOT NULL, \`code\` varchar(255) NOT NULL, \`gender\` varchar(1) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+      `CREATE TABLE \`person\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`last_name\` varchar(255) NOT NULL, \`age\` int NOT NULL, \`code\` varchar(255) NOT NULL, \`gender\` varchar(1) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
   }
 

@@ -18,7 +18,7 @@ export class User implements IUser {
   @Column()
   last_name: string;
 
-  @Column('timestamp')
+  @Column()
   age: number;
 
   @Column()

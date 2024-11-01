@@ -5,10 +5,11 @@ import { User } from './infrastructure/entity/user.entity';
 import { UserService } from './infrastructure/service/user.service';
 import { IUserService } from './domain/service/IUser.service';
 import { CreateUserUseCase } from './application/createUser/CreateUser.useCase';
+import { MailModule } from 'src/shared/mail/mail.module';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), MailModule],
   providers: [
     {
       provide: 'UserService',

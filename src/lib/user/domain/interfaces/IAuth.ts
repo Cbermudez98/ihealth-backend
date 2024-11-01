@@ -5,3 +5,4 @@ export interface IAuth {
 }
 
 export interface IAuthCreate extends Omit<IAuth, 'id'> {}
+export interface IAuthDto extends Omit<IAuth, 'id' | 'email'> {}

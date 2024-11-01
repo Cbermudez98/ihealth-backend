@@ -28,4 +28,15 @@ export class MailService {
       context,
     });
   }
+
+  async sendWelcomeEmail(to: string, name: string) {
+    await this.mailerService.sendMail({
+      to,
+      subject: 'Bienvenido a IHealth!',
+      template: './welcome',
+      context: {
+        name,
+      },
+    });
+  }
 }
