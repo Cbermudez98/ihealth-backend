@@ -28,23 +28,4 @@ describe('MailController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
-
-  it('should send email successfully', async () => {
-    const emailData = {
-      to: 'test@example.com',
-      subject: 'Test Subject',
-      template: 'welcome',
-      context: { name: 'Test User' },
-    };
-
-    const result = await controller.sendMail(emailData);
-
-    expect(service.sendEmail).toHaveBeenCalledWith(
-      emailData.to,
-      emailData.subject,
-      emailData.template,
-      emailData.context,
-    );
-    expect(result).toEqual({ message: 'Email sent successfully' });
-  });
 });

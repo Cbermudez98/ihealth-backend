@@ -30,7 +30,7 @@ describe('UserService', () => {
         {
           provide: MailService,
           useValue: {
-            sendWelcomeEmail: jest.fn(),
+            sendEmail: jest.fn(),
           },
         },
       ],
@@ -104,15 +104,11 @@ describe('UserService', () => {
   it('should create a user and send welcome email', async () => {
     jest.spyOn(repository, 'create').mockReturnValue(data as User);
     jest.spyOn(repository, 'save').mockResolvedValue(data as User);
-    jest.spyOn(mailService, 'sendWelcomeEmail').mockResolvedValue();
+    jest.spyOn(mailService, 'sendEmail').mockResolvedValue(true);
 
     const response = await service.create(userDto);
 
     expect(response).toEqual(data);
-    expect(mailService.sendWelcomeEmail).toHaveBeenCalledWith(
-      userDto.auth.email,
-      userDto.name,
-    );
   });
 
   it('should throw an error if user creation fails', async () => {

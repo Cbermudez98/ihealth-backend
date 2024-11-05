@@ -36,7 +36,7 @@ export class UserService implements IUserService {
 
     const user = this.userRepository.create(newUserData);
     const savedUser = await this.userRepository.save(user);
-    await this.mailerService.sendWelcomeEmail(user.auth.email, user.name);
+    // await this.mailerService.sendWelcomeEmail(user.auth.email, user.name);
 
     return savedUser;
   }

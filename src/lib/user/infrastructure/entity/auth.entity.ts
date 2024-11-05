@@ -6,7 +6,7 @@ export class Auth implements IAuth {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()

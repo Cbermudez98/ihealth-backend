@@ -4,28 +4,28 @@ import { MailService } from './mail.service';
 import { BullModule } from '@nestjs/bull';
 import { mailBullConfig } from 'src/config/mail';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { MailQueue } from './mail.queue';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 const bullModule = BullModule.forRoot(mailBullConfig);
 @Module({
   imports: [
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.gmail.com',
-        port: 465,
+        host: process.env.MAIL_HOST,
+        port: Number(process.env.MAIL_PORT),
         secure: true,
         auth: {
-          user: 'healthprueba@gmail.com',
-          pass: 'tptfsttyiyqyikyi',
+          user: process.env.MAIL_NOTIFIER,
+          pass: process.env.MAIL_PASSWORD,
         },
       },
       defaults: {
-        from: '"IHealth" <ihealthprueba@gmail.com>',
+        from: process.env.MAIL_FROM,
       },
       template: {
         dir: './src/shared/templates/email',
-        adapter: new PugAdapter(),
+        adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
         },

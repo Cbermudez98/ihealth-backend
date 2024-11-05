@@ -1,5 +1,7 @@
+import { IHashProvider } from './../../../common/domain/services/IHash.service';
 import { CreateUserUseCase } from '../../application/createUser/CreateUser.useCase';
 import { IUserService } from '../../domain/service/IUser.service';
+import { IMailerService } from './../../../common/domain/services/IMailer.service';
 
 describe('User use cases test', () => {
   const service: IUserService = {
@@ -7,7 +9,20 @@ describe('User use cases test', () => {
     save: jest.fn(),
   };
 
-  const createUserUseCase = new CreateUserUseCase(service);
+  const serviceHash: IHashProvider = {
+    compare: jest.fn(),
+    encrypt: jest.fn(),
+  };
+
+  const serviceMail: IMailerService = {
+    sendEmail: jest.fn(),
+  };
+
+  const createUserUseCase = new CreateUserUseCase(
+    service,
+    serviceHash,
+    serviceMail,
+  );
 
   const data = {
     name: 'Jane',

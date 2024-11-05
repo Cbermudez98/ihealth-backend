@@ -5,7 +5,7 @@ import { MailService } from './mail.service';
 export class MailController {
   constructor(private readonly mailService: MailService) {}
 
-  @Post('send')
+  /*@Post('send')
   async sendMail(
     @Body()
     body: {
@@ -18,5 +18,5 @@ export class MailController {
     const { to, subject, template, context } = body;
     await this.mailService.sendEmail(to, subject, template, context);
     return { message: 'Email sent successfully' };
-  }
+  }*/
 }

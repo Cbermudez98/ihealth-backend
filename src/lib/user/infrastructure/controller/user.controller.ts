@@ -13,6 +13,7 @@ export class UserController {
 
   @Post()
   public async createuser(@Body() UserDto: UserDto) {
+    console.log('UserDto', UserDto);
     const newUser = await this.createUserUseCase.run(UserDto);
     return ResponseAdapter.set(
       HttpStatus.CREATED,

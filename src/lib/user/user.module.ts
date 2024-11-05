@@ -6,6 +6,10 @@ import { UserService } from './infrastructure/service/user.service';
 import { IUserService } from './domain/service/IUser.service';
 import { CreateUserUseCase } from './application/createUser/CreateUser.useCase';
 import { MailModule } from 'src/shared/mail/mail.module';
+import { HashProvider } from 'src/shared/providers/hash.provider/hash.provider';
+import { MailService } from 'src/shared/mail/mail.service';
+import { IHashProvider } from '../common/domain/services/IHash.service';
+import { IMailerService } from '../common/domain/services/IMailer.service';
 
 @Module({
   controllers: [UserController],
@@ -16,9 +20,21 @@ import { MailModule } from 'src/shared/mail/mail.module';
       useClass: UserService,
     },
     {
+      provide: 'HashProvider',
+      useClass: HashProvider,
+    },
+    {
+      provide: 'MailService',
+      useClass: MailService,
+    },
+    {
       provide: 'CreateUserUseCase',
-      useFactory: (service: IUserService) => new CreateUserUseCase(service),
-      inject: ['UserService'],
+      useFactory: (
+        service: IUserService,
+        hashProvider: IHashProvider,
+        mailService: IMailerService,
+      ) => new CreateUserUseCase(service, hashProvider, mailService),
+      inject: ['UserService', 'HashProvider', 'MailService'],
     },
   ],
 })

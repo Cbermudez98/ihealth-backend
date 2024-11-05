@@ -1,12 +1,28 @@
+import { IHashProvider } from 'src/lib/common/domain/services/IHash.service';
 import { IUser } from '../../domain/interfaces/IUser';
 import { IUserService } from '../../domain/service/IUser.service';
 import { UserDto } from '../../infrastructure/dtos/user.dto';
+import {
+  IMailerService,
+  TEMPLATE_MAIL,
+} from './../../../common/domain/services/IMailer.service';
 
 export class CreateUserUseCase {
-  constructor(private readonly userService: IUserService) {}
+  constructor(
+    private readonly userService: IUserService,
+    private readonly hashProvider: IHashProvider,
+    private readonly mailerService: IMailerService,
+  ) {}
 
   async run(data: UserDto): Promise<IUser> {
-    const newUser = this.userService.create(data);
+    const newPassowrd = this.hashProvider.encrypt(data.auth.password);
+    data.auth.password = newPassowrd;
+    const newUser = await this.userService.create(data);
+    await this.mailerService.sendEmail({
+      subject: 'Bienvenido a IHealth',
+      template: TEMPLATE_MAIL.WELCOME,
+      to: data.auth.email,
+    });
     return newUser;
   }
 }
