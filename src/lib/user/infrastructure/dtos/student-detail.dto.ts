@@ -1,8 +1,8 @@
 import { IsInt, IsNotEmpty, ValidateNested } from 'class-validator';
-import { ICareer } from '../../domain/interfaces/ICareer';
+import { ICareer } from '../../../career/domain/interfaces/ICareer';
 import { IStudentDetailCreate } from '../../domain/interfaces/IStudentDetail';
 import { Type } from 'class-transformer';
-import { CareerDto } from './career.dto';
+import { CareerDto } from '../../../career/infrastructure/dtos/career.dto';
 
 export class StudentDetailDto implements IStudentDetailCreate {
   @IsNotEmpty()

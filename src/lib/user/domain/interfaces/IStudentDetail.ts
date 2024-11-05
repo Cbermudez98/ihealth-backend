@@ -1,4 +1,7 @@
-import { ICareer, ICareerCreate } from './ICareer';
+import {
+  ICareer,
+  ICareerCreate,
+} from '../../../career/domain/interfaces/ICareer';
 
 export interface IStudentDetail {
   id: number;

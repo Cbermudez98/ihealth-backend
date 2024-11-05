@@ -12,7 +12,7 @@ export class UserController {
   ) {}
 
   @Post()
-  public async user(@Body() UserDto: UserDto) {
+  public async createuser(@Body() UserDto: UserDto) {
     const newUser = await this.createUserUseCase.run(UserDto);
     return ResponseAdapter.set(
       HttpStatus.CREATED,

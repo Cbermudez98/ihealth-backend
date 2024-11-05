@@ -1,11 +1,11 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { IUserService } from '../../domain/service/IUser.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { IUser, IUserDto } from '../../domain/interfaces/IUser';
 import { hashPassword } from './auth.service';
-import { MailService } from 'src/shared/mail/mail.service';
+import { MailService } from '../../../../shared/mail/mail.service';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -13,6 +13,7 @@ export class UserService implements IUserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly mailerService: MailService,
   ) {}
+
   async save(newUser: Promise<IUser>): Promise<IUser> {
     throw new Error('Method not implemented.');
   }

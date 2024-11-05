@@ -7,6 +7,6 @@ export class CreateUserUseCase {
 
   async run(data: UserDto): Promise<IUser> {
     const newUser = this.userService.create(data);
-    return await this.userService.save(newUser);
+    return newUser;
   }
 }

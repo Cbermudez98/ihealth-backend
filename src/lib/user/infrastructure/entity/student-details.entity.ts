@@ -1,13 +1,7 @@
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IStudentDetail } from '../../domain/interfaces/IStudentDetail';
-import { ICareer } from '../../domain/interfaces/ICareer';
-import { Career } from './career.entity';
+import { ICareer } from '../../../career/domain/interfaces/ICareer';
+import { Career } from '../../../career/infrastructure/entity/career.entity';
 
 @Entity('student_details')
 export class StudentDetail implements IStudentDetail {
