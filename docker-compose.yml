@@ -13,3 +13,14 @@ services:
       - ${DATABASE_PORT}:3306
     volumes:
       - ./db-data:/var/lib/mysql
+  redis:
+    image: redis
+    restart: always
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_DATABASES: ${REDIS_DATABASES}
+    ports:
+      - ${REDIS_PORT}:6379
+    depends_on:
+      - my_sql
