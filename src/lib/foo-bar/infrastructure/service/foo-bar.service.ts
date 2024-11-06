@@ -1,6 +1,5 @@
 import {
   GatewayTimeoutException,
-  HttpStatus,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
@@ -21,6 +20,7 @@ export class FooBarService implements IFooBarService {
   constructor(
     @InjectRepository(Foo) private readonly fooRepository: Repository<Foo>,
   ) {}
+
   async get(id: IFooBar['id']): Promise<IFooBar> {
     const fooBar = await this.fooRepository.findOneBy({ id });
     if (!fooBar) {
