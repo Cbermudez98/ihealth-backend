@@ -6,7 +6,6 @@ import { IMailerService } from './../../../common/domain/services/IMailer.servic
 describe('User use cases test', () => {
   const service: IUserService = {
     create: jest.fn(),
-    save: jest.fn(),
   };
 
   const serviceHash: IHashProvider = {

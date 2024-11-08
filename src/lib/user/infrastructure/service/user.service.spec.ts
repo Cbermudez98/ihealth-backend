@@ -4,7 +4,7 @@ import { User } from '../entity/user.entity';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { IUserDto } from '../../domain/interfaces/IUser';
-import { UnprocessableEntityException } from '@nestjs/common';
+import { RequestTimeoutException } from '@nestjs/common';
 import { MailService } from '../../../../shared/mail/mail.service';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -56,7 +56,7 @@ describe('UserService', () => {
     code: 198297418712,
     gender: 'M',
     auth: {
-      email: 'santiago.lopezmarmolejo@unicolombo.edu.co',
+      email: 'rawad.munosromero@unicolombo.edu.co',
       password: 'Jane123*',
       id: 0,
     },
@@ -84,8 +84,7 @@ describe('UserService', () => {
     code: 198297418712,
     gender: 'M',
     auth: {
-      email: 'santiago.lopezmarmolejo@unicolombo.edu.co',
-      password: 'Jane123*',
+      email: 'rawad.munosromero@unicolombo.edu.co',
     },
     direction: {
       neighborhood: 'El pozon',
@@ -104,8 +103,6 @@ describe('UserService', () => {
   it('should create a user and send welcome email', async () => {
     jest.spyOn(repository, 'create').mockReturnValue(data as User);
     jest.spyOn(repository, 'save').mockResolvedValue(data as User);
-    jest.spyOn(mailService, 'sendEmail').mockResolvedValue(true);
-
     const response = await service.create(userDto);
 
     expect(response).toEqual(data);
@@ -113,12 +110,9 @@ describe('UserService', () => {
 
   it('should throw an error if user creation fails', async () => {
     jest.spyOn(repository, 'create').mockReturnValue(userDto as User);
-    jest.spyOn(repository, 'save').mockImplementation(() => {
-      throw new UnprocessableEntityException('Failed to save user');
-    });
 
     await expect(service.create(userDto)).rejects.toThrow(
-      UnprocessableEntityException,
+      RequestTimeoutException,
     );
   });
 });

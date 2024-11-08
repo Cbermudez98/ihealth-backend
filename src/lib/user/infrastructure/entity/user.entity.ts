@@ -21,7 +21,7 @@ export class User implements IUser {
   @Column()
   age: number;
 
-  @Column()
+  @Column({ type: 'bigint', unique: true })
   code: number;
 
   @Column({ length: 1 })

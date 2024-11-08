@@ -30,10 +30,10 @@ import { IMailerService } from '../common/domain/services/IMailer.service';
     {
       provide: 'CreateUserUseCase',
       useFactory: (
-        service: IUserService,
+        userService: IUserService,
         hashProvider: IHashProvider,
         mailService: IMailerService,
-      ) => new CreateUserUseCase(service, hashProvider, mailService),
+      ) => new CreateUserUseCase(userService, hashProvider, mailService),
       inject: ['UserService', 'HashProvider', 'MailService'],
     },
   ],
