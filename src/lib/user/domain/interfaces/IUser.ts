@@ -1,4 +1,4 @@
-import { IAuth, IAuthCreate } from './IAuth';
+import { IAuth, IAuthCreate } from '../../../auth/domain/interfaces/IAuth';
 import { IDirection, IDirectionCreate } from './IDirection';
 import { IStudentDetail, IStudentDetailCreate } from './IStudentDetail';
 

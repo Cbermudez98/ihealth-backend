@@ -1,11 +1,11 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IUser } from '../../domain/interfaces/IUser';
-import { IAuth } from '../../domain/interfaces/IAuth';
+import { IAuth } from '../../../auth/domain/interfaces/IAuth';
 import { IDirection } from '../../domain/interfaces/IDirection';
 import { IStudentDetail } from '../../domain/interfaces/IStudentDetail';
-import { Auth } from './auth.entity';
 import { Direction } from './direction.entity';
 import { StudentDetail } from './student-details.entity';
+import { Auth } from '../../../auth/infrastructure/entity/auth.entity';
 
 @Entity('person')
 export class User implements IUser {

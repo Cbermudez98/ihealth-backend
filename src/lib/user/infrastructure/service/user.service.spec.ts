@@ -59,6 +59,7 @@ describe('UserService', () => {
       email: 'santiago.lopezmarmolejo@unicolombo.edu.co',
       password: 'Jane123*',
       id: 0,
+      access_token: '',
     },
     direction: {
       neighborhood: 'El pozon',

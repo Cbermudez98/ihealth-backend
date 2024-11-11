@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { IUser, IUserDto } from '../../domain/interfaces/IUser';
-import { hashPassword } from './auth.service';
+import { hashPassword } from '../../../auth/infrastructure/service/auth.service';
 import { MailService } from '../../../../shared/mail/mail.service';
 
 @Injectable()

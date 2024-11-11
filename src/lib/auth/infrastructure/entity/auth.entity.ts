@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { IAuth } from '../../domain/interfaces/IAuth';
+import { IAuth } from '../../../auth/domain/interfaces/IAuth';
 
 @Entity('auth')
 export class Auth implements IAuth {
@@ -11,4 +11,7 @@ export class Auth implements IAuth {
 
   @Column()
   password: string;
+
+  @Column()
+  access_token: string;
 }
