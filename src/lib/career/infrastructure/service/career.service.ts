@@ -16,7 +16,7 @@ export class CareerService implements ICareerService {
   async get(id: ICareer['id']): Promise<ICareer> {
     const career = await this.careerRepository.findOneBy({ id });
     if (!career) {
-      throw new NotFoundError('Foo bar not found');
+      throw new NotFoundError('Carrer not found');
     }
     return career;
   }

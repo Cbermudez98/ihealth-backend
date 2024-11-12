@@ -10,10 +10,12 @@ import { HashProvider } from 'src/shared/providers/hash.provider/hash.provider';
 import { MailService } from 'src/shared/mail/mail.service';
 import { IHashProvider } from '../common/domain/services/IHash.service';
 import { IMailerService } from '../common/domain/services/IMailer.service';
+import { CareerService } from '../career/infrastructure/service/career.service';
+import { Career } from '../career/infrastructure/entity/career.entity';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([User]), MailModule],
+  imports: [TypeOrmModule.forFeature([User, Career]), MailModule],
   providers: [
     {
       provide: 'UserService',
@@ -36,6 +38,7 @@ import { IMailerService } from '../common/domain/services/IMailer.service';
       ) => new CreateUserUseCase(userService, hashProvider, mailService),
       inject: ['UserService', 'HashProvider', 'MailService'],
     },
+    CareerService,
   ],
 })
 export class UserModule {}

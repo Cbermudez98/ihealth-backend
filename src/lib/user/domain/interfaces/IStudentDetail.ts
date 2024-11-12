@@ -1,15 +1,15 @@
 import {
   ICareer,
-  ICareerCreate,
+  ICarrerAssing,
 } from '../../../career/domain/interfaces/ICareer';
 
 export interface IStudentDetail {
   id: number;
-  career_id: ICareer;
+  career: ICareer;
   semester: number;
 }
 
 export interface IStudentDetailCreate
-  extends Omit<IStudentDetail, 'id' | 'career_id'> {
-  career_id: ICareerCreate;
+  extends Omit<IStudentDetail, 'id' | 'career'> {
+  career: ICarrerAssing;
 }
