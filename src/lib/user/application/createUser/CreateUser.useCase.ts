@@ -1,7 +1,6 @@
 import { IHashProvider } from 'src/lib/common/domain/services/IHash.service';
-import { IUser } from '../../domain/interfaces/IUser';
+import { IUser, IUserCreate } from '../../domain/interfaces/IUser';
 import { IUserService } from '../../domain/service/IUser.service';
-import { UserDto } from '../../infrastructure/dtos/user.dto';
 import {
   IMailerService,
   TEMPLATE_MAIL,
@@ -14,7 +13,7 @@ export class CreateUserUseCase {
     private readonly mailerService: IMailerService,
   ) {}
 
-  async run(data: UserDto): Promise<IUser> {
+  async run(data: IUserCreate): Promise<IUser> {
     const newPassowrd = this.hashProvider.encrypt(data.auth.password);
     data.auth.password = newPassowrd;
     const newUser = await this.userService.create(data);

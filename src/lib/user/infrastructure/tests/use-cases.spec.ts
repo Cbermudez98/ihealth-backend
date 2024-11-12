@@ -6,7 +6,6 @@ import { IMailerService } from './../../../common/domain/services/IMailer.servic
 describe('User use cases test', () => {
   const service: IUserService = {
     create: jest.fn(),
-    save: jest.fn(),
   };
 
   const serviceHash: IHashProvider = {
@@ -42,8 +41,8 @@ describe('User use cases test', () => {
     },
     student_detail: {
       semester: 7,
-      career_id: {
-        name: 'Tecnologia en desarrollo de Software',
+      career: {
+        id: 1,
       },
     },
   };
