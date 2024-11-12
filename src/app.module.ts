@@ -5,7 +5,6 @@ import { UserModule } from './lib/user/user.module';
 import { SharedModule } from './shared/shared.module';
 import { CareerModule } from './lib/career/infrastructure/career.module';
 import { AuthModule } from './lib/auth/auth.module';
-import { IauthService } from './auth/domain/iauth/iauth.service';
 
 @Module({
   imports: [
@@ -17,6 +16,6 @@ import { IauthService } from './auth/domain/iauth/iauth.service';
     AuthModule,
   ],
   controllers: [],
-  providers: [IauthService],
+  providers: [],
 })
 export class AppModule {}

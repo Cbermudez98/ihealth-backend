@@ -1,26 +1,42 @@
-import { JwtService } from '@nestjs/jwt';
-import { IAuth } from '../../domain/interfaces/IAuth';
-import { IauthService } from '../../domain/service/iauth.service';
+import { IAuthService } from '../../domain/service/IAuth.service';
 import { AuthDto } from '../../infrastructure/dtos/auth.dto';
-import { IHashProvider } from 'src/lib/common/domain/services/IHash.service';
-import { IUserService } from 'src/lib/user/domain/service/IUser.service';
+import { IHashProvider } from './../../../common/domain/services/IHash.service';
+import { NotFoundError } from './../../../common/domain/errors/NotFoundErrors';
+import { ForbidenError } from 'src/lib/common/domain/errors/ForbiddenError';
+import { IJwtService } from '../../domain/service/IJwt.service';
+import { InternalServerError } from 'src/lib/common/domain/errors/InternalServerError';
+import { IAccessToken } from '../../domain/interfaces/IAccessToken';
 
 export class AuthUserUseCase {
   constructor(
-    private readonly userService: IUserService,
     private readonly hashProvider: IHashProvider,
-    private readonly jwtService: JwtService,
-    private readonly authService: IauthService,
-    private readonly iauth: IAuth,
+    private readonly authService: IAuthService,
+    private readonly jwtService: IJwtService,
   ) {}
 
-  async run(auth: AuthDto): Promise<IAuth> {
-    const user = await this.authService.login(auth.email);
-
-    const validateUser = await this.authService.validateUser(auth.email);
+  async run(auth: AuthDto): Promise<IAccessToken> {
+    const user = await this.authService.validateUser(auth.email);
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundError('User not found');
     }
-    return {} as IAuth;
+    const isValidPassword = this.hashProvider.compare(
+      auth.password,
+      user.password,
+    );
+    if (!isValidPassword) {
+      throw new ForbidenError('Password mismatch');
+    }
+    let token: string = '';
+    try {
+      token = this.jwtService.signToken({
+        id: user.id,
+        roles: 'admin',
+      });
+    } catch (error) {
+      throw new InternalServerError('Error generating token');
+    }
+    return {
+      access_token: `Bearer ${token}`,
+    };
   }
 }

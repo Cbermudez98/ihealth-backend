@@ -7,6 +7,8 @@ import { Type } from 'class-transformer';
 import { AuthDto } from '../../../auth/infrastructure/dtos/auth.dto';
 import { DirectionDto } from './direction.dto';
 import { StudentDetailDto } from './student-detail.dto';
+import { IRoleDto } from '../../domain/interfaces/IRole';
+import { RoleDto } from './role.dto';
 
 export class UserDto implements IUserCreate {
   @IsNotEmpty()
@@ -43,4 +45,9 @@ export class UserDto implements IUserCreate {
   @ValidateNested()
   @Type(() => StudentDetailDto)
   student_detail: IStudentDetailCreate;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => RoleDto)
+  role: IRoleDto;
 }

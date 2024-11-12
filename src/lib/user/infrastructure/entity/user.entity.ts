@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -12,6 +13,8 @@ import { IStudentDetail } from '../../domain/interfaces/IStudentDetail';
 import { Direction } from './direction.entity';
 import { StudentDetail } from './student-details.entity';
 import { Auth } from '../../../auth/infrastructure/entity/auth.entity';
+import { IRole } from '../../domain/interfaces/IRole';
+import { Role } from './role.entity';
 
 @Entity('person')
 export class User implements IUser {
@@ -44,4 +47,8 @@ export class User implements IUser {
   @OneToOne(() => StudentDetail, { cascade: true })
   @JoinColumn()
   student_detail: IStudentDetail;
+
+  @OneToMany(() => Role, (role) => role.users)
+  @JoinColumn({ name: 'role_id' })
+  role: IRole;
 }

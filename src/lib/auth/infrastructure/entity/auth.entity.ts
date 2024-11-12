@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IAuth } from '../../../auth/domain/interfaces/IAuth';
+import { IUser } from './../../../user/domain/interfaces/IUser';
+import { User } from './../../../user/infrastructure/entity/user.entity';
 
 @Entity('auth')
 export class Auth implements IAuth {
@@ -12,6 +14,6 @@ export class Auth implements IAuth {
   @Column()
   password: string;
 
-  @Column()
-  access_token: string;
+  @OneToOne(() => User, (user) => user.auth)
+  user: IUser;
 }

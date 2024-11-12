@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { IAuth } from '../interfaces/IAuth';
 
-@Injectable()
-export class IauthService {
+export interface IAuthService {
   login: (id: any) => Promise<{ access_token: string }>;
-  validateUser: (username: string) => Promise<any>;
+  validateUser: (email: string) => Promise<IAuth>;
 }

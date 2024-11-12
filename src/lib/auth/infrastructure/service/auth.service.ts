@@ -1,35 +1,45 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { IauthService } from '../../domain/service/iauth.service';
+import { IAuthService } from '../../domain/service/IAuth.service';
 import { JwtService } from '@nestjs/jwt';
-import { IAuth, IAuthCreate, IAuthDto } from '../../domain/interfaces/IAuth';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auth } from '../entity/auth.entity';
 import { Repository } from 'typeorm';
+import { IAuth } from '../../domain/interfaces/IAuth';
+import { NotFoundError } from '../../../common/domain/errors/NotFoundErrors';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(
     @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
-    private iauthService: IauthService,
-    private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.authRepository.findOneBy({ email });
-    if (!user) {
-      return false;
+  async validateUser(email: string): Promise<IAuth> {
+    try {
+      await this.getAuth(email);
+    } catch (error) {
+      console.log('error', error);
     }
-    //const hashedPassword = await hashPassword(password);
-    return bcrypt.compare(password, user.password);
+    return await this.authRepository.findOneBy({ email });
   }
 
-  async login(user: any) {
-    const payload = { username: user.email, sub: user.password };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  async getAuth(email: string) {
+    const user = await this.authRepository.findOne({
+      where: {
+        email,
+      },
+      relations: ['user'],
+    });
+    console.log(user);
   }
+
+  login: (id: any) => Promise<{ access_token: string }>;
+  // async login(user: any) {
+  //   const payload = { username: user.email, sub: user.password };
+  //   return {
+  //     access_token: this.jwtService.sign(payload),
+  //   };
+  // }
 }
 
 export async function hashPassword(

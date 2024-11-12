@@ -15,20 +15,30 @@ import { AuthDto } from '../dtos/auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from '../../guard/local-auth.guard';
 import { JwtAuthGuard } from '../../guard/jwt-auth.guard';
+import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
+import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    @Inject('AuthUserUseCase')
+    private readonly authUSerUseCase: AuthUserUseCase,
+  ) {}
 
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  @Post()
+  async login(@Body() authDto: AuthDto) {
+    const response = await this.authUSerUseCase.run(authDto);
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      response,
+      HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
+      true,
+    );
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user();
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Get('profile')
+  // getProfile(@Request() req) {
+  //   return req.user();
+  // }
 }
