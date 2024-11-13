@@ -10,12 +10,13 @@ jobs:
     build:
         runs-on: ubuntu-latest
         env:
-            DATABASE_NAME: ${{ secrets.DB_DATABASE }}
+            DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
             DATABASE_USER: ${{ secrets.DATABASE_USER}}
             DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
             DATABASE_DIALECT: ${{ secrets.DATABASE_DIALECT }}
             DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
             MIGRATION_TABLE: ${{ secrets.MIGRATION_TABLE }}
+            DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
         
         steps:
             - name: checkout code
