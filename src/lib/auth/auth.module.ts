@@ -10,13 +10,11 @@ import { HashProvider } from 'src/shared/providers/hash.provider/hash.provider';
 import { AuthController } from './infrastructure/controller/auth.controller';
 import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 import { IJwtService } from './domain/service/IJwt.service';
-import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [AuthController],
   imports: [TypeOrmModule.forFeature([Auth]), UserModule],
   providers: [
-    // JwtService,
     {
       provide: 'IHashProvider',
       useClass: HashProvider,

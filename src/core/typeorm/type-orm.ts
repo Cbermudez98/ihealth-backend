@@ -10,7 +10,7 @@ import { Career } from 'src/lib/career/infrastructure/entity/career.entity';
 import { Direction } from 'src/lib/user/infrastructure/entity/direction.entity';
 import { StudentDetail } from 'src/lib/user/infrastructure/entity/student-details.entity';
 import { User } from 'src/lib/user/infrastructure/entity/user.entity';
-import { Role } from 'src/lib/user/infrastructure/entity/role.entity';
+import { Role } from 'src/lib/role/infrastructure/entity/role.entity';
 
 export default class TypeOrmConfig {
   static getOrmConfig(config: ConfigService): TypeOrmModuleOptions {

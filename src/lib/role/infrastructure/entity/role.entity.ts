@@ -1,7 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { IRole } from '../../domain/interfaces/IRole';
-import { IUser } from '../../domain/interfaces/IUser';
-import { User } from './user.entity';
+import { IUser } from '../../../user/domain/interfaces/IUser';
+import { User } from '../../../user/infrastructure/entity/user.entity';
 
 @Entity('role')
 export class Role implements IRole {

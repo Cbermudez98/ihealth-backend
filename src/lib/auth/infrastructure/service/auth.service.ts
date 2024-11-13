@@ -16,30 +16,14 @@ export class AuthService implements IAuthService {
 
   async validateUser(email: string): Promise<IAuth> {
     try {
-      await this.getAuth(email);
     } catch (error) {
       console.log('error', error);
     }
-    return await this.authRepository.findOneBy({ email });
-  }
-
-  async getAuth(email: string) {
-    const user = await this.authRepository.findOne({
-      where: {
-        email,
-      },
-      relations: ['user'],
+    return await this.authRepository.findOne({
+      where: { email },
+      relations: ['user', 'user.role'],
     });
-    console.log(user);
   }
-
-  login: (id: any) => Promise<{ access_token: string }>;
-  // async login(user: any) {
-  //   const payload = { username: user.email, sub: user.password };
-  //   return {
-  //     access_token: this.jwtService.sign(payload),
-  //   };
-  // }
 }
 
 export async function hashPassword(

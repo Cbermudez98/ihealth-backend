@@ -10,17 +10,20 @@ import { Repository } from 'typeorm';
 import { IUser, IUserCreate, IUserDto } from '../../domain/interfaces/IUser';
 import { CareerService } from '../../../career/infrastructure/service/career.service';
 import { Career } from '../../../career/infrastructure/entity/career.entity';
+import { IRole } from '../../../role/domain/interfaces/IRole';
+import { RoleService } from '../../../role/infrastructure/service/role.service';
 
 @Injectable()
 export class UserService implements IUserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly carrerService: CareerService,
+    private readonly careerService: CareerService,
+    private readonly roleService: RoleService,
   ) {}
 
   async create(userDto: IUserCreate): Promise<IUser> {
     let user: User | undefined;
-    let carrer: Career | undefined;
+    let career: Career | undefined;
     try {
       user = this.userRepository.create(userDto);
     } catch (error) {
@@ -30,15 +33,25 @@ export class UserService implements IUserService {
     }
 
     try {
-      carrer = await this.carrerService.get(userDto.student_detail.career.id);
+      career = await this.careerService.get(userDto.student_detail.career.id);
+    } catch (error) {
+      throw error;
+    }
+
+    let role: IRole | undefined;
+
+    try {
+      role = await this.roleService.get(userDto.role.id);
     } catch (error) {
       throw error;
     }
 
     try {
-      user.student_detail.career = carrer;
+      user.student_detail.career = career;
+      user.role = role;
       user = await this.userRepository.save(user);
     } catch (error) {
+      console.log('Error', error);
       throw new RequestTimeoutException('Cannot save user', {
         description: 'Error saving user',
       });

@@ -2,6 +2,7 @@ import { IHashProvider } from './../../../common/domain/services/IHash.service';
 import { CreateUserUseCase } from '../../application/createUser/CreateUser.useCase';
 import { IUserService } from '../../domain/service/IUser.service';
 import { IMailerService } from './../../../common/domain/services/IMailer.service';
+import { IUserCreate } from '../../domain/interfaces/IUser';
 
 describe('User use cases test', () => {
   const service: IUserService = {
@@ -23,7 +24,7 @@ describe('User use cases test', () => {
     serviceMail,
   );
 
-  const data = {
+  const data: IUserCreate = {
     name: 'Jane',
     last_name: 'Doe',
     age: 20,
@@ -44,6 +45,9 @@ describe('User use cases test', () => {
       career: {
         id: 1,
       },
+    },
+    role: {
+      id: 1,
     },
   };
 

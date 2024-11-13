@@ -12,10 +12,14 @@ import { IHashProvider } from '../common/domain/services/IHash.service';
 import { IMailerService } from '../common/domain/services/IMailer.service';
 import { CareerService } from '../career/infrastructure/service/career.service';
 import { Career } from '../career/infrastructure/entity/career.entity';
+import { Role } from '../role/infrastructure/entity/role.entity';
+import { RoleService } from '../role/infrastructure/service/role.service';
+import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
+import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([User, Career]), MailModule],
+  imports: [TypeOrmModule.forFeature([User, Career, Role]), MailModule],
   providers: [
     {
       provide: 'UserService',
@@ -39,6 +43,9 @@ import { Career } from '../career/infrastructure/entity/career.entity';
       inject: ['UserService', 'HashProvider', 'MailService'],
     },
     CareerService,
+    RoleService,
+    JwtAuthGuard,
+    JwtProvider,
   ],
 })
 export class UserModule {}

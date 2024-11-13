@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -14,8 +15,7 @@ export class StudentDetail implements IStudentDetail {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Career)
-  @JoinColumn()
+  @ManyToOne(() => Career, (career) => career.id)
   career: ICareer;
 
   @Column({ type: 'int' })
