@@ -4,9 +4,19 @@ import { CoreModule } from './core/core.module';
 import { UserModule } from './lib/user/user.module';
 import { SharedModule } from './shared/shared.module';
 import { CareerModule } from './lib/career/infrastructure/career.module';
+import { AuthModule } from './lib/auth/auth.module';
+import { RoleModule } from './lib/role/role.module';
 
 @Module({
-  imports: [CoreModule, FooBarModule, UserModule, SharedModule, CareerModule],
+  imports: [
+    CoreModule,
+    FooBarModule,
+    UserModule,
+    SharedModule,
+    CareerModule,
+    AuthModule,
+    RoleModule,
+  ],
   controllers: [],
   providers: [],
 })

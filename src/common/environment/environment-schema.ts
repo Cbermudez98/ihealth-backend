@@ -11,6 +11,7 @@ export const environmentSchema = Joi.object({
   MIGRATION_TABLE: Joi.string().required(),
   JWT_EXPIRE_TTL: Joi.number().required(),
   JWT_EXPIRE_REFRESH: Joi.number().required(),
+  JWT_SECRET_KEY: Joi.string().required(),
   MAIL_NOTIFIER: Joi.string().email().required(),
   MAIL_PASSWORD: Joi.string().required(),
   MAIL_FROM: Joi.string().required(),

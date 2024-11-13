@@ -10,10 +10,16 @@ import { HashProvider } from 'src/shared/providers/hash.provider/hash.provider';
 import { MailService } from 'src/shared/mail/mail.service';
 import { IHashProvider } from '../common/domain/services/IHash.service';
 import { IMailerService } from '../common/domain/services/IMailer.service';
+import { CareerService } from '../career/infrastructure/service/career.service';
+import { Career } from '../career/infrastructure/entity/career.entity';
+import { Role } from '../role/infrastructure/entity/role.entity';
+import { RoleService } from '../role/infrastructure/service/role.service';
+import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
+import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([User]), MailModule],
+  imports: [TypeOrmModule.forFeature([User, Career, Role]), MailModule],
   providers: [
     {
       provide: 'UserService',
@@ -30,12 +36,16 @@ import { IMailerService } from '../common/domain/services/IMailer.service';
     {
       provide: 'CreateUserUseCase',
       useFactory: (
-        service: IUserService,
+        userService: IUserService,
         hashProvider: IHashProvider,
         mailService: IMailerService,
-      ) => new CreateUserUseCase(service, hashProvider, mailService),
+      ) => new CreateUserUseCase(userService, hashProvider, mailService),
       inject: ['UserService', 'HashProvider', 'MailService'],
     },
+    CareerService,
+    RoleService,
+    JwtAuthGuard,
+    JwtProvider,
   ],
 })
 export class UserModule {}

@@ -30,9 +30,6 @@ export class CareerSeeder implements OnModuleInit {
 
     if (existingCareers.length === 0) {
       await this.careerRepository.save(careers);
-      console.log('Carreras predefinidas ingresadas');
-    } else {
-      console.log('Las carreras ya se ingresaron ._.');
     }
   }
 }

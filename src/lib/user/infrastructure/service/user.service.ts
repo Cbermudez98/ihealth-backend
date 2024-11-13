@@ -1,43 +1,64 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  RequestTimeoutException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { IUserService } from '../../domain/service/IUser.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
-import { IUser, IUserDto } from '../../domain/interfaces/IUser';
-import { hashPassword } from './auth.service';
-import { MailService } from '../../../../shared/mail/mail.service';
+import { IUser, IUserCreate, IUserDto } from '../../domain/interfaces/IUser';
+import { CareerService } from '../../../career/infrastructure/service/career.service';
+import { Career } from '../../../career/infrastructure/entity/career.entity';
+import { IRole } from '../../../role/domain/interfaces/IRole';
+import { RoleService } from '../../../role/infrastructure/service/role.service';
 
 @Injectable()
 export class UserService implements IUserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly mailerService: MailService,
+    private readonly careerService: CareerService,
+    private readonly roleService: RoleService,
   ) {}
 
-  async save(newUser: Promise<IUser>): Promise<IUser> {
-    throw new Error('Method not implemented.');
-  }
+  async create(userDto: IUserCreate): Promise<IUser> {
+    let user: User | undefined;
+    let career: Career | undefined;
+    try {
+      user = this.userRepository.create(userDto);
+    } catch (error) {
+      throw new RequestTimeoutException('Cannot create user', {
+        description: 'Error creating user',
+      });
+    }
 
-  async create(userDto: IUserDto): Promise<IUser> {
-    const hashedPassword = await hashPassword(userDto.auth.password);
-    const newUserData = {
-      name: userDto.name,
-      last_name: userDto.last_name,
-      age: userDto.age,
-      code: userDto.code,
-      gender: userDto.gender,
-      auth: {
-        email: userDto.auth.email,
-        password: hashedPassword,
-      },
-      direction: userDto.direction,
-      student_detail: userDto.student_detail,
-    };
+    try {
+      career = await this.careerService.get(userDto.student_detail.career.id);
+    } catch (error) {
+      throw error;
+    }
 
-    const user = this.userRepository.create(newUserData);
-    const savedUser = await this.userRepository.save(user);
-    // await this.mailerService.sendWelcomeEmail(user.auth.email, user.name);
+    let role: IRole | undefined;
 
-    return savedUser;
+    try {
+      role = await this.roleService.get(userDto.role.id);
+    } catch (error) {
+      throw error;
+    }
+
+    try {
+      user.student_detail.career = career;
+      user.role = role;
+      user = await this.userRepository.save(user);
+    } catch (error) {
+      console.log('Error', error);
+      throw new RequestTimeoutException('Cannot save user', {
+        description: 'Error saving user',
+      });
+    }
+    if (!user) {
+      throw new UnprocessableEntityException('User could not be created');
+    }
+    return user;
   }
 }
