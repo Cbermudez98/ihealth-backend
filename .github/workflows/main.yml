@@ -1,0 +1,43 @@
+name: deploy
+run-name: deploy job
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        env:
+            DATABASE_NAME: ${{ secrets.DB_DATABASE }}
+            DATABASE_USER: ${{ secrets.DATABASE_USER}}
+            DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+            DATABASE_DIALECT: ${{ secrets.DATABASE_DIALECT }}
+            DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+            MIGRATION_TABLE: ${{ secrets.MIGRATION_TABLE }}
+        
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v2
+            
+            - name: Setup node.js
+              uses: actions/setup-node@v2
+              with:
+                    node-version: 20
+            
+            - name: Install dependencies
+              run: npm install
+            
+            - name: Install railway
+              run: npm i -g @railway/cli
+            
+            - name: Run migrations
+              run: npm run migration:run
+            
+            - name: Deploy
+              uses: bervProject/railway-deploy@main
+              with:
+                    railway_token: ${{ secrets.RAILWAY_TOKEN }}
+                    service: ${{ secrets.RAILWAY_SERVICE }}
+                    detach: false
