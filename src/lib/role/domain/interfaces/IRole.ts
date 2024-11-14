@@ -9,3 +9,4 @@ export interface IRole {
 export interface IRoleCreate extends Omit<IRole, 'id' | 'users'> {}
 export interface IRoleDto extends Omit<IRole, 'id' | 'users'> {}
 export interface IRoleAssign extends Omit<IRole, 'name' | 'users'> {}
+export interface IRoleAssignUpdate extends Partial<IRoleAssign> {}

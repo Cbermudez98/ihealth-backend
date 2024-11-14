@@ -16,6 +16,7 @@ import { Role } from '../role/infrastructure/entity/role.entity';
 import { RoleService } from '../role/infrastructure/service/role.service';
 import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
 import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
+import { UpdateUserUseCase } from './application/updateUser/UpdateUser.useCase';
 
 @Module({
   controllers: [UserController],
@@ -41,6 +42,12 @@ import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
         mailService: IMailerService,
       ) => new CreateUserUseCase(userService, hashProvider, mailService),
       inject: ['UserService', 'HashProvider', 'MailService'],
+    },
+    {
+      provide: 'UpdateUserUseCase',
+      useFactory: (userService: IUserService, hashProvider: IHashProvider) =>
+        new UpdateUserUseCase(userService, hashProvider),
+      inject: ['UserService', 'HashProvider'],
     },
     CareerService,
     RoleService,
