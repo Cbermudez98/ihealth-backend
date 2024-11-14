@@ -9,3 +9,4 @@ export interface IAuth {
 
 export interface IAuthCreate extends Omit<IAuth, 'id' | 'user'> {}
 export interface IAuthDto extends Omit<IAuth, 'id' | 'email' | 'user'> {}
+export interface IAuthUpdateDto extends Partial<IAuthCreate> {}

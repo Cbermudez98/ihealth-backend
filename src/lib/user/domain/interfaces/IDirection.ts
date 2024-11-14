@@ -7,3 +7,4 @@ export interface IDirection {
 }
 
 export interface IDirectionCreate extends Omit<IDirection, 'id'> {}
+export interface IDirectionUpdate extends Partial<IDirectionCreate> {}
