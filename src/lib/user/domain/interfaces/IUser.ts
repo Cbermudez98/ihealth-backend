@@ -1,7 +1,19 @@
-import { IAuth, IAuthCreate } from '../../../auth/domain/interfaces/IAuth';
-import { IDirection, IDirectionCreate } from './IDirection';
-import { IRole, IRoleAssign } from '../../../role/domain/interfaces/IRole';
-import { IStudentDetail, IStudentDetailCreate } from './IStudentDetail';
+import {
+  IAuth,
+  IAuthCreate,
+  IAuthUpdateDto,
+} from '../../../auth/domain/interfaces/IAuth';
+import { IDirection, IDirectionCreate, IDirectionUpdate } from './IDirection';
+import {
+  IRole,
+  IRoleAssign,
+  IRoleAssignUpdate,
+} from '../../../role/domain/interfaces/IRole';
+import {
+  IStudentDetail,
+  IStudentDetailCreate,
+  IStudentDetailUpdateDto,
+} from './IStudentDetail';
 
 export interface IUser {
   id: number;
@@ -24,6 +36,14 @@ export interface IUserCreate
   role: IRoleAssign;
 }
 
-export interface IUserUpdate extends Partial<IUserCreate> {}
+export interface IUserUpdate
+  extends Partial<
+    Omit<IUserCreate, 'auth' | 'direction' | 'student_detail' | 'role'>
+  > {
+  auth: IAuthUpdateDto;
+  direction: IDirectionUpdate;
+  student_detail: IStudentDetailUpdateDto;
+  role: IRoleAssignUpdate;
+}
 
 export interface IUserDto extends Omit<IUser, 'id'> {}

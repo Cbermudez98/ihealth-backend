@@ -11,6 +11,8 @@ import { Direction } from 'src/lib/user/infrastructure/entity/direction.entity';
 import { StudentDetail } from 'src/lib/user/infrastructure/entity/student-details.entity';
 import { User } from 'src/lib/user/infrastructure/entity/user.entity';
 import { Role } from 'src/lib/role/infrastructure/entity/role.entity';
+import { Reason } from 'src/lib/reason/infrastructure/entity/reason.entity';
+import { Cause } from 'src/lib/cause/infrastructure/entity/cause.entity';
 
 export default class TypeOrmConfig {
   static getOrmConfig(config: ConfigService): TypeOrmModuleOptions {
@@ -22,7 +24,17 @@ export default class TypeOrmConfig {
       host: config.get<string>('DATABASE_HOST'),
       port: config.get<number>('DATABASE_PORT'),
       database: config.get<string>('DATABASE_NAME'),
-      entities: [Foo, Auth, StudentDetail, User, Direction, Career, Role],
+      entities: [
+        Foo,
+        Auth,
+        StudentDetail,
+        User,
+        Direction,
+        Career,
+        Role,
+        Reason,
+        Cause,
+      ],
       migrationsTableName: config.get<string>('MIGRATION_TABLE'),
       migrations: [join(__dirname, '/../../migrations/**/*.{ts, js}')],
     };

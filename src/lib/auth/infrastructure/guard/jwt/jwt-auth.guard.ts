@@ -3,6 +3,7 @@ import { SetMetadata } from '@nestjs/common';
 import { Request } from 'express';
 import { ForbiddenError } from '../../../../common/domain/errors/ForbiddenError';
 import { JwtProvider } from '../../../../../shared/providers/jwt.provider/jwt.provider';
+import { KEYS } from 'src/common/constants/keys';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -16,7 +17,7 @@ export class JwtAuthGuard {
     const token = this.getHeadersFromRequest(request);
     try {
       const payload = this.jwtProvider.verifyToken(token);
-      request['user'] = payload;
+      request[KEYS.USER] = payload;
     } catch (error) {
       throw new ForbiddenError('Token not provide');
     }

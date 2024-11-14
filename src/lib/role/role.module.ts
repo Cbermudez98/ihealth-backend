@@ -1,14 +1,27 @@
 import { Module } from '@nestjs/common';
-import { ControllerController } from './infrastructure/controller/controller.controller';
-import { ControllerService } from './infrastructure/controller/controller.service';
+import { RoleController } from './infrastructure/controller/controller.controller';
 import { RoleService } from './infrastructure/service/role.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Role } from './infrastructure/entity/role.entity';
 import { RoleSeeder } from './../../seeds/role.seeder';
+import { GetAllRolesUseCase } from './application/getAllRoles/GetAllRoles.useCase';
+import { IRoleService } from './domain/service/IRole.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Role])],
-  controllers: [ControllerController],
-  providers: [ControllerService, RoleService, RoleSeeder],
+  controllers: [RoleController],
+  providers: [
+    {
+      provide: 'RoleService',
+      useClass: RoleService,
+    },
+    {
+      provide: 'GetAllRolesUseCase',
+      useFactory: (roleService: IRoleService) =>
+        new GetAllRolesUseCase(roleService),
+      inject: ['RoleService'],
+    },
+    RoleSeeder,
+  ],
 })
 export class RoleModule {}
