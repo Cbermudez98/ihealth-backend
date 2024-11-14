@@ -6,6 +6,7 @@ import { SharedModule } from './shared/shared.module';
 import { CareerModule } from './lib/career/infrastructure/career.module';
 import { AuthModule } from './lib/auth/auth.module';
 import { RoleModule } from './lib/role/role.module';
+import { SurveyModule } from './lib/survey/survey.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { RoleModule } from './lib/role/role.module';
     CareerModule,
     AuthModule,
     RoleModule,
+    SurveyModule,
   ],
   controllers: [],
   providers: [],
