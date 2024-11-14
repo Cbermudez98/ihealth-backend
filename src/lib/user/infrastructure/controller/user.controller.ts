@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Inject,
   Param,
@@ -19,6 +20,7 @@ import { Roles } from './../../../role/infrastructure/decorator/role.decorator';
 import { ROLES } from './../../../../common/constants/roles.enum';
 import { RoleGuard } from './../../../auth/infrastructure/guard/role/role.guard';
 import { UpdateUserUseCase } from '../../application/updateUser/UpdateUser.useCase';
+import { GetUserUseCase } from '../../application/getUSer/GetUser.useCase';
 
 @Controller('user')
 export class UserController {
@@ -27,7 +29,19 @@ export class UserController {
     private readonly createUserUseCase: CreateUserUseCase,
     @Inject('UpdateUserUseCase')
     private readonly updateUserUseCase: UpdateUserUseCase,
+    @Inject('GetUserUseCase')
+    private readonly getUserUseCase: GetUserUseCase,
   ) {}
+
+  @Get('/:id')
+  public async getUser(@Param('id', ParseIntPipe) id: number) {
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      await this.getUserUseCase.run(id),
+      HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
+      true,
+    );
+  }
 
   @Post()
   public async createUser(@Body() UserDto: UserDto) {
