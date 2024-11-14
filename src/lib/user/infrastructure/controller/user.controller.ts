@@ -33,6 +33,8 @@ export class UserController {
     private readonly getUserUseCase: GetUserUseCase,
   ) {}
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
   @Get('/:id')
   public async getUser(@Param('id', ParseIntPipe) id: number) {
     return ResponseAdapter.set(
