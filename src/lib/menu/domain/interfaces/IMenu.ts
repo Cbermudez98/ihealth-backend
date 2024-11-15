@@ -4,3 +4,5 @@ export interface IMenu {
   icon: any;
   route: string;
 }
+
+export interface IMenuDto extends Omit<IMenu, 'id'> {}

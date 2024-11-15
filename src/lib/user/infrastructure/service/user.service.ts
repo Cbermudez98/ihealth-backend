@@ -7,12 +7,7 @@ import { IUserService } from '../../domain/service/IUser.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
-import {
-  IUser,
-  IUserCreate,
-  IUserDto,
-  IUserUpdate,
-} from '../../domain/interfaces/IUser';
+import { IUser, IUserCreate, IUserUpdate } from '../../domain/interfaces/IUser';
 import { CareerService } from '../../../career/infrastructure/service/career.service';
 import { Career } from '../../../career/infrastructure/entity/career.entity';
 import { IRole } from '../../../role/domain/interfaces/IRole';
