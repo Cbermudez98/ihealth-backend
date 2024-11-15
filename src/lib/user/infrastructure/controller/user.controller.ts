@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { CreateUserUseCase } from '../../application/createUser/CreateUser.useCase';
@@ -21,6 +22,9 @@ import { ROLES } from './../../../../common/constants/roles.enum';
 import { RoleGuard } from './../../../auth/infrastructure/guard/role/role.guard';
 import { UpdateUserUseCase } from '../../application/updateUser/UpdateUser.useCase';
 import { GetUserUseCase } from '../../application/getUSer/GetUser.useCase';
+import { Request } from 'express';
+import { KEYS } from 'src/common/constants/keys';
+import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
 
 @Controller('user')
 export class UserController {
@@ -35,11 +39,12 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
-  @Get('/:id')
-  public async getUser(@Param('id', ParseIntPipe) id: number) {
+  @Get()
+  public async getUser(@Req() request: Request) {
+    const auth: ITokenPayload = request[KEYS.USER] as ITokenPayload;
     return ResponseAdapter.set(
       HttpStatus.OK,
-      await this.getUserUseCase.run(id),
+      await this.getUserUseCase.run(auth.id),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );
@@ -58,14 +63,12 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
-  @Patch('/:id')
-  public async updateUser(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() user: UserUpdateDto,
-  ) {
+  @Patch()
+  public async updateUser(@Body() user: UserUpdateDto, @Req() req: Request) {
+    const token: ITokenPayload = req[KEYS.USER] as ITokenPayload;
     return ResponseAdapter.set(
       HttpStatus.OK,
-      await this.updateUserUseCase.run(id, user),
+      await this.updateUserUseCase.run(token.id, user),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );

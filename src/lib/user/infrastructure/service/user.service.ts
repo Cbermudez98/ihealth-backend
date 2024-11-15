@@ -22,6 +22,7 @@ export class UserService implements IUserService {
   ) {}
 
   async create(userDto: IUserCreate): Promise<IUser> {
+    console.log('🚀  ~ UserService ~ create ~ userDto:', userDto);
     let user: User | undefined;
     let career: Career | undefined;
     try {
@@ -59,6 +60,7 @@ export class UserService implements IUserService {
     if (!user) {
       throw new UnprocessableEntityException('User could not be created');
     }
+    console.log('Created with success');
     return user;
   }
 
