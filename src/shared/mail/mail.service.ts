@@ -16,6 +16,7 @@ export class MailService implements IMailerService {
   ) {}
 
   async sendEmail(mail: IMail): Promise<boolean> {
+    console.log('🚀  ~ MailService ~ sendEmail ~ mail:', mail);
     try {
       const template = this.getTemplate(mail.template);
       await this.mailQueue.add({
@@ -24,6 +25,7 @@ export class MailService implements IMailerService {
         template: template,
         context: {},
       });
+      console.log('Added mail to queue with success', mail);
       return true;
     } catch (error) {
       console.log('🚀  ~ MailService ~ sendEmail ~ error:', error);
@@ -33,6 +35,12 @@ export class MailService implements IMailerService {
 
   async processEmail(job: Job) {
     const { to, subject, template, context } = job.data;
+    console.log({
+      to,
+      subject,
+      template,
+      context,
+    });
 
     await this.mailerService.sendMail({
       to,
