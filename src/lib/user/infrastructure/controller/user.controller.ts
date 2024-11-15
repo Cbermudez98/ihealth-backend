@@ -39,11 +39,12 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
-  @Get('/:id')
-  public async getUser(@Param('id', ParseIntPipe) id: number) {
+  @Get()
+  public async getUser(@Req() request: Request) {
+    const auth: ITokenPayload = request[KEYS.USER] as ITokenPayload;
     return ResponseAdapter.set(
       HttpStatus.OK,
-      await this.getUserUseCase.run(id),
+      await this.getUserUseCase.run(auth.id),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );
