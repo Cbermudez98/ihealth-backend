@@ -21,4 +21,5 @@ export const environmentSchema = Joi.object({
   REDIS_PORT: Joi.number().required(),
   REDIS_DATABASES: Joi.number().required(),
   REDIS_HOST: Joi.string().required(),
+  REDIS_USERNAME: Joi.string().required(),
 });

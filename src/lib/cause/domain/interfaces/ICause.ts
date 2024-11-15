@@ -5,3 +5,6 @@ export interface ICause {
   name: string;
   reason: IReason;
 }
+
+export interface ICauseCreate extends Pick<ICause, 'name'> {}
+export interface ICauseUpdate extends Partial<ICauseCreate> {}
