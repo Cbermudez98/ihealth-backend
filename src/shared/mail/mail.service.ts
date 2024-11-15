@@ -26,6 +26,7 @@ export class MailService implements IMailerService {
       });
       return true;
     } catch (error) {
+      console.log('🚀  ~ MailService ~ sendEmail ~ error:', error);
       return false;
     }
   }
