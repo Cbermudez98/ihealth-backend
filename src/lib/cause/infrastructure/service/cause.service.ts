@@ -25,20 +25,27 @@ export class CauseService implements ICauseService {
     let reason: IReason | undefined;
     let newCause: ICause | undefined;
     try {
-      reason = await this.reasonRepository.findOneBy({ id });
+      reason = await this.reasonRepository.findOne({
+        where: {
+          id,
+        },
+        relations: {
+          causes: true,
+        },
+      });
     } catch (error) {
       throw new NotFoundError('Reason not found');
     }
 
     try {
       newCause = this.causeRepository.create(cause);
+      newCause.reason = reason;
     } catch (error) {
       throw new RequestTimeoutException('Could not create cause');
     }
 
     try {
-      reason.causes.push(newCause);
-      await this.reasonRepository.save(reason);
+      await this.causeRepository.save(newCause);
     } catch (error) {
       throw new RequestTimeoutException('Could not save cause');
     }

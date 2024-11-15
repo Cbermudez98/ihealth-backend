@@ -39,9 +39,10 @@ export class CauseController {
     @Param('id', ParseIntPipe) id: number,
     @Body() createCauseDto: CauseDto,
   ) {
+    await this.createCauseUseCase.run(id, createCauseDto);
     return ResponseAdapter.set(
       HttpStatus.OK,
-      this.createCauseUseCase.run(id, createCauseDto),
+      {},
       HTTP_RESPONSE_MESSAGE.HTTP_201_CREATED,
       true,
     );
@@ -54,22 +55,23 @@ export class CauseController {
     @Param('id', ParseIntPipe) id: number,
     @Body() createCauseDto: CauseUpdateDto,
   ) {
+    await this.updateCauseUseCase.run(id, createCauseDto);
     return ResponseAdapter.set(
       HttpStatus.OK,
-      this.updateCauseUseCase.run(id, createCauseDto),
+      {},
       HTTP_RESPONSE_MESSAGE.HTTP_201_CREATED,
       true,
     );
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(ROLES.ADMIN)
+  @Roles(ROLES.ADMIN, ROLES.COORDINATOR, ROLES.COORDINATOR)
   @Get('/:id')
   async getCause(@Param('id', ParseIntPipe) id: number) {
     return ResponseAdapter.set(
       HttpStatus.OK,
-      this.getCauseByReasonUseCase.run(id),
-      HTTP_RESPONSE_MESSAGE.HTTP_201_CREATED,
+      await this.getCauseByReasonUseCase.run(id),
+      HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );
   }
