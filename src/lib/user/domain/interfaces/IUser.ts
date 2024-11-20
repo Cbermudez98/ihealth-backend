@@ -14,6 +14,7 @@ import {
   IStudentDetailCreate,
   IStudentDetailUpdateDto,
 } from './IStudentDetail';
+import { IAppointment } from './../../../appointment/domain/interfaces/IAppointment';
 
 export interface IUser {
   id: number;
@@ -26,10 +27,14 @@ export interface IUser {
   direction: IDirection;
   student_detail: IStudentDetail;
   role: IRole;
+  appointments: IAppointment[];
 }
 
 export interface IUserCreate
-  extends Omit<IUser, 'id' | 'direction' | 'auth' | 'student_detail' | 'role'> {
+  extends Omit<
+    IUser,
+    'id' | 'direction' | 'auth' | 'student_detail' | 'role' | 'appointments'
+  > {
   auth: IAuthCreate;
   direction: IDirectionCreate;
   student_detail: IStudentDetailCreate;
@@ -38,7 +43,10 @@ export interface IUserCreate
 
 export interface IUserUpdate
   extends Partial<
-    Omit<IUserCreate, 'auth' | 'direction' | 'student_detail' | 'role'>
+    Omit<
+      IUserCreate,
+      'auth' | 'direction' | 'student_detail' | 'role' | 'appointments'
+    >
   > {
   auth: IAuthUpdateDto;
   direction: IDirectionUpdate;
@@ -46,4 +54,4 @@ export interface IUserUpdate
   role: IRoleAssignUpdate;
 }
 
-export interface IUserDto extends Omit<IUser, 'id'> {}
+export interface IUserDto extends Omit<IUser, 'id' | 'appointments'> {}

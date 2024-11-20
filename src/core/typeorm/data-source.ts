@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
-import { Foo } from 'src/lib/foo-bar/infrastructure/entity/foo.entity';
 import { join } from 'path';
 
 config();

@@ -8,6 +8,8 @@ import { AuthModule } from './lib/auth/auth.module';
 import { RoleModule } from './lib/role/role.module';
 import { ReasonModule } from './lib/reason/reason.module';
 import { CauseModule } from './lib/cause/cause.module';
+import { AppointmentModule } from './lib/appointment/appointment.module';
+import { ScheduleModule } from './lib/schedule/schedule.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { CauseModule } from './lib/cause/cause.module';
     RoleModule,
     ReasonModule,
     CauseModule,
+    AppointmentModule,
+    ScheduleModule,
   ],
   controllers: [],
   providers: [],

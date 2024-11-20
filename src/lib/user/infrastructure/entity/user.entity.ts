@@ -16,6 +16,8 @@ import { StudentDetail } from './student-details.entity';
 import { Auth } from '../../../auth/infrastructure/entity/auth.entity';
 import { IRole } from '../../../role/domain/interfaces/IRole';
 import { Role } from '../../../role/infrastructure/entity/role.entity';
+import { IAppointment } from './../../../appointment/domain/interfaces/IAppointment';
+import { Appointment } from './../../../appointment/infrastructure/entity/appointment.entity';
 
 @Entity('person')
 export class User implements IUser {
@@ -51,4 +53,7 @@ export class User implements IUser {
 
   @ManyToOne(() => Role, (role) => role.users)
   role: IRole;
+
+  @OneToMany(() => Appointment, (appointment) => appointment.user)
+  appointments: IAppointment[];
 }
