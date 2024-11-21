@@ -6,6 +6,10 @@ import { MenuService } from './infrastructure/service/menu.service';
 import { Menu } from './infrastructure/entity/menu.entity';
 import { GetMenuUseCase } from './application/getMenuCaseUse/GetMenu.useCase';
 import { AddItemUseCase } from './application/addItemCaseUse/AddItem.useCase';
+import { UpdateMenuUseCase } from './application/updateCaseUse/updateMenu.useCase';
+import { IMenuService } from './domain/service/IMenu.service';
+import { IRoleService } from '../role/domain/service/IRole.service';
+import { RoleService } from '../role/infrastructure/service/role.service';
 
 @Module({
   controllers: [MenuController],
@@ -15,8 +19,26 @@ import { AddItemUseCase } from './application/addItemCaseUse/AddItem.useCase';
       provide: 'MenuService',
       useClass: MenuService,
     },
-    GetMenuUseCase,
-    AddItemUseCase,
+    {
+      provide: 'RoleService',
+      useClass: RoleService,
+    },
+    {
+      provide: 'GetMenuUseCase',
+      useFactory: (roleService: IRoleService, menuService: IMenuService) =>
+        new GetMenuUseCase(roleService, menuService),
+      inject: ['RoleService', 'MenuService'],
+    },
+    {
+      provide: 'AddItemUseCase',
+      useFactory: (menuService: IMenuService) =>
+        new AddItemUseCase(menuService),
+      inject: ['MenuService'],
+    },
+    {
+      provide: 'UpdateMenuUseCase',
+      useClass: UpdateMenuUseCase,
+    },
   ],
 })
 export class MenuModule {}
