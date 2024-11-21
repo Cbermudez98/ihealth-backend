@@ -6,9 +6,10 @@ import { Role } from './infrastructure/entity/role.entity';
 import { RoleSeeder } from './../../seeds/role.seeder';
 import { GetAllRolesUseCase } from './application/getAllRoles/GetAllRoles.useCase';
 import { IRoleService } from './domain/service/IRole.service';
+import { Menu } from '../menu/infrastructure/entity/menu.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role])],
+  imports: [TypeOrmModule.forFeature([Role, Menu])],
   controllers: [RoleController],
   providers: [
     {

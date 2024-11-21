@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { IMenu } from '../interfaces/IMenu';
+import { IMenu, IMenuAdd, IMenuUpdate } from '../interfaces/IMenu';
 import { IRole } from 'src/lib/role/domain/interfaces/IRole';
 
 @Injectable()
 export class IMenuService {
-  //  getAll: (id: IRole['id']) => Promise<IMenu>;
-  //  addItem: ()
+  getMenu: (id: IRole['id']) => Promise<IMenu[]>;
+  addItem: (menu: IMenuAdd) => Promise<IMenu>;
+  update: (id: number, item: IMenuUpdate) => Promise<boolean>;
 }
