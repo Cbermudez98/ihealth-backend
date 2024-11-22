@@ -6,7 +6,7 @@ import { MenuService } from './infrastructure/service/menu.service';
 import { Menu } from './infrastructure/entity/menu.entity';
 import { GetMenuUseCase } from './application/getMenuCaseUse/GetMenu.useCase';
 import { AddItemUseCase } from './application/addItemCaseUse/AddItem.useCase';
-import { UpdateMenuUseCase } from './application/updateCaseUse/updateMenu.useCase';
+import { UpdateMenuUseCase } from './application/updateCaseUse/UpdateMenu.useCase';
 import { IMenuService } from './domain/service/IMenu.service';
 import { IRoleService } from '../role/domain/service/IRole.service';
 import { RoleService } from '../role/infrastructure/service/role.service';

@@ -16,7 +16,7 @@ import { GetMenuUseCase } from '../../application/getMenuCaseUse/GetMenu.useCase
 import * as jwt from 'jsonwebtoken';
 import { MenuDto } from '../dtos/menu.dto';
 import { AddItemUseCase } from '../../application/addItemCaseUse/AddItem.useCase';
-import { UpdateMenuUseCase } from '../../application/updateCaseUse/updateMenu.useCase';
+import { UpdateMenuUseCase } from '../../application/updateCaseUse/UpdateMenu.useCase';
 
 import { IMenuUpdate } from '../../domain/interfaces/IMenu';
 import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
@@ -74,28 +74,50 @@ export class MenuController {
     }
   }
 
-  @Patch(':id')
-  async updateItem(
-    @Param('id') id: number,
-    @Body() menuUpdateData: IMenuUpdate,
+  @Patch(':menuId')
+  public async updateMenu(
+    @Param('menuId') menuId: number,
+    @Body() menuDto: IMenuUpdate,
     @Headers('authorization') authHeader: string,
+    @Req() req: Request,
   ) {
     if (!authHeader) {
-      throw new UnauthorizedException(
-        'Invalid or missing authorization header',
-      );
+      throw new UnauthorizedException('Authorization header is missing');
     }
 
     const token = authHeader.split(' ')[1];
-
     let decodedToken: any;
+
     try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
     } catch (error) {
       throw new UnauthorizedException('Invalid or expired token');
     }
 
-    return this.updateMenuUseCase.run(id, menuUpdateData, decodedToken);
+    if (decodedToken.role !== 'admin') {
+      throw new ForbiddenException(
+        'You do not have permission to perform this action',
+      );
+    }
+
+    try {
+      const updatedMenu = await this.updateMenuUseCase.run(menuId, menuDto);
+
+      return ResponseAdapter.set(
+        HttpStatus.OK,
+        updatedMenu,
+        'Menu updated successfully',
+        true,
+      );
+    } catch (error) {
+      console.error('Error updating menu: ', error);
+      return ResponseAdapter.set(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        null,
+        'Something went wrong during the update process',
+        false,
+      );
+    }
   }
 
   @Get()

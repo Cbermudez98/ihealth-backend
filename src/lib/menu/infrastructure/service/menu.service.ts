@@ -1,5 +1,6 @@
 import {
   Injectable,
+  NotFoundException,
   RequestTimeoutException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -19,8 +20,28 @@ export class MenuService implements IMenuService {
     private readonly roleRepository: Repository<Role>,
   ) {}
 
-  updateItems: (id: number, menuData: IMenuUpdate) => Promise<IMenu>;
-  getMenuById: (id: number) => Promise<IMenu | null>;
+  async updateItems(menuId: number, menuDto: Partial<IMenu>): Promise<Menu> {
+    const menu = await this.getMenuById(menuId);
+    if (!menu) {
+      throw new NotFoundException(`Menu not found`);
+    }
+
+    const updatedMenu = Object.assign(menu, menuDto);
+
+    try {
+      return await this.menuRepository.save(updatedMenu);
+    } catch (error) {
+      console.error('Error saving updated menu: ', error);
+      throw new Error('Could not save the updated menu');
+    }
+  }
+
+  async getMenuById(menuId: number): Promise<Menu | undefined> {
+    return this.menuRepository.findOne({
+      where: { id: menuId },
+      relations: ['roles'],
+    });
+  }
 
   async getMenus(role: string): Promise<Menu[]> {
     return this.menuRepository.find({
