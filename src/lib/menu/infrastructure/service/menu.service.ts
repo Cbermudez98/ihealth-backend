@@ -36,11 +36,20 @@ export class MenuService implements IMenuService {
     }
   }
 
-  async getMenuById(menuId: number): Promise<Menu | undefined> {
-    return this.menuRepository.findOne({
-      where: { id: menuId },
-      relations: ['roles'],
-    });
+  async getMenuById(id: IMenu['id']): Promise<IMenu | null> {
+    let menu: Menu | null = null;
+
+    try {
+      menu = await this.menuRepository.findOne({
+        where: { id },
+        relations: { roles: true },
+      });
+    } catch (error) {
+      console.error('Error querying menu by ID:', error);
+      throw new RequestTimeoutException('Error retrieving menu by ID');
+    }
+
+    return menu;
   }
 
   async getMenus(role: string): Promise<Menu[]> {

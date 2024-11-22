@@ -8,8 +8,8 @@ import { GetMenuUseCase } from './application/getMenuCaseUse/GetMenu.useCase';
 import { AddItemUseCase } from './application/addItemCaseUse/AddItem.useCase';
 import { UpdateMenuUseCase } from './application/updateCaseUse/UpdateMenu.useCase';
 import { IMenuService } from './domain/service/IMenu.service';
-import { IRoleService } from '../role/domain/service/IRole.service';
 import { RoleService } from '../role/infrastructure/service/role.service';
+import { GetMenuByIDCaseUse } from './application/getMenuByIDCaseUse/GetMenuByID.useCase';
 
 @Module({
   controllers: [MenuController],
@@ -37,7 +37,15 @@ import { RoleService } from '../role/infrastructure/service/role.service';
     },
     {
       provide: 'UpdateMenuUseCase',
-      useClass: UpdateMenuUseCase,
+      useFactory: (menuService: IMenuService) =>
+        new UpdateMenuUseCase(menuService),
+      inject: ['MenuService'],
+    },
+    {
+      provide: GetMenuByIDCaseUse,
+      useFactory: (menuService: IMenuService) =>
+        new GetMenuByIDCaseUse(menuService),
+      inject: ['MenuService'],
     },
   ],
 })
