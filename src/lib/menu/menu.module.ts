@@ -10,6 +10,7 @@ import { UpdateMenuUseCase } from './application/updateCaseUse/UpdateMenu.useCas
 import { IMenuService } from './domain/service/IMenu.service';
 import { RoleService } from '../role/infrastructure/service/role.service';
 import { GetMenuByIDCaseUse } from './application/getMenuByIDCaseUse/GetMenuByID.useCase';
+import { DeleteMenuUseCase } from './application/deleteMenuCaseUse/DeleteMenu.useCase';
 
 @Module({
   controllers: [MenuController],
@@ -42,9 +43,15 @@ import { GetMenuByIDCaseUse } from './application/getMenuByIDCaseUse/GetMenuByID
       inject: ['MenuService'],
     },
     {
-      provide: GetMenuByIDCaseUse,
+      provide: 'GetMenuByIDCaseUse',
       useFactory: (menuService: IMenuService) =>
         new GetMenuByIDCaseUse(menuService),
+      inject: ['MenuService'],
+    },
+    {
+      provide: 'DeleteMenuUseCase',
+      useFactory: (menuService: IMenuService) =>
+        new DeleteMenuUseCase(menuService),
       inject: ['MenuService'],
     },
   ],

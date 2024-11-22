@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IRoleService } from '../../../role/domain/service/IRole.service';
 import { IMenu } from '../../domain/interfaces/IMenu';
 import { IMenuService } from '../../domain/service/IMenu.service';
 

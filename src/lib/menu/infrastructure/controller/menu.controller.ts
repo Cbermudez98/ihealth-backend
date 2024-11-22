@@ -11,6 +11,7 @@ import {
   ForbiddenException,
   Get,
   Req,
+  Delete,
 } from '@nestjs/common';
 import { GetMenuUseCase } from '../../application/getMenuCaseUse/GetMenu.useCase';
 import * as jwt from 'jsonwebtoken';
@@ -20,6 +21,7 @@ import { UpdateMenuUseCase } from '../../application/updateCaseUse/UpdateMenu.us
 
 import { IMenuUpdate } from '../../domain/interfaces/IMenu';
 import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
+import { DeleteMenuUseCase } from '../../application/deleteMenuCaseUse/DeleteMenu.useCase';
 
 @Controller('menu')
 export class MenuController {
@@ -30,6 +32,8 @@ export class MenuController {
     private readonly addMenuItemUseCase: AddItemUseCase,
     @Inject('UpdateMenuUseCase')
     private readonly updateMenuUseCase: UpdateMenuUseCase,
+    @Inject('DeleteMenuUseCase')
+    private readonly deleteMenuUseCase: DeleteMenuUseCase,
   ) {}
 
   @Post()
@@ -160,6 +164,51 @@ export class MenuController {
         HttpStatus.INTERNAL_SERVER_ERROR,
         null,
         'Error retrieving menus',
+        false,
+      );
+    }
+  }
+
+  @Delete(':menuId')
+  public async deleteMenu(
+    @Param('menuId') menuId: number,
+    @Req() request: Request,
+  ) {
+    const authHeader = request.headers['authorization'];
+
+    if (!authHeader) {
+      throw new UnauthorizedException('Authorization header missing');
+    }
+
+    const token = authHeader.split(' ')[1];
+    let decodedToken: any;
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    } catch (error) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+
+    if (decodedToken.role !== 'admin') {
+      throw new ForbiddenException(
+        'You do not have permission to perform this action',
+      );
+    }
+
+    try {
+      await this.deleteMenuUseCase.run(menuId);
+      return ResponseAdapter.set(
+        HttpStatus.OK,
+        null,
+        'Menu deleted successfully',
+        true,
+      );
+    } catch (error) {
+      console.error('Error in MenuController:', error);
+      return ResponseAdapter.set(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        null,
+        'Something went wrong while deleting the menu.',
         false,
       );
     }

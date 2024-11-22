@@ -5,7 +5,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { IMenuService } from '../../domain/service/IMenu.service';
-import { IMenu, IMenuAdd, IMenuUpdate } from '../../domain/interfaces/IMenu';
+import { IMenu, IMenuAdd } from '../../domain/interfaces/IMenu';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Menu } from '../entity/menu.entity';
 import { Role } from 'src/lib/role/infrastructure/entity/role.entity';
@@ -109,5 +109,27 @@ export class MenuService implements IMenuService {
 
     console.log('Created menu item successfully');
     return newMenuItem;
+  }
+
+  async deleteMenu(id: number): Promise<void> {
+    let menu: Menu | null = null;
+
+    try {
+      menu = await this.menuRepository.findOneBy({ id });
+    } catch (error) {
+      console.error('Error querying menu for deletion:', error);
+      throw new RequestTimeoutException('Error finding menu');
+    }
+
+    if (!menu) {
+      throw new NotFoundException('Menu not found');
+    }
+
+    try {
+      await this.menuRepository.delete(id);
+    } catch (error) {
+      console.error('Error deleting menu:', error);
+      throw new RequestTimeoutException('Error deleting menu');
+    }
   }
 }
