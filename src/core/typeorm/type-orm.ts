@@ -13,6 +13,7 @@ import { User } from 'src/lib/user/infrastructure/entity/user.entity';
 import { Role } from 'src/lib/role/infrastructure/entity/role.entity';
 import { Reason } from 'src/lib/reason/infrastructure/entity/reason.entity';
 import { Cause } from 'src/lib/cause/infrastructure/entity/cause.entity';
+import { Menu } from 'src/lib/menu/infrastructure/entity/menu.entity';
 
 export default class TypeOrmConfig {
   static getOrmConfig(config: ConfigService): TypeOrmModuleOptions {
@@ -34,6 +35,7 @@ export default class TypeOrmConfig {
         Role,
         Reason,
         Cause,
+        Menu,
       ],
       migrationsTableName: config.get<string>('MIGRATION_TABLE'),
       migrations: [join(__dirname, '/../../migrations/**/*.{ts, js}')],

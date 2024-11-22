@@ -1,5 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { IMenu } from '../../domain/interfaces/IMenu';
+import { Role } from '../../../role/infrastructure/entity/role.entity';
 
 @Entity('menu')
 export class Menu implements IMenu {
@@ -14,4 +21,8 @@ export class Menu implements IMenu {
 
   @Column({ type: 'varchar' })
   route: string;
+
+  @ManyToMany(() => Role, (role) => role.menus)
+  @JoinTable()
+  roles: Role[];
 }
