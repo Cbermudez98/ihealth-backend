@@ -49,6 +49,7 @@
     "ihealth-backend": "file:",
     "ioredis": "^5.4.1",
     "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
     "mjml": "^4.15.3",
     "mysql2": "^3.11.3",
     "nodemailer": "^6.9.16",
