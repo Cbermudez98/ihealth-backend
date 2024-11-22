@@ -25,9 +25,9 @@ import { RoleService } from '../role/infrastructure/service/role.service';
     },
     {
       provide: 'GetMenuUseCase',
-      useFactory: (roleService: IRoleService, menuService: IMenuService) =>
-        new GetMenuUseCase(roleService, menuService),
-      inject: ['RoleService', 'MenuService'],
+      useFactory: (menuService: IMenuService) =>
+        new GetMenuUseCase(menuService),
+      inject: ['MenuService'],
     },
     {
       provide: 'AddItemUseCase',

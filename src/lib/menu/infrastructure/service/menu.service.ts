@@ -1,6 +1,5 @@
 import {
   Injectable,
-  NotFoundException,
   RequestTimeoutException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -10,7 +9,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Menu } from '../entity/menu.entity';
 import { Role } from 'src/lib/role/infrastructure/entity/role.entity';
 import { Repository } from 'typeorm';
-import { IRole } from 'src/lib/role/domain/interfaces/IRole';
 
 @Injectable()
 export class MenuService implements IMenuService {
@@ -20,36 +18,15 @@ export class MenuService implements IMenuService {
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
   ) {}
-  update: (id: number, menuData: IMenuUpdate) => Promise<IMenu>;
+
+  updateItems: (id: number, menuData: IMenuUpdate) => Promise<IMenu>;
   getMenuById: (id: number) => Promise<IMenu | null>;
 
-  async get(roleId: IRole['id']): Promise<IMenu[]> {
-    console.log('MenuService ~ getMenusByRole ~ roleId:', roleId);
-
-    let role: Role | undefined;
-
-    try {
-      role = await this.roleRepository.findOne({
-        where: { id: roleId },
-        relations: ['menus'],
-      });
-    } catch (error) {
-      console.error('Error finding role', error);
-      throw new RequestTimeoutException('Cannot find role', {
-        description: 'Error finding the role for the menu item',
-      });
-    }
-
-    if (!role) {
-      throw new NotFoundException('Role not found');
-    }
-
-    if (!role.menus || role.menus.length === 0) {
-      throw new NotFoundException('No menus found for this role');
-    }
-
-    console.log('Menus retrieved successfully');
-    return role.menus;
+  async getMenus(role: string): Promise<Menu[]> {
+    return this.menuRepository.find({
+      where: { roles: { name: role } },
+      relations: ['roles'],
+    });
   }
 
   async createItem(menuDto: IMenuAdd): Promise<IMenu> {

@@ -8,6 +8,9 @@ import {
   Param,
   Inject,
   HttpStatus,
+  ForbiddenException,
+  Get,
+  Req,
 } from '@nestjs/common';
 import { GetMenuUseCase } from '../../application/getMenuCaseUse/GetMenu.useCase';
 import * as jwt from 'jsonwebtoken';
@@ -30,8 +33,28 @@ export class MenuController {
   ) {}
 
   @Post()
-  public async createMenu(@Body() menuDto: MenuDto) {
+  public async createMenu(
+    @Body() menuDto: MenuDto,
+    @Headers('authorization') authHeader: string,
+  ) {
     try {
+      const token = authHeader.split(' ')[1];
+
+      console.log(token);
+      let decodedToken: any;
+      try {
+        decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        console.log(decodedToken);
+      } catch (error) {
+        throw new UnauthorizedException('Invalid or expired token');
+      }
+
+      if (decodedToken.role !== 'admin') {
+        throw new ForbiddenException(
+          'You do not have permission to perform this action',
+        );
+      }
+
       const newMenu = await this.addMenuItemUseCase.run(menuDto);
 
       return ResponseAdapter.set(
@@ -73,5 +96,50 @@ export class MenuController {
     }
 
     return this.updateMenuUseCase.run(id, menuUpdateData, decodedToken);
+  }
+
+  @Get()
+  public async getMenus(@Req() request: Request) {
+    const authHeader = request.headers['authorization'];
+    if (!authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException(
+        'Authorization header missing or invalid',
+      );
+    }
+
+    const token = authHeader.split(' ')[1];
+    let decodedToken: any;
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    } catch (error) {
+      console.error('Invalid token:', error.message);
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+
+    const role = decodedToken.role;
+
+    if (!role) {
+      throw new UnauthorizedException('Role not found in token');
+    }
+
+    try {
+      const menus = await this.getMenuUseCase.run(role);
+
+      return ResponseAdapter.set(
+        HttpStatus.OK,
+        menus,
+        'Menus retrieved successfully',
+        true,
+      );
+    } catch (error) {
+      console.error('Error in MenuController:', error);
+      return ResponseAdapter.set(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        null,
+        'Error retrieving menus',
+        false,
+      );
+    }
   }
 }
