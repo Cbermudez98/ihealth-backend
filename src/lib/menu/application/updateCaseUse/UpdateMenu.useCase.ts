@@ -10,7 +10,6 @@ export class UpdateMenuUseCase {
     if (!menu) {
       throw new NotFoundException(`Menu not found`);
     }
-
     const updatedMenu = await this.menuService.updateItems(menuId, menuDto);
     return updatedMenu;
   }
