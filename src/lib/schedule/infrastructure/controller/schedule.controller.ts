@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Inject,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ResponseAdapter } from '../../../../common/response-adapter/response.adapter';
@@ -15,6 +16,7 @@ import { ROLES } from '../../../../common/constants/roles.enum';
 import { JwtAuthGuard } from './../../../auth/infrastructure/guard/jwt/jwt-auth.guard';
 import { RoleGuard } from './../../../auth/infrastructure/guard/role/role.guard';
 import { CreateScheduleDto } from '../dtos/schedule.dto';
+import { FilterScheduleDto } from '../dtos/filter.dto';
 
 @Controller('schedule')
 export class ScheduleController {
@@ -26,10 +28,10 @@ export class ScheduleController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
   @Get()
-  public async getSchedules() {
+  public async getSchedules(@Query() filter: FilterScheduleDto) {
     return ResponseAdapter.set(
       HttpStatus.OK,
-      await this.getScheduleUseCase.run(),
+      await this.getScheduleUseCase.run(filter),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );
@@ -41,7 +43,7 @@ export class ScheduleController {
   public async createSchedules(@Body() createScheduleDto: CreateScheduleDto) {
     return ResponseAdapter.set(
       HttpStatus.OK,
-      await this.getScheduleUseCase.run(),
+      {},
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );

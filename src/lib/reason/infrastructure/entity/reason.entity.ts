@@ -13,7 +13,7 @@ export class Reason implements IReason {
   @Column()
   name: string;
 
-  @OneToMany(() => Cause, (cause) => cause.reason)
+  @OneToMany(() => Cause, (cause) => cause.reason, { cascade: true, })
   causes: ICause[];
 
   @OneToMany(() => Appointment, (appointment) => appointment.reason)

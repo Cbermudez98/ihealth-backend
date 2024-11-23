@@ -10,6 +10,7 @@ import { IReasonService } from 'src/lib/reason/domain/service/IReason.service';
 import { IScheduleService } from 'src/lib/schedule/domain/service/ISchedule.service';
 import { IAppointmentService } from '../../domain/services/IAppointment.service';
 import { FoundError } from 'src/lib/common/domain/errors/FoundError';
+import { DateUtil } from 'src/lib/common/domain/utils/date';
 
 export class CreateAppointmentUseCase {
   constructor(
@@ -29,6 +30,17 @@ export class CreateAppointmentUseCase {
       if (hasAnAppointment) {
         throw new FoundError('User has a current appointment');
       }
+      const date = new Date(new Date().setHours(0, 0, 0, 0));
+      createAppointmentDto.date = date;
+
+      const scheduleTook = await this.scheduleService.scheduleHasBeenTaken(
+        createAppointmentDto.schedule,
+        date,
+      );
+      if (scheduleTook) {
+        throw new FoundError('Schedule has been taken');
+      }
+      return true;
       let appointment: IAppointmentSave = {} as IAppointmentSave;
       appointment.user = await this.userService.get(createAppointmentDto.user);
       appointment.psychologist = await this.userService.get(

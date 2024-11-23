@@ -8,15 +8,23 @@ import { Repository } from 'typeorm';
 import { Schedule } from '../entity/Schedule.entity';
 import { IScheduleService } from '../../domain/service/ISchedule.service';
 import { ISchedule, IScheduleCreate } from '../../domain/interfaces/ISchedule';
+import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
+import { Appointment } from 'src/lib/appointment/infrastructure/entity/appointment.entity';
 
 @Injectable()
 export class ScheduleService implements IScheduleService {
   constructor(
     @InjectRepository(Schedule)
     private readonly scheduleRepository: Repository<Schedule>,
+    @InjectRepository(Appointment)
+    private readonly appointmentRepository: Repository<Appointment>,
   ) {}
-  async get(): Promise<ISchedule[]> {
-    return await this.scheduleRepository.find();
+  async get(day: string): Promise<ISchedule[]> {
+    return await this.scheduleRepository.find({
+      where: {
+        day,
+      },
+    });
   }
 
   async create(schedule: IScheduleCreate): Promise<ISchedule> {
@@ -33,5 +41,35 @@ export class ScheduleService implements IScheduleService {
       throw new UnprocessableEntityException('Could not save schedule');
     }
     return newSchedule;
+  }
+
+  async getSingle(id: ISchedule['id']): Promise<ISchedule> {
+    try {
+      return await this.scheduleRepository.findOneByOrFail({
+        id,
+      });
+    } catch (error) {
+      throw new NotFoundError('Schedule not found');
+    }
+  }
+
+  async scheduleHasBeenTaken(
+    id: ISchedule['id'],
+    date: Date,
+  ): Promise<boolean> {
+    try {
+      const appointment = await this.appointmentRepository.findOne({
+        where: {
+          date,
+          schedule: {
+            id,
+          },
+        },
+      });
+      console.log('🚀  ~ ScheduleService ~ appointment:', appointment);
+      return Boolean(appointment);
+    } catch (error) {
+      throw new RequestTimeoutException('Error getting schedule');
+    }
   }
 }

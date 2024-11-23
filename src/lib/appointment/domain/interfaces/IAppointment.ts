@@ -10,9 +10,20 @@ export interface IAppointment {
   psychologist: IUser;
   description: string;
   date: Date;
-  time: number;
   status: IStatus;
   reason: IReason;
   cause: ICause;
   schedule: ISchedule;
 }
+
+export interface IAppointmentCreate
+  extends Pick<IAppointment, 'date' | 'description'> {
+  user: number;
+  psychologist: number;
+  status: number;
+  reason: number;
+  cause: number;
+  schedule: number;
+}
+
+export interface IAppointmentSave extends Omit<IAppointment, 'id'> {}

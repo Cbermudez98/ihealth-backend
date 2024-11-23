@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Schedule } from '../lib/schedule/infrastructure/entity/Schedule.entity'; // Asegúrate de importar la entidad correctamente
 import { IScheduleCreate } from '../lib/schedule/domain/interfaces/ISchedule';
+import { DAYS } from 'src/common/constants/keys';
 
 @Injectable()
 export class ScheduleSeeder implements OnModuleInit {
@@ -22,13 +23,13 @@ export class ScheduleSeeder implements OnModuleInit {
   async generateSchedulesForWeek() {
     const schedules: Schedule[] = [];
 
-    const daysOfWeek = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
+    const daysOfWeek: DAYS[] = [
+      DAYS.MONDAY,
+      DAYS.TUESDAY,
+      DAYS.WEDNESDAY,
+      DAYS.THURSDAY,
+      DAYS.FRIDAY,
+      DAYS.SATURDAY,
     ];
 
     for (const day of daysOfWeek) {
@@ -41,7 +42,7 @@ export class ScheduleSeeder implements OnModuleInit {
         );
       }
 
-      if (day !== 'Saturday') {
+      if (day !== DAYS.SATURDAY) {
         for (let startTime = 14; startTime < 18; startTime += 0.75) {
           const startTimeString = this.formatTime(startTime);
           const endTimeString = this.formatTime(startTime + 0.75); // 45 minutes duration
@@ -52,7 +53,7 @@ export class ScheduleSeeder implements OnModuleInit {
         }
       }
 
-      if (day === 'Saturday') {
+      if (day === DAYS.SATURDAY) {
         for (let startTime = 8; startTime < 12; startTime += 0.75) {
           const startTimeString = this.formatTime(startTime);
           const endTimeString = this.formatTime(startTime + 0.75); // 45 minutes duration

@@ -9,7 +9,7 @@ export class CurrentAppointmentUseCase {
 
       return appointment;
     } catch (error) {
-      console.log('🚀  ~ CurrentAppointmentUseCase ~ run ~ error:', error);
+      throw error;
     }
   }
 }

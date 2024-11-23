@@ -25,13 +25,8 @@ export class Appointment implements IAppointment {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ type: "datetime" })
   date: Date;
-
-  @Column({
-    type: 'time',
-  })
-  time: number;
 
   @ManyToOne(() => User, (user) => user.appointments)
   user: IUser;
@@ -48,6 +43,6 @@ export class Appointment implements IAppointment {
   @ManyToOne(() => Cause, (cause) => cause.appointments)
   cause: ICause;
 
-  @OneToMany(() => Schedule, (schedule) => schedule.appointments)
+  @ManyToOne(() => Schedule, (schedule) => schedule.appointments)
   schedule: ISchedule;
 }

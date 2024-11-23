@@ -10,3 +10,7 @@ export interface ISchedule {
 
 export interface IScheduleCreate
   extends Omit<ISchedule, 'id' | 'appointments'> {}
+
+export interface IFilterSchedule extends Pick<ISchedule, 'day'> {
+  date: string;
+}

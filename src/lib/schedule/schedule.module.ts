@@ -11,14 +11,21 @@ import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Role } from '../role/infrastructure/entity/role.entity';
 import { Schedule } from './infrastructure/entity/Schedule.entity';
+import { AppointmentService } from '../appointment/infrastructure/service/appointment/appointment.service';
+import { IAppointmentService } from '../appointment/domain/services/IAppointment.service';
+import { Appointment } from '../appointment/infrastructure/entity/appointment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role, Schedule])],
+  imports: [TypeOrmModule.forFeature([Role, Schedule, Appointment])],
   controllers: [ScheduleController],
   providers: [
     {
       provide: 'ScheduleService',
       useClass: ScheduleService,
+    },
+    {
+      provide: 'AppointmentService',
+      useClass: AppointmentService,
     },
     {
       provide: 'CreateScheduleUseCase',
@@ -28,9 +35,11 @@ import { Schedule } from './infrastructure/entity/Schedule.entity';
     },
     {
       provide: 'GetScheduleUseCase',
-      useFactory: (scheduleService: IScheduleService) =>
-        new GetScheduleUseCase(scheduleService),
-      inject: ['ScheduleService'],
+      useFactory: (
+        scheduleService: IScheduleService,
+        appointmentService: IAppointmentService,
+      ) => new GetScheduleUseCase(scheduleService, appointmentService),
+      inject: ['ScheduleService', 'AppointmentService'],
     },
     ScheduleSeeder,
     RoleService,
