@@ -40,7 +40,7 @@ export class CreateAppointmentUseCase {
       if (scheduleTook) {
         throw new FoundError('Schedule has been taken');
       }
-      return true;
+
       let appointment: IAppointmentSave = {} as IAppointmentSave;
       appointment.user = await this.userService.get(createAppointmentDto.user);
       appointment.psychologist = await this.userService.get(
