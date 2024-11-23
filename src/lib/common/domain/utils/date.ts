@@ -1,3 +1,5 @@
+import { isAfter, isBefore, isEqual, parseISO } from 'date-fns';
+
 export class DateUtil {
   static getStartDate(date: string) {
     return new Date(
@@ -28,10 +30,31 @@ export class DateUtil {
   }
 
   static parseToUTC(dateString: string): Date {
-    // Parse the string into a Date object
     const date = new Date(dateString);
+    return date;
+  }
 
-    // Return the time in UTC format (milliseconds since Jan 1, 1970)
-    return date; // This is the UTC timestamp (in milliseconds)
+  static isDateTodayOrFuture(date: Date) {
+    const dateGiven = new Date(
+      `${date.getFullYear()}-${date.getMonth()}-${date.getUTCDate()}`,
+    );
+
+    return dateGiven >= this.getCurrentDate();
+  }
+
+  static getCurrentDate(): Date {
+    const date = new Date();
+    return new Date(
+      `${date.getFullYear()}-${date.getMonth()}-${date.getDate() - 1}`,
+    );
+  }
+
+  static getHour(): string {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    // const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${hours}:${minutes}:00`;
   }
 }

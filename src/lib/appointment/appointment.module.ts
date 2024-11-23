@@ -114,7 +114,10 @@ import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppoin
     },
     {
       provide: 'UpdateStatusAppointmentUseCase',
-      useFactory: (appointmentService: IAppointmentService, statusService: IStatusService) =>
+      useFactory: (
+        appointmentService: IAppointmentService,
+        statusService: IStatusService,
+      ) =>
         new UpdateStatusAppointmentUseCase(appointmentService, statusService),
       inject: ['AppointmentService', 'StatusService'],
     },

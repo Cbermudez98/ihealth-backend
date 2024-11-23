@@ -25,7 +25,7 @@ export class Appointment implements IAppointment {
   @Column()
   description: string;
 
-  @Column({ type: "datetime" })
+  @Column({ type: 'datetime' })
   date: Date;
 
   @ManyToOne(() => User, (user) => user.appointments)

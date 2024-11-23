@@ -4,12 +4,13 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Schedule } from '../entity/Schedule.entity';
 import { IScheduleService } from '../../domain/service/ISchedule.service';
 import { ISchedule, IScheduleCreate } from '../../domain/interfaces/ISchedule';
 import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
 import { Appointment } from 'src/lib/appointment/infrastructure/entity/appointment.entity';
+import { DateUtil } from 'src/lib/common/domain/utils/date';
 
 @Injectable()
 export class ScheduleService implements IScheduleService {
@@ -20,11 +21,13 @@ export class ScheduleService implements IScheduleService {
     private readonly appointmentRepository: Repository<Appointment>,
   ) {}
   async get(day: string): Promise<ISchedule[]> {
-    return await this.scheduleRepository.find({
-      where: {
-        day,
-      },
-    });
+    if (DateUtil.getHour())
+      return await this.scheduleRepository.find({
+        where: {
+          day,
+          start_time: MoreThan('10:00:00'),
+        },
+      });
   }
 
   async create(schedule: IScheduleCreate): Promise<ISchedule> {
@@ -66,7 +69,6 @@ export class ScheduleService implements IScheduleService {
           },
         },
       });
-      console.log('🚀  ~ ScheduleService ~ appointment:', appointment);
       return Boolean(appointment);
     } catch (error) {
       throw new RequestTimeoutException('Error getting schedule');

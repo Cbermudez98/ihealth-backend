@@ -11,6 +11,7 @@ import { IScheduleService } from 'src/lib/schedule/domain/service/ISchedule.serv
 import { IAppointmentService } from '../../domain/services/IAppointment.service';
 import { FoundError } from 'src/lib/common/domain/errors/FoundError';
 import { DateUtil } from 'src/lib/common/domain/utils/date';
+import { BadRequestError } from 'src/lib/common/domain/errors/BadRequestError';
 
 export class CreateAppointmentUseCase {
   constructor(
@@ -23,6 +24,9 @@ export class CreateAppointmentUseCase {
   ) {}
   async run(createAppointmentDto: IAppointmentCreate) {
     try {
+      if (!DateUtil.isDateTodayOrFuture(createAppointmentDto.date)) {
+        throw new BadRequestError('The date is invalid');
+      }
       const hasAnAppointment =
         await this.appointmentService.getActiveAppointmentUser(
           createAppointmentDto.user,
@@ -30,7 +34,7 @@ export class CreateAppointmentUseCase {
       if (hasAnAppointment) {
         throw new FoundError('User has a current appointment');
       }
-      const date = new Date(new Date().setHours(0, 0, 0, 0));
+      const date = new Date(createAppointmentDto.date.setHours(0, 0, 0, 0));
       createAppointmentDto.date = date;
 
       const scheduleTook = await this.scheduleService.scheduleHasBeenTaken(
@@ -69,6 +73,7 @@ export class CreateAppointmentUseCase {
       await this.appointmentService.create(appointment);
       return { msg: 'Created with success' };
     } catch (error) {
+      console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ error:', error);
       throw error;
     }
   }
