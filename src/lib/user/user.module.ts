@@ -19,6 +19,7 @@ import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 import { UpdateUserUseCase } from './application/updateUser/UpdateUser.useCase';
 import { GetUserUseCase } from './application/getUSer/GetUser.useCase';
 import { Menu } from '../menu/infrastructure/entity/menu.entity';
+import { GetPsycologistUseCase } from './application/getPsycologist/GetPsycologist.useCase';
 
 @Module({
   controllers: [UserController],
@@ -55,6 +56,12 @@ import { Menu } from '../menu/infrastructure/entity/menu.entity';
       provide: 'GetUserUseCase',
       useFactory: (userService: IUserService) =>
         new GetUserUseCase(userService),
+      inject: ['UserService'],
+    },
+    {
+      provide: 'GetPsycologistUseCase',
+      useFactory: (userService: IUserService) =>
+        new GetPsycologistUseCase(userService),
       inject: ['UserService'],
     },
     CareerService,

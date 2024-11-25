@@ -23,6 +23,7 @@ import { GetUserUseCase } from '../../application/getUSer/GetUser.useCase';
 import { Request } from 'express';
 import { KEYS } from 'src/common/constants/keys';
 import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
+import { GetPsycologistUseCase } from '../../application/getPsycologist/GetPsycologist.useCase';
 
 @Controller('user')
 export class UserController {
@@ -33,6 +34,8 @@ export class UserController {
     private readonly updateUserUseCase: UpdateUserUseCase,
     @Inject('GetUserUseCase')
     private readonly getUserUseCase: GetUserUseCase,
+    @Inject('GetPsycologistUseCase')
+    private readonly getPsycologistUseCase: GetPsycologistUseCase,
   ) {}
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -43,6 +46,18 @@ export class UserController {
     return ResponseAdapter.set(
       HttpStatus.OK,
       await this.getUserUseCase.run(auth.id),
+      HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
+      true,
+    );
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
+  @Get('psychologist')
+  public async getPsycologist() {
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      await this.getPsycologistUseCase.run(),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );
