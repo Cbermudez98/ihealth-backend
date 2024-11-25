@@ -11,6 +11,8 @@ import { IMenuService } from './domain/service/IMenu.service';
 import { RoleService } from '../role/infrastructure/service/role.service';
 import { GetMenuByIDCaseUse } from './application/getMenuByIDCaseUse/GetMenuByID.useCase';
 import { DeleteMenuUseCase } from './application/deleteMenuCaseUse/DeleteMenu.useCase';
+import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
+import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 
 @Module({
   controllers: [MenuController],
@@ -54,6 +56,8 @@ import { DeleteMenuUseCase } from './application/deleteMenuCaseUse/DeleteMenu.us
         new DeleteMenuUseCase(menuService),
       inject: ['MenuService'],
     },
+    JwtAuthGuard,
+    JwtProvider,
   ],
 })
 export class MenuModule {}

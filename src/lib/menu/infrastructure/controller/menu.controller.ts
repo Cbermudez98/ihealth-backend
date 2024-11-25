@@ -12,9 +12,9 @@ import {
   Get,
   Req,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { GetMenuUseCase } from '../../application/getMenuCaseUse/GetMenu.useCase';
-import * as jwt from 'jsonwebtoken';
 import { MenuDto } from '../dtos/menu.dto';
 import { AddItemUseCase } from '../../application/addItemCaseUse/AddItem.useCase';
 import { UpdateMenuUseCase } from '../../application/updateCaseUse/UpdateMenu.useCase';
@@ -22,6 +22,12 @@ import { UpdateMenuUseCase } from '../../application/updateCaseUse/UpdateMenu.us
 import { IMenuUpdate } from '../../domain/interfaces/IMenu';
 import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
 import { DeleteMenuUseCase } from '../../application/deleteMenuCaseUse/DeleteMenu.useCase';
+import { JwtAuthGuard } from 'src/lib/auth/infrastructure/guard/jwt/jwt-auth.guard';
+import { RoleGuard } from 'src/lib/auth/infrastructure/guard/role/role.guard';
+import { ROLES } from 'src/common/constants/roles.enum';
+import { Roles } from 'src/lib/role/infrastructure/decorator/role.decorator';
+import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
+import { KEYS } from 'src/common/constants/keys';
 
 @Controller('menu')
 export class MenuController {
@@ -36,29 +42,14 @@ export class MenuController {
     private readonly deleteMenuUseCase: DeleteMenuUseCase,
   ) {}
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
   @Post()
   public async createMenu(
     @Body() menuDto: MenuDto,
     @Headers('authorization') authHeader: string,
   ) {
     try {
-      const token = authHeader.split(' ')[1];
-
-      console.log(token);
-      let decodedToken: any;
-      try {
-        decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        console.log(decodedToken);
-      } catch (error) {
-        throw new UnauthorizedException('Invalid or expired token');
-      }
-
-      if (decodedToken.role !== 'admin') {
-        throw new ForbiddenException(
-          'You do not have permission to perform this action',
-        );
-      }
-
       const newMenu = await this.addMenuItemUseCase.run(menuDto);
 
       return ResponseAdapter.set(
@@ -78,32 +69,14 @@ export class MenuController {
     }
   }
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
   @Patch(':menuId')
   public async updateMenu(
     @Param('menuId') menuId: number,
     @Body() menuDto: IMenuUpdate,
-    @Headers('authorization') authHeader: string,
     @Req() req: Request,
   ) {
-    if (!authHeader) {
-      throw new UnauthorizedException('Authorization header is missing');
-    }
-
-    const token = authHeader.split(' ')[1];
-    let decodedToken: any;
-
-    try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    } catch (error) {
-      throw new UnauthorizedException('Invalid or expired token');
-    }
-
-    if (decodedToken.role !== 'admin') {
-      throw new ForbiddenException(
-        'You do not have permission to perform this action',
-      );
-    }
-
     try {
       const updatedMenu = await this.updateMenuUseCase.run(menuId, menuDto);
 
@@ -124,33 +97,13 @@ export class MenuController {
     }
   }
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
   @Get()
   public async getMenus(@Req() request: Request) {
-    const authHeader = request.headers['authorization'];
-    if (!authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException(
-        'Authorization header missing or invalid',
-      );
-    }
-
-    const token = authHeader.split(' ')[1];
-    let decodedToken: any;
-
     try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    } catch (error) {
-      console.error('Invalid token:', error.message);
-      throw new UnauthorizedException('Invalid or expired token');
-    }
-
-    const role = decodedToken.role;
-
-    if (!role) {
-      throw new UnauthorizedException('Role not found in token');
-    }
-
-    try {
-      const menus = await this.getMenuUseCase.run(role);
+      const jwt_payload: ITokenPayload = request[KEYS.USER];
+      const menus = await this.getMenuUseCase.run(jwt_payload.role);
 
       return ResponseAdapter.set(
         HttpStatus.OK,
@@ -169,32 +122,13 @@ export class MenuController {
     }
   }
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
   @Delete(':menuId')
   public async deleteMenu(
     @Param('menuId') menuId: number,
     @Req() request: Request,
   ) {
-    const authHeader = request.headers['authorization'];
-
-    if (!authHeader) {
-      throw new UnauthorizedException('Authorization header missing');
-    }
-
-    const token = authHeader.split(' ')[1];
-    let decodedToken: any;
-
-    try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    } catch (error) {
-      throw new UnauthorizedException('Invalid or expired token');
-    }
-
-    if (decodedToken.role !== 'admin') {
-      throw new ForbiddenException(
-        'You do not have permission to perform this action',
-      );
-    }
-
     try {
       await this.deleteMenuUseCase.run(menuId);
       return ResponseAdapter.set(
