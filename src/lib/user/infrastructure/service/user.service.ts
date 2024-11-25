@@ -12,6 +12,7 @@ import { CareerService } from '../../../career/infrastructure/service/career.ser
 import { Career } from '../../../career/infrastructure/entity/career.entity';
 import { IRole } from '../../../role/domain/interfaces/IRole';
 import { RoleService } from '../../../role/infrastructure/service/role.service';
+import { ROLES } from 'src/common/constants/roles.enum';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -129,5 +130,26 @@ export class UserService implements IUserService {
       throw new RequestTimeoutException('Error updating user');
     }
     return true;
+  }
+
+  async getPsychologist(): Promise<IUser[]> {
+    try {
+      return await this.userRepository.find({
+        where: {
+          role: {
+            name: ROLES.COORDINATOR,
+          },
+        },
+        relations: {
+          auth: false,
+          appointments: false,
+          direction: false,
+          student_detail: false,
+          role: false,
+        },
+      });
+    } catch (error) {
+      throw new RequestTimeoutException('Could not get psycologist');
+    }
   }
 }
