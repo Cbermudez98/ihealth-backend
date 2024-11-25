@@ -136,7 +136,7 @@ export class CreateAppointmentUseCase {
         },
       };
       console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ mail:', mail);
-      // await this.mailService.sendEmail(mail);
+      await this.mailService.sendEmail(mail);
       return { msg: 'Created with success' };
     } catch (error) {
       console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ error:', error);
