@@ -35,6 +35,7 @@ import { IcsProvider } from 'src/shared/providers/ics.provider/ics.provider';
 import { IMailerService } from '../common/domain/services/IMailer.service';
 import { IICsService } from '../common/domain/services/IICs.service';
 import { MailModule } from 'src/shared/mail/mail.module';
+import { GetAllAppointmentsUSeCase } from './application/GetAllAppointmentsUseCase/getAllAppointments.useCase';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -140,6 +141,12 @@ import { MailModule } from 'src/shared/mail/mail.module';
       ) =>
         new UpdateStatusAppointmentUseCase(appointmentService, statusService),
       inject: ['AppointmentService', 'StatusService'],
+    },
+    {
+      provide: 'GetAllAppointmentsUSeCase',
+      useFactory: (appointmentService: IAppointmentService) =>
+        new GetAllAppointmentsUSeCase(appointmentService),
+      inject: ['AppointmentService'],
     },
     StatusSeeder,
     StatusSeeder,
