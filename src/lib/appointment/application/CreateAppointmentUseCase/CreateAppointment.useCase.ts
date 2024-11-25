@@ -98,8 +98,8 @@ export class CreateAppointmentUseCase {
         endDate,
       });
       const ics: IICs = {
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
+        startDate: startDate.toString(),
+        endDate: endDate.toString(),
         summary: MAIL.SUMMARY,
         description: MAIL.DESCRIPTION,
         location: MAIL.LOCATION,
