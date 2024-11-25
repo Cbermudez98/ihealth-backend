@@ -88,15 +88,18 @@ export class CreateAppointmentUseCase {
           ' ' +
           appointment.schedule.start_time,
       );
-      startDate.getTime() + startDate.getTimezoneOffset() * 60000;
-      startDate.setHours(startDate.getHours() + 5);
+
       let endDate = new Date(
         appointment.date.toISOString().split('T')[0] +
           ' ' +
           appointment.schedule.end_time,
       );
-      endDate.getTime() + startDate.getTimezoneOffset() * 60000;
-      endDate.setHours(endDate.getHours() + 5);
+      if (process.env.NODE_ENV !== 'dev') {
+        startDate.getTime() + startDate.getTimezoneOffset() * 60000;
+        startDate.setHours(startDate.getHours() + 5);
+        endDate.getTime() + startDate.getTimezoneOffset() * 60000;
+        endDate.setHours(endDate.getHours() + 5);
+      }
 
       await this.appointmentService.create(appointment);
       console.log({
