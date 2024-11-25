@@ -155,4 +155,12 @@ export class AppointmentService implements IAppointmentService {
 
     return appointments;
   }
+
+  async getAll(): Promise<IAppointment[]> {
+    try {
+      return this.appointmentRepository.find();
+    } catch (error) {
+      throw new NotFoundError('Appointment not found');
+    }
+  }
 }
