@@ -23,7 +23,9 @@ export class MailService implements IMailerService {
         to: mail.to,
         subject: mail.subject,
         template: template,
-        context: {},
+        context: mail.context,
+        attachments: mail.attachments,
+        callEvent: mail.callEvent,
       });
       console.log('Added mail to queue with success', mail);
       return true;
@@ -34,25 +36,43 @@ export class MailService implements IMailerService {
   }
 
   async processEmail(job: Job) {
-    const { to, subject, template, context } = job.data;
-    console.log({
-      to,
-      subject,
-      template,
-      context,
-    });
+    try {
+      const { to, subject, template, context, attachments, callEvent } =
+        job.data;
+      console.log({
+        to,
+        subject,
+        template,
+        context,
+        attachments,
+        callEvent,
+      });
 
-    await this.mailerService.sendMail({
-      to,
-      subject,
-      template,
-      context,
-    });
+      await this.mailerService.sendMail({
+        to,
+        subject,
+        template,
+        context,
+        attachments,
+        icalEvent: callEvent
+          ? {
+              filename: callEvent?.fileName,
+              method: 'request',
+              content: callEvent.content,
+            }
+          : {},
+      });
+
+      console.log('Sended mail');
+    } catch (error) {
+      console.log('🚀  ~ MailService ~ processEmail ~ error:', error);
+    }
   }
 
   private getTemplate(template: TEMPLATE_MAIL): string {
     return {
       [TEMPLATE_MAIL.WELCOME]: './welcome',
+      [TEMPLATE_MAIL.SCHEDULED_APPOINTMENT]: './appointment',
       '': '',
     }[template];
   }
