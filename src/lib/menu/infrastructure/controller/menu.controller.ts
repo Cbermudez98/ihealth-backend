@@ -49,24 +49,14 @@ export class MenuController {
     @Body() menuDto: MenuDto,
     @Headers('authorization') authHeader: string,
   ) {
-    try {
-      const newMenu = await this.addMenuItemUseCase.run(menuDto);
+    const newMenu = await this.addMenuItemUseCase.run(menuDto);
 
-      return ResponseAdapter.set(
-        HttpStatus.CREATED,
-        newMenu,
-        'Menu created successfully',
-        true,
-      );
-    } catch (error) {
-      console.error('Error in MenuController: ', error);
-      return ResponseAdapter.set(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        null,
-        'Something went wrong on our end.',
-        false,
-      );
-    }
+    return ResponseAdapter.set(
+      HttpStatus.CREATED,
+      newMenu,
+      'Menu created successfully',
+      true,
+    );
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -77,49 +67,29 @@ export class MenuController {
     @Body() menuDto: IMenuUpdate,
     @Req() req: Request,
   ) {
-    try {
-      const updatedMenu = await this.updateMenuUseCase.run(menuId, menuDto);
+    const updatedMenu = await this.updateMenuUseCase.run(menuId, menuDto);
 
-      return ResponseAdapter.set(
-        HttpStatus.OK,
-        updatedMenu,
-        'Menu updated successfully',
-        true,
-      );
-    } catch (error) {
-      console.error('Error updating menu: ', error);
-      return ResponseAdapter.set(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        null,
-        'Something went wrong during the update process',
-        false,
-      );
-    }
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      updatedMenu,
+      'Menu updated successfully',
+      true,
+    );
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(ROLES.ADMIN)
+  @Roles(ROLES.ADMIN, ROLES.COORDINATOR, ROLES.USER)
   @Get()
   public async getMenus(@Req() request: Request) {
-    try {
-      const jwt_payload: ITokenPayload = request[KEYS.USER];
-      const menus = await this.getMenuUseCase.run(jwt_payload.role);
+    const jwt_payload: ITokenPayload = request[KEYS.USER];
+    const menus = await this.getMenuUseCase.run(jwt_payload.role);
 
-      return ResponseAdapter.set(
-        HttpStatus.OK,
-        menus,
-        'Menus retrieved successfully',
-        true,
-      );
-    } catch (error) {
-      console.error('Error in MenuController:', error);
-      return ResponseAdapter.set(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        null,
-        'Error retrieving menus',
-        false,
-      );
-    }
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      menus,
+      'Menus retrieved successfully',
+      true,
+    );
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
