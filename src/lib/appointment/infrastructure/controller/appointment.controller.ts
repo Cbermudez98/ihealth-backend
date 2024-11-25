@@ -57,11 +57,10 @@ export class AppointmentController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.ADMIN)
   @Get('history/all')
-  public async getAllAppointments(@Req() req: Request) {
-    const token: ITokenPayload = req[KEYS.USER] as ITokenPayload;
+  public async getAllAppointments() {
     return ResponseAdapter.set(
       HttpStatus.OK,
-      await this.currentAppointmentUseCase.run(token.id),
+      await this.getAllAppointmentsUSeCase.run(),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );
