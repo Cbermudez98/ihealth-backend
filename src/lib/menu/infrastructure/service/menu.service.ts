@@ -55,7 +55,6 @@ export class MenuService implements IMenuService {
   async getMenus(role: string): Promise<Menu[]> {
     return this.menuRepository.find({
       where: { roles: { name: role } },
-      relations: ['roles'],
     });
   }
 
