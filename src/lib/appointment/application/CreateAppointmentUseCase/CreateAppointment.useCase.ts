@@ -19,6 +19,7 @@ import {
 } from 'src/lib/common/domain/services/IMailer.service';
 import { IICs, IICsService } from 'src/lib/common/domain/services/IICs.service';
 import { MAIL } from 'src/common/constants/keys';
+import { DateTime } from 'luxon';
 
 export class CreateAppointmentUseCase {
   constructor(
@@ -100,6 +101,14 @@ export class CreateAppointmentUseCase {
         startDate,
         endDate,
       });
+      let localTime = DateTime.fromISO(startDate.toISOString(), {
+        zone: 'America/Bogota',
+      });
+      console.log(localTime);
+      let serverTime = localTime.setZone('utc');
+      console.log('Local Time: ', localTime.toString()); // Local time
+
+      console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
       const ics: IICs = {
         startDate: startDate.toString(),
         endDate: endDate.toString(),
@@ -127,7 +136,7 @@ export class CreateAppointmentUseCase {
         },
       };
       console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ mail:', mail);
-      await this.mailService.sendEmail(mail);
+      // await this.mailService.sendEmail(mail);
       return { msg: 'Created with success' };
     } catch (error) {
       console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ error:', error);
