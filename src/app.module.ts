@@ -8,6 +8,7 @@ import { AuthModule } from './lib/auth/auth.module';
 import { RoleModule } from './lib/role/role.module';
 import { ReasonModule } from './lib/reason/reason.module';
 import { CauseModule } from './lib/cause/cause.module';
+import { MenuModule } from './lib/menu/menu.module';
 import { AppointmentModule } from './lib/appointment/appointment.module';
 import { ScheduleModule } from './lib/schedule/schedule.module';
 
@@ -22,6 +23,7 @@ import { ScheduleModule } from './lib/schedule/schedule.module';
     RoleModule,
     ReasonModule,
     CauseModule,
+    MenuModule,
     AppointmentModule,
     ScheduleModule,
   ],

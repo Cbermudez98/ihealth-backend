@@ -12,6 +12,13 @@ import { IAppointmentService } from '../../domain/services/IAppointment.service'
 import { FoundError } from 'src/lib/common/domain/errors/FoundError';
 import { DateUtil } from 'src/lib/common/domain/utils/date';
 import { BadRequestError } from 'src/lib/common/domain/errors/BadRequestError';
+import {
+  IMail,
+  IMailerService,
+  TEMPLATE_MAIL,
+} from 'src/lib/common/domain/services/IMailer.service';
+import { IICs, IICsService } from 'src/lib/common/domain/services/IICs.service';
+import { MAIL } from 'src/common/constants/keys';
 
 export class CreateAppointmentUseCase {
   constructor(
@@ -21,6 +28,8 @@ export class CreateAppointmentUseCase {
     private readonly reasonService: IReasonService,
     private readonly scheduleService: IScheduleService,
     private readonly appointmentService: IAppointmentService,
+    private readonly mailService: IMailerService,
+    private readonly icsService: IICsService,
   ) {}
   async run(createAppointmentDto: IAppointmentCreate) {
     try {
@@ -35,6 +44,8 @@ export class CreateAppointmentUseCase {
         throw new FoundError('User has a current appointment');
       }
       const date = new Date(createAppointmentDto.date.setHours(0, 0, 0, 0));
+      date.setDate(date.getDate() + 1);
+      console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ date:', date);
       createAppointmentDto.date = date;
 
       const scheduleTook = await this.scheduleService.scheduleHasBeenTaken(
@@ -70,7 +81,50 @@ export class CreateAppointmentUseCase {
         '🚀  ~ CreateAppointmentUseCase ~ run ~ appointment:',
         appointment,
       );
+
+      let startDate = new Date(
+        appointment.date.toISOString().split('T')[0] +
+          ' ' +
+          appointment.schedule.start_time,
+      );
+      let endDate = new Date(
+        appointment.date.toISOString().split('T')[0] +
+          ' ' +
+          appointment.schedule.end_time,
+      );
       await this.appointmentService.create(appointment);
+      console.log({
+        startDate,
+        endDate,
+      });
+      const ics: IICs = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        summary: MAIL.SUMMARY,
+        description: MAIL.DESCRIPTION,
+        location: MAIL.LOCATION,
+        url: MAIL.URL,
+        mailTo: appointment.user.auth.email,
+      };
+      const icsFile = this.icsService.generate(ics);
+      console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ ics:', ics);
+      const mail: IMail = {
+        to: appointment.user.auth.email,
+        subject: 'Confirmacion de cita IHealth',
+        template: TEMPLATE_MAIL.SCHEDULED_APPOINTMENT,
+        callEvent: {
+          fileName: 'appointment.ics',
+          content: icsFile,
+          encoding: 'utf-8',
+        },
+        context: {
+          doctorName: `${appointment.psychologist.name} ${appointment.psychologist.last_name}`,
+          appointmentDate: startDate.toDateString(),
+          appointmentTime: `${appointment.schedule.start_time} - ${appointment.schedule.end_time}`,
+        },
+      };
+      console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ mail:', mail);
+      await this.mailService.sendEmail(mail);
       return { msg: 'Created with success' };
     } catch (error) {
       console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ error:', error);

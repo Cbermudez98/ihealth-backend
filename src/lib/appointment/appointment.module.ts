@@ -30,6 +30,11 @@ import { Schedule } from '../schedule/infrastructure/entity/Schedule.entity';
 import { CurrentAppointmentUseCase } from './application/CurrentAppointmentUseCase/getCurrentAppointment.useCase';
 import { GetHistoryAppointmentUseCase } from './application/GetHistoryAppopointmentUseCase/getHistoryAppointment.useCase';
 import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppointment/updateStatusAppointment.useCase';
+import { MailService } from 'src/shared/mail/mail.service';
+import { IcsProvider } from 'src/shared/providers/ics.provider/ics.provider';
+import { IMailerService } from '../common/domain/services/IMailer.service';
+import { IICsService } from '../common/domain/services/IICs.service';
+import { MailModule } from 'src/shared/mail/mail.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -42,6 +47,7 @@ import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppoin
       Reason,
       Schedule,
     ]),
+    MailModule,
   ],
   controllers: [AppointmentController],
   providers: [
@@ -74,6 +80,14 @@ import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppoin
       useClass: AppointmentService,
     },
     {
+      provide: 'MailService',
+      useClass: MailService,
+    },
+    {
+      provide: 'IcsService',
+      useClass: IcsProvider,
+    },
+    {
       provide: 'CreateAppointmentUseCase',
       useFactory: (
         userService: IUserService,
@@ -82,6 +96,8 @@ import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppoin
         reasonService: IReasonService,
         scheduleService: IScheduleService,
         appointmentService: IAppointmentService,
+        mailService: IMailerService,
+        icsService: IICsService,
       ) =>
         new CreateAppointmentUseCase(
           userService,
@@ -90,6 +106,8 @@ import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppoin
           reasonService,
           scheduleService,
           appointmentService,
+          mailService,
+          icsService,
         ),
       inject: [
         'UserService',
@@ -98,6 +116,8 @@ import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppoin
         'ReasonService',
         'ScheduleService',
         'AppointmentService',
+        'MailService',
+        'IcsService',
       ],
     },
     {

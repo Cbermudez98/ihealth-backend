@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Confirmation</title>
+  <style>
+    .correo {
+      width: 660px;
+      margin: auto;
+      margin-top: 20px;
+      border-radius: 20px;
+      padding: 10px;
+    }
+
+    .text-wrapper {
+      border-top: #000000 solid 1px;
+      padding-top: 25px;
+      left: 183px;
+      font-family: "DM Sans-Bold", Helvetica;
+      font-weight: 700;
+      color: #000000;
+      font-size: 26px;
+      letter-spacing: 0;
+      line-height: normal;
+      text-align: center;
+    }
+
+    .tu-autenticaci-n-se {
+      width: 708px;
+      top: 121px;
+      left: 27px;
+      font-family: "DM Sans-Regular", Helvetica;
+      font-weight: 400;
+      color: transparent;
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+
+    .span {
+      color: #202020;
+    }
+
+    .text-wrapper-2 {
+      color: #000000;
+    }
+
+    .div {
+      top: 73px;
+      left: 27px;
+      font-family: "DM Sans-SemiBold", Helvetica;
+      font-weight: 600;
+      color: #000000;
+      font-size: 18px;
+      letter-spacing: 0;
+      line-height: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="correo">
+    <div class="overlap-group">
+      <div style="display: flex; justify-content: center; align-items: center; height: 50%;">
+        <svg version="1.1" viewBox="0 0 2048 444" width="200" height="100" xmlns="http://www.w3.org/2000/svg">
+          <path transform="translate(162,9)" d="m0 0h19l22 3 21 6 16 7 16 9 13 10 10 9 8 8 2 1v2l5-3 6-7 11-9 8-7 11-7 12-7 21-8 21-5 17-2h14l20 2 21 5 20 8 16 9 15 11 13 12 9 10 11 16 10 19 7 21 2 10v60l-2 10-7 20-8 16-10 15-11 13-129 129-14 11-15 9-15 7-18 6-20 4-11 1h-18l-17-2-21-5-20-8-16-9-12-9-15-13-16-17-15-15-3-2v-2l-3-1v-2h-2v-2l-4-2-2-4-4-2-1-3-3-1v-2l-3-1v-2h-2v-2l-3-1v-2l-3-1v-2l-3-1v-2h-2v-2l-4-2-2-4-4-2-1-3-4-2-2-4h-2v-2l-4-2-26-26-7-8-13-17-12-23-7-21-3-15-1-8v-32l5-25 5-15 9-19 8-12 11-14 15-15 15-11 14-8 15-7 19-6 17-3z" fill="#43CAF8"/>
+          <path transform="translate(784,61)" d="m0 0h68l2 1 1 110v8l114 1v-72l1-48h68l3 1v301l-2 1h-69l-1-12v-105l1-2h-116l1 4v113l-1 2h-70l-1-4v-298z" fill="#000001"/>
+        </svg>
+      </div>
+
+      <div class="text-wrapper">¡Tu cita ha sido programada con éxito!</div>
+      <p class="div">Detalles de tu cita:</p>
+      <p>
+        <strong>Doctor:</strong> {{doctorName}} <br>
+        <strong>Fecha:</strong> {{appointmentDate}} <br>
+        <strong>Hora:</strong> {{appointmentTime}} <br>
+      </p>
+      <p class="tu-autenticaci-n-se">
+        <span class="span">
+          Tu cita ha sido confirmada con éxito. Por favor, revisa los detalles de tu cita con el doctor {{doctorName}}. 
+          Si tienes alguna pregunta, no dudes en ponerte en contacto con nosotros. 
+        </span>
+        <span class="text-wrapper-2">
+          ¡Te esperamos en la cita!
+        </span>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

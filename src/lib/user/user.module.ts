@@ -18,10 +18,11 @@ import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
 import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 import { UpdateUserUseCase } from './application/updateUser/UpdateUser.useCase';
 import { GetUserUseCase } from './application/getUSer/GetUser.useCase';
+import { Menu } from '../menu/infrastructure/entity/menu.entity';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([User, Career, Role]), MailModule],
+  imports: [TypeOrmModule.forFeature([User, Career, Role, Menu]), MailModule],
   providers: [
     {
       provide: 'UserService',

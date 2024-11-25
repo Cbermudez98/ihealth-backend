@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IStudentDetail } from '../../domain/interfaces/IStudentDetail';
 import { ICareer } from '../../../career/domain/interfaces/ICareer';
 import { Career } from '../../../career/infrastructure/entity/career.entity';
