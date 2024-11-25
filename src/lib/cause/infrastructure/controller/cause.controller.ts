@@ -65,7 +65,7 @@ export class CauseController {
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(ROLES.ADMIN, ROLES.COORDINATOR, ROLES.COORDINATOR)
+  @Roles(ROLES.ADMIN, ROLES.COORDINATOR, ROLES.USER)
   @Get('/:id')
   async getCause(@Param('id', ParseIntPipe) id: number) {
     return ResponseAdapter.set(

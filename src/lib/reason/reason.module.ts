@@ -1,7 +1,7 @@
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { ReasonController } from './infrastructure/controller/reason.controller';
 import { ReasonService } from './infrastructure/service/reason.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { Reason } from './infrastructure/entity/reason.entity';
 import { IReasonService } from './domain/service/IReason.service';
 import { CreateReasonUseCase } from './application/createReason/CreateReason.useCase';
@@ -10,11 +10,13 @@ import { GetReasonsUseCase } from './application/getReasons/GetReasons.useCase';
 import { UpdateReasonUseCase } from './application/updateReason/UpdateReason.useCase';
 import { RoleService } from '../role/infrastructure/service/role.service';
 import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
-import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
+import { JwtProvider } from './../../shared/providers/jwt.provider/jwt.provider';
 import { Role } from '../role/infrastructure/entity/role.entity';
+import { ReasonAndCauseSeeder } from './../../seeds/reasonAndCauses.seeder';
+import { Cause } from '../cause/infrastructure/entity/cause.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Reason, Role])],
+  imports: [TypeOrmModule.forFeature([Reason, Role, Cause])],
   controllers: [ReasonController],
   providers: [
     {
@@ -48,6 +50,7 @@ import { Role } from '../role/infrastructure/entity/role.entity';
     RoleService,
     JwtAuthGuard,
     JwtProvider,
+    ReasonAndCauseSeeder,
   ],
 })
 export class ReasonModule {}

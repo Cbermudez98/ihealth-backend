@@ -78,4 +78,14 @@ export class CauseService implements ICauseService {
       },
     });
   }
+
+  async getSingle(id: ICause['id']): Promise<ICause> {
+    try {
+      return await this.causeRepository.findOneByOrFail({
+        id,
+      });
+    } catch (error) {
+      throw new NotFoundError('Cause not found');
+    }
+  }
 }
