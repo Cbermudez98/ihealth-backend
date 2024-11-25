@@ -87,11 +87,14 @@ export class CreateAppointmentUseCase {
           ' ' +
           appointment.schedule.start_time,
       );
+      startDate.getTime() + startDate.getTimezoneOffset() * 60000;
       let endDate = new Date(
         appointment.date.toISOString().split('T')[0] +
           ' ' +
           appointment.schedule.end_time,
       );
+      endDate.getTime() + startDate.getTimezoneOffset() * 60000;
+
       await this.appointmentService.create(appointment);
       console.log({
         startDate,
