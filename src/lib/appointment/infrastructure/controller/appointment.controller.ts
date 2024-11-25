@@ -24,6 +24,7 @@ import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
 import { KEYS } from 'src/common/constants/keys';
 import { GetHistoryAppointmentUseCase } from '../../application/GetHistoryAppopointmentUseCase/getHistoryAppointment.useCase';
 import { UpdateStatusAppointmentUseCase } from '../../application/updateStatusAppointment/updateStatusAppointment.useCase';
+import { GetAllAppointmentsUSeCase } from '../../application/GetAllAppointmentsUseCase/getAllAppointments.useCase';
 
 @Controller('appointment')
 export class AppointmentController {
@@ -36,12 +37,27 @@ export class AppointmentController {
     private readonly getHistoryAppointmentUseCase: GetHistoryAppointmentUseCase,
     @Inject('UpdateStatusAppointmentUseCase')
     private readonly updateStatusAppointmentUseCase: UpdateStatusAppointmentUseCase,
+    @Inject('GetAllAppointmentsUSeCase')
+    private getAllAppointmentsUSeCase: GetAllAppointmentsUSeCase,
   ) {}
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.USER)
   @Get()
   public async currentAppointment(@Req() req: Request) {
+    const token: ITokenPayload = req[KEYS.USER] as ITokenPayload;
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      await this.currentAppointmentUseCase.run(token.id),
+      HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
+      true,
+    );
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
+  @Get('history/all')
+  public async getAllAppointments(@Req() req: Request) {
     const token: ITokenPayload = req[KEYS.USER] as ITokenPayload;
     return ResponseAdapter.set(
       HttpStatus.OK,

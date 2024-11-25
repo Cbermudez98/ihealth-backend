@@ -14,4 +14,5 @@ export interface IAppointmentService {
   getByUserId: (id: IUser['id']) => Promise<IAppointment>;
   getHistory: (id: IUser['id']) => Promise<IAppointment[]>;
   getAppointmentsByDate: (schedule: IFilterSchedule) => Promise<IAppointment[]>;
+  getAll: () => Promise<IAppointment[]>;
 }
