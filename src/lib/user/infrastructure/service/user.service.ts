@@ -6,13 +6,14 @@ import {
 import { IUserService } from '../../domain/service/IUser.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { IUser, IUserCreate, IUserUpdate } from '../../domain/interfaces/IUser';
 import { CareerService } from '../../../career/infrastructure/service/career.service';
 import { Career } from '../../../career/infrastructure/entity/career.entity';
 import { IRole } from '../../../role/domain/interfaces/IRole';
 import { RoleService } from '../../../role/infrastructure/service/role.service';
 import { ROLES } from 'src/common/constants/roles.enum';
+import { name } from 'ejs';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -150,6 +151,27 @@ export class UserService implements IUserService {
       });
     } catch (error) {
       throw new RequestTimeoutException('Could not get psycologist');
+    }
+  }
+
+  async getAll(): Promise<IUser[]> {
+    try {
+      return await this.userRepository.find({
+        where: {
+          role: {
+            name: In([ROLES.COORDINATOR, ROLES.ADMIN, ROLES.USER]),
+          },
+        },
+        relations: {
+          auth: false,
+          appointments: false,
+          direction: false,
+          student_detail: false,
+          role: false,
+        },
+      });
+    } catch (error) {
+      throw new RequestTimeoutException('Could not get all Users');
     }
   }
 }

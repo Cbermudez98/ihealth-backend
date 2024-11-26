@@ -20,6 +20,7 @@ import { UpdateUserUseCase } from './application/updateUser/UpdateUser.useCase';
 import { GetUserUseCase } from './application/getUSer/GetUser.useCase';
 import { Menu } from '../menu/infrastructure/entity/menu.entity';
 import { GetPsycologistUseCase } from './application/getPsycologist/GetPsycologist.useCase';
+import { GetAllUsersUseCase } from './application/getAllUsers/GetAllUsers.useCase';
 
 @Module({
   controllers: [UserController],
@@ -62,6 +63,12 @@ import { GetPsycologistUseCase } from './application/getPsycologist/GetPsycologi
       provide: 'GetPsycologistUseCase',
       useFactory: (userService: IUserService) =>
         new GetPsycologistUseCase(userService),
+      inject: ['UserService'],
+    },
+    {
+      provide: 'GetAllUsersUseCase',
+      useFactory: (userService: IUserService) =>
+        new GetAllUsersUseCase(userService),
       inject: ['UserService'],
     },
     CareerService,
