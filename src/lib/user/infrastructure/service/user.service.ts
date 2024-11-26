@@ -146,7 +146,7 @@ export class UserService implements IUserService {
           appointments: false,
           direction: false,
           student_detail: false,
-          role: true,
+          role: false,
         },
       });
     } catch (error) {
@@ -167,7 +167,7 @@ export class UserService implements IUserService {
           appointments: false,
           direction: false,
           student_detail: false,
-          role: false,
+          role: true,
         },
       });
     } catch (error) {
