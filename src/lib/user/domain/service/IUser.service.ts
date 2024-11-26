@@ -5,4 +5,5 @@ export interface IUserService {
   get: (id: IUser['id']) => Promise<IUser>;
   update: (id: IUser['id'], userToUpdate: IUserUpdate) => Promise<boolean>;
   getPsychologist: () => Promise<IUser[]>;
+  getAll: () => Promise<IUser[]>;
 }
