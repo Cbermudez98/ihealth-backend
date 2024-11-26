@@ -176,6 +176,7 @@ export class AppointmentService implements IAppointmentService {
           user: {
             id: true,
             name: true,
+            last_name: true,
             code: true,
           },
           date: true,
