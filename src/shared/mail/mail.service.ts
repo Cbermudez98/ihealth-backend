@@ -23,9 +23,9 @@ export class MailService implements IMailerService {
         to: mail.to,
         subject: mail.subject,
         template: template,
-        context: mail.context,
-        attachments: mail.attachments,
-        callEvent: mail.callEvent,
+        context: mail.context ?? {},
+        attachments: mail.attachments ?? [],
+        callEvent: mail.callEvent ?? {},
       });
       console.log('Added mail to queue with success', mail);
       return true;
