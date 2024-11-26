@@ -38,7 +38,7 @@ export class AppointmentController {
     @Inject('UpdateStatusAppointmentUseCase')
     private readonly updateStatusAppointmentUseCase: UpdateStatusAppointmentUseCase,
     @Inject('GetAllAppointmentsUSeCase')
-    private getAllAppointmentsUSeCase: GetAllAppointmentsUSeCase,
+    private readonly getAllAppointmentsUSeCase: GetAllAppointmentsUSeCase,
   ) {}
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -56,8 +56,8 @@ export class AppointmentController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.ADMIN)
-  @Get('history/all')
-  public async getAllAppointments() {
+  @Get('/history/all')
+  public async getAll() {
     return ResponseAdapter.set(
       HttpStatus.OK,
       await this.getAllAppointmentsUSeCase.run(),
