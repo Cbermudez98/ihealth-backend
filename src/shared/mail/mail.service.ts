@@ -23,9 +23,9 @@ export class MailService implements IMailerService {
         to: mail.to,
         subject: mail.subject,
         template: template,
-        context: mail.context ?? {},
-        attachments: mail.attachments ?? [],
-        callEvent: mail.callEvent ?? {},
+        context: mail?.context,
+        attachments: mail?.attachments,
+        callEvent: mail?.callEvent,
       });
       console.log('Added mail to queue with success', mail);
       return true;
@@ -53,19 +53,19 @@ export class MailService implements IMailerService {
         subject,
         template,
         context,
-        attachments,
+        attachments: attachments,
         icalEvent: callEvent
           ? {
               filename: callEvent?.fileName,
               method: 'request',
-              content: callEvent.content,
+              content: callEvent?.content,
             }
-          : {},
+          : undefined,
       });
 
       console.log('Sended mail');
     } catch (error) {
-      console.log('🚀  ~ MailService ~ processEmail ~ error:', error);
+      console.log('🚀  ~ MailService ~ processEmail ~ error:', error.message);
     }
   }
 
