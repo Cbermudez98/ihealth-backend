@@ -21,13 +21,12 @@ export class ScheduleService implements IScheduleService {
     private readonly appointmentRepository: Repository<Appointment>,
   ) {}
   async get(day: string): Promise<ISchedule[]> {
-    if (DateUtil.getHour())
-      return await this.scheduleRepository.find({
-        where: {
-          day,
-          start_time: MoreThan('10:00:00'),
-        },
-      });
+    return await this.scheduleRepository.find({
+      where: {
+        day,
+        start_time: MoreThan('08:00:00'),
+      },
+    });
   }
 
   async create(schedule: IScheduleCreate): Promise<ISchedule> {
