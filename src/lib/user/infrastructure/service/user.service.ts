@@ -172,6 +172,7 @@ export class UserService implements IUserService {
           role: true,
         },
         select: {
+          id: true,
           name: true,
           last_name: true,
           code: true,

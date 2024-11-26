@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Appointment } from '../../entity/appointment.entity';
-import { Between, Or, Repository } from 'typeorm';
+import { Between, In, Or, Repository } from 'typeorm';
 import { IUser } from 'src/lib/user/domain/interfaces/IUser';
 import { IStatus, STATUS } from 'src/lib/appointment/domain/interfaces/IStatus';
 import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
@@ -158,7 +158,39 @@ export class AppointmentService implements IAppointmentService {
 
   async getAll(): Promise<IAppointment[]> {
     try {
-      return this.appointmentRepository.find();
+      const appointment = await this.appointmentRepository.find({
+        where: {
+          status: {
+            name: In([STATUS.PENDING, STATUS.ATTENDED, STATUS.CLOSE]),
+          },
+        },
+        relations: {
+          user: true,
+          schedule: true,
+          cause: false,
+          status: true,
+        },
+        select: {
+          id: true,
+          description: false,
+          user: {
+            id: true,
+            name: true,
+            code: true,
+          },
+          date: true,
+          schedule: {
+            id: true,
+            day: true,
+            start_time: true,
+          },
+          status: {
+            id: true,
+            name: true,
+          },
+        },
+      });
+      return appointment;
     } catch (error) {
       throw new NotFoundError('Appointment not found');
     }
