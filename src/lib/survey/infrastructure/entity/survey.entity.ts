@@ -46,4 +46,6 @@ export class Survey implements ISurvey {
   @OneToMany(() => AppointmentSurvey, (appointmentSurvey) => appointmentSurvey)
   @JoinColumn()
   appointmentSurvey: IAppointmentSurvey;
+
+  //completar relaciones
 }

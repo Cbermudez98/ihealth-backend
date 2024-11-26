@@ -7,6 +7,8 @@ import { CareerModule } from './lib/career/infrastructure/career.module';
 import { AuthModule } from './lib/auth/auth.module';
 import { RoleModule } from './lib/role/role.module';
 import { SurveyModule } from './lib/survey/survey.module';
+import { ServiceService } from './lib/survey/infrastructure/service/survey.service';
+import { SurveyController } from './lib/survey/infrastructure/controller/survey.controller';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { SurveyModule } from './lib/survey/survey.module';
     RoleModule,
     SurveyModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [SurveyController],
+  providers: [ServiceService],
 })
 export class AppModule {}
