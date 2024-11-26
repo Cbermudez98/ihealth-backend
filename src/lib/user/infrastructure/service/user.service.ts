@@ -159,15 +159,35 @@ export class UserService implements IUserService {
       return await this.userRepository.find({
         where: {
           role: {
-            name: In([ROLES.COORDINATOR, ROLES.ADMIN, ROLES.USER]),
+            name: In([ROLES.USER]),
           },
         },
         relations: {
-          auth: false,
+          auth: true,
           appointments: false,
           direction: false,
-          student_detail: false,
+          student_detail: {
+            career: true,
+          },
           role: true,
+        },
+        select: {
+          name: true,
+          last_name: true,
+          code: true,
+          auth: {
+            email: true,
+          },
+          student_detail: {
+            id: true,
+            semester: false,
+            career: {
+              name: true,
+            },
+          },
+          role: {
+            name: true,
+          },
         },
       });
     } catch (error) {
