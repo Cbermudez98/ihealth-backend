@@ -67,7 +67,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(ROLES.ADMIN)
+  @Roles(ROLES.ADMIN, ROLES.COORDINATOR)
   @Get('all')
   public async getAll() {
     return ResponseAdapter.set(
