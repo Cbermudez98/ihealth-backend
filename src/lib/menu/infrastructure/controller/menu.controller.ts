@@ -28,17 +28,18 @@ import { ROLES } from 'src/common/constants/roles.enum';
 import { Roles } from 'src/lib/role/infrastructure/decorator/role.decorator';
 import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
 import { KEYS } from 'src/common/constants/keys';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Controller('menu')
 export class MenuController {
   constructor(
-    @Inject('GetMenuUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_MENU_USE_CASE)
     private readonly getMenuUseCase: GetMenuUseCase,
-    @Inject('AddItemUseCase')
+    @Inject(CONSTANTS.USE_CASES.ADD_ITEM_MENU_USE_CASE)
     private readonly addMenuItemUseCase: AddItemUseCase,
-    @Inject('UpdateMenuUseCase')
+    @Inject(CONSTANTS.USE_CASES.UPDATE_MENU_USE_CASE)
     private readonly updateMenuUseCase: UpdateMenuUseCase,
-    @Inject('DeleteMenuUseCase')
+    @Inject(CONSTANTS.USE_CASES.DELETE_MENU_USE_CASE)
     private readonly deleteMenuUseCase: DeleteMenuUseCase,
   ) {}
 

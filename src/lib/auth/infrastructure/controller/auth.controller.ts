@@ -1,26 +1,14 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  HttpStatus,
-  Inject,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Inject, Post } from '@nestjs/common';
 import { AuthUserUseCase } from '../../application/authUser/AuthUser.useCase';
-import { AuthService } from '../service/auth.service';
 import { AuthDto } from '../dtos/auth.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from '../guard/jwt/jwt-auth.guard';
 import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
 import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    @Inject('AuthUserUseCase')
+    @Inject(CONSTANTS.USE_CASES.AUTH_USER_USE_CASE)
     private readonly authUSerUseCase: AuthUserUseCase,
   ) {}
 

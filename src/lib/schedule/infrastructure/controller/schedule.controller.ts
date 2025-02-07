@@ -18,11 +18,12 @@ import { RoleGuard } from './../../../auth/infrastructure/guard/role/role.guard'
 import { CreateScheduleDto } from '../dtos/schedule.dto';
 import { FilterScheduleDto } from '../dtos/filter.dto';
 import { DAYS } from 'src/common/constants/keys';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Controller('schedule')
 export class ScheduleController {
   constructor(
-    @Inject('GetScheduleUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_SCHEDULE_USE_CASE)
     private readonly getScheduleUseCase: GetScheduleUseCase,
   ) {}
 

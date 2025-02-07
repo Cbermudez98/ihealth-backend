@@ -1,42 +1,36 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from '../user/user.module';
 import { AuthService } from './infrastructure/service/auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Auth } from './infrastructure/entity/auth.entity';
 import { IHashProvider } from '../common/domain/services/IHash.service';
 import { IAuthService } from './domain/service/IAuth.service';
 import { AuthUserUseCase } from './application/authUser/AuthUser.useCase';
-import { HashProvider } from 'src/shared/providers/hash.provider/hash.provider';
 import { AuthController } from './infrastructure/controller/auth.controller';
-import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 import { IJwtService } from './domain/service/IJwt.service';
+import { SharedModule } from 'src/shared/shared.module';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Module({
   controllers: [AuthController],
-  imports: [TypeOrmModule.forFeature([Auth]), UserModule],
+  imports: [TypeOrmModule.forFeature([Auth]), SharedModule],
   providers: [
     {
-      provide: 'IHashProvider',
-      useClass: HashProvider,
-    },
-    {
-      provide: 'IAuthService',
+      provide: CONSTANTS.PROVIDERS.AUTH_SERVICE,
       useClass: AuthService,
     },
     {
-      provide: 'IJwtService',
-      useClass: JwtProvider,
-    },
-    {
-      provide: 'AuthUserUseCase',
+      provide: CONSTANTS.USE_CASES.AUTH_USER_USE_CASE,
       useFactory: (
         hashProvider: IHashProvider,
         authService: IAuthService,
         jwtProvide: IJwtService,
       ) => new AuthUserUseCase(hashProvider, authService, jwtProvide),
-      inject: ['IHashProvider', 'IAuthService', 'IJwtService'],
+      inject: [
+        CONSTANTS.PROVIDERS.HASH_PROVIDER,
+        CONSTANTS.PROVIDERS.AUTH_SERVICE,
+        CONSTANTS.PROVIDERS.JWT_SERVICE,
+      ],
     },
-    // { provide: APP_GUARD, useClass: JwtAuthGuard },
   ],
 })
 export class AuthModule {}

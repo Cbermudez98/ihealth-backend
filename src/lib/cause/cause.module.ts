@@ -12,36 +12,36 @@ import { Reason } from '../reason/infrastructure/entity/reason.entity';
 import { UpdateCauseUseCase } from './application/updateCauseUseCase/UpdateCause.useCase';
 import { GetCauseByReasonUseCase } from './application/getCauseByReasonUseCase/GetCause.useCase';
 import { Role } from '../role/infrastructure/entity/role.entity';
+import { SharedModule } from 'src/shared/shared.module';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Cause, Reason, Role])],
+  imports: [TypeOrmModule.forFeature([Cause, Reason, Role]), SharedModule],
   controllers: [CauseController],
   providers: [
     {
-      provide: 'CauseService',
+      provide: CONSTANTS.PROVIDERS.CAUSE_SERVICE,
       useClass: CauseService,
     },
     {
-      provide: 'CreateCauseUseCase',
+      provide: CONSTANTS.USE_CASES.CREATE_CAUSE_USE_CASE,
       useFactory: (causeService: ICauseService) =>
         new CreateCauseUseCase(causeService),
-      inject: ['CauseService'],
+      inject: [CONSTANTS.PROVIDERS.CAUSE_SERVICE],
     },
     {
-      provide: 'UpdateCauseUseCase',
+      provide: CONSTANTS.USE_CASES.UPDATE_CAUSE_USE_CASE,
       useFactory: (causeService: ICauseService) =>
         new UpdateCauseUseCase(causeService),
-      inject: ['CauseService'],
+      inject: [CONSTANTS.PROVIDERS.CAUSE_SERVICE],
     },
     {
-      provide: 'GetCauseByReasonUseCase',
+      provide: CONSTANTS.USE_CASES.GET_CAUSE_BY_REASON_USE_CASE,
       useFactory: (causeService: ICauseService) =>
         new GetCauseByReasonUseCase(causeService),
-      inject: ['CauseService'],
+      inject: [CONSTANTS.PROVIDERS.CAUSE_SERVICE],
     },
-    RoleService,
-    JwtAuthGuard,
-    JwtProvider,
   ],
+  exports: [CONSTANTS.PROVIDERS.CAUSE_SERVICE],
 })
 export class CauseModule {}

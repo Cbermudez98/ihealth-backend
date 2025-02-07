@@ -21,15 +21,16 @@ import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
 import { CauseUpdateDto } from '../dtos/cause-update.dto';
 import { UpdateCauseUseCase } from '../../application/updateCauseUseCase/UpdateCause.useCase';
 import { GetCauseByReasonUseCase } from '../../application/getCauseByReasonUseCase/GetCause.useCase';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Controller('cause')
 export class CauseController {
   constructor(
-    @Inject('CreateCauseUseCase')
+    @Inject(CONSTANTS.USE_CASES.CREATE_CAUSE_USE_CASE)
     private readonly createCauseUseCase: CreateCauseUseCase,
-    @Inject('UpdateCauseUseCase')
+    @Inject(CONSTANTS.USE_CASES.UPDATE_CAUSE_USE_CASE)
     private readonly updateCauseUseCase: UpdateCauseUseCase,
-    @Inject('GetCauseByReasonUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_CAUSE_BY_REASON_USE_CASE)
     private readonly getCauseByReasonUseCase: GetCauseByReasonUseCase,
   ) {}
   @UseGuards(JwtAuthGuard, RoleGuard)
