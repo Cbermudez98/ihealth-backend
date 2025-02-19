@@ -46,7 +46,6 @@ export class UserController {
   @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
   @Get()
   public async getUser(@Req() request: Request) {
-    console.log('Hello world');
     const auth: ITokenPayload = request[KEYS.USER] as ITokenPayload;
     return ResponseAdapter.set(
       HttpStatus.OK,
