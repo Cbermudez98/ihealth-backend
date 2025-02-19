@@ -22,20 +22,21 @@ import { JwtAuthGuard } from './../../../auth/infrastructure/guard/jwt/jwt-auth.
 import { RoleGuard } from './../../..//auth/infrastructure/guard/role/role.guard';
 import { ROLES } from '../../../../common/constants/roles.enum';
 import { Roles } from './../../../role/infrastructure/decorator/role.decorator';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Controller('reason')
 export class ReasonController {
   constructor(
-    @Inject('GetReasonsUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_REASONS_USE_CASE)
     private readonly getReasonsUseCase: GetReasonsUseCase,
 
-    @Inject('GetReasonUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_REASON_USE_CASE)
     private readonly getReasonUseCase: GetReasonUseCase,
 
-    @Inject('CreateReasonUseCase')
+    @Inject(CONSTANTS.USE_CASES.CREATE_REASON_USE_CASE)
     private readonly createReasonUseCase: CreateReasonUseCase,
 
-    @Inject('UpdateReasonUseCase')
+    @Inject(CONSTANTS.USE_CASES.UPDATE_REASON_USE_CASE)
     private readonly updateReasonUseCase: UpdateReasonUseCase,
   ) {}
 

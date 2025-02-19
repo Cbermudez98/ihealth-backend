@@ -13,51 +13,47 @@ import { GetMenuByIDCaseUse } from './application/getMenuByIDCaseUse/GetMenuByID
 import { DeleteMenuUseCase } from './application/deleteMenuCaseUse/DeleteMenu.useCase';
 import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
 import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
+import { SharedModule } from 'src/shared/shared.module';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Module({
   controllers: [MenuController],
-  imports: [TypeOrmModule.forFeature([Role, Menu])],
+  imports: [TypeOrmModule.forFeature([Role, Menu]), SharedModule],
   providers: [
     {
-      provide: 'MenuService',
+      provide: CONSTANTS.PROVIDERS.MENU_SERVICE,
       useClass: MenuService,
     },
     {
-      provide: 'RoleService',
-      useClass: RoleService,
-    },
-    {
-      provide: 'GetMenuUseCase',
+      provide: CONSTANTS.USE_CASES.GET_MENU_USE_CASE,
       useFactory: (menuService: IMenuService) =>
         new GetMenuUseCase(menuService),
-      inject: ['MenuService'],
+      inject: [CONSTANTS.PROVIDERS.MENU_SERVICE],
     },
     {
-      provide: 'AddItemUseCase',
+      provide: CONSTANTS.USE_CASES.ADD_ITEM_MENU_USE_CASE,
       useFactory: (menuService: IMenuService) =>
         new AddItemUseCase(menuService),
-      inject: ['MenuService'],
+      inject: [CONSTANTS.PROVIDERS.MENU_SERVICE],
     },
     {
-      provide: 'UpdateMenuUseCase',
+      provide: CONSTANTS.USE_CASES.UPDATE_MENU_USE_CASE,
       useFactory: (menuService: IMenuService) =>
         new UpdateMenuUseCase(menuService),
-      inject: ['MenuService'],
+      inject: [CONSTANTS.PROVIDERS.MENU_SERVICE],
     },
     {
-      provide: 'GetMenuByIDCaseUse',
+      provide: CONSTANTS.USE_CASES.GET_MENU_BY_ID_USE_CASE,
       useFactory: (menuService: IMenuService) =>
         new GetMenuByIDCaseUse(menuService),
-      inject: ['MenuService'],
+      inject: [CONSTANTS.PROVIDERS.MENU_SERVICE],
     },
     {
-      provide: 'DeleteMenuUseCase',
+      provide: CONSTANTS.USE_CASES.DELETE_MENU_USE_CASE,
       useFactory: (menuService: IMenuService) =>
         new DeleteMenuUseCase(menuService),
-      inject: ['MenuService'],
+      inject: [CONSTANTS.PROVIDERS.MENU_SERVICE],
     },
-    JwtAuthGuard,
-    JwtProvider,
   ],
 })
 export class MenuModule {}

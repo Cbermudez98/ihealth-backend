@@ -23,21 +23,22 @@ import { GetUserUseCase } from '../../application/getUSer/GetUser.useCase';
 import { Request } from 'express';
 import { KEYS } from 'src/common/constants/keys';
 import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
-import { GetPsycologistUseCase } from '../../application/getPsycologist/GetPsycologist.useCase';
+import { GetPsychologistUseCase } from '../../application/getPsychologist/GetPsychologist.useCase';
 import { GetAllUsersUseCase } from '../../application/getAllUsers/GetAllUsers.useCase';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Controller('user')
 export class UserController {
   constructor(
-    @Inject('CreateUserUseCase')
+    @Inject(CONSTANTS.USE_CASES.CREATE_USER_USE_CASE)
     private readonly createUserUseCase: CreateUserUseCase,
-    @Inject('UpdateUserUseCase')
+    @Inject(CONSTANTS.USE_CASES.UPDATE_USER_USE_CASE)
     private readonly updateUserUseCase: UpdateUserUseCase,
-    @Inject('GetUserUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_USER_USE_CASE)
     private readonly getUserUseCase: GetUserUseCase,
-    @Inject('GetPsycologistUseCase')
-    private readonly getPsycologistUseCase: GetPsycologistUseCase,
-    @Inject('GetAllUsersUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_PSYCHOLOGIST_USE_CASE)
+    private readonly getPsychologistUseCase: GetPsychologistUseCase,
+    @Inject(CONSTANTS.USE_CASES.GET_ALL_USER_USE_CASE)
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
   ) {}
 
@@ -60,7 +61,7 @@ export class UserController {
   public async getPsycologist() {
     return ResponseAdapter.set(
       HttpStatus.OK,
-      await this.getPsycologistUseCase.run(),
+      await this.getPsychologistUseCase.run(),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );

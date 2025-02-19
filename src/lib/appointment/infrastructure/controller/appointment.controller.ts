@@ -25,19 +25,20 @@ import { KEYS } from 'src/common/constants/keys';
 import { GetHistoryAppointmentUseCase } from '../../application/GetHistoryAppopointmentUseCase/getHistoryAppointment.useCase';
 import { UpdateStatusAppointmentUseCase } from '../../application/updateStatusAppointment/updateStatusAppointment.useCase';
 import { GetAllAppointmentsUSeCase } from '../../application/GetAllAppointmentsUseCase/getAllAppointments.useCase';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Controller('appointment')
 export class AppointmentController {
   constructor(
-    @Inject('CreateAppointmentUseCase')
+    @Inject(CONSTANTS.USE_CASES.CREATE_APPOINTMENT_USE_CASE)
     private readonly createAppointmentUseCase: CreateAppointmentUseCase,
-    @Inject('CurrentAppointmentUseCase')
+    @Inject(CONSTANTS.USE_CASES.CURRENT_APPOINTMENT_USE_CASE)
     private readonly currentAppointmentUseCase: CurrentAppointmentUseCase,
-    @Inject('GetHistoryAppointmentUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_HISTORY_APPOINTMENT_USE_CASE)
     private readonly getHistoryAppointmentUseCase: GetHistoryAppointmentUseCase,
-    @Inject('UpdateStatusAppointmentUseCase')
+    @Inject(CONSTANTS.USE_CASES.UPDATE_APPOINTMENT_USE_CASE)
     private readonly updateStatusAppointmentUseCase: UpdateStatusAppointmentUseCase,
-    @Inject('GetAllAppointmentsUSeCase')
+    @Inject(CONSTANTS.USE_CASES.GET_ALL_APPOINTMENTS_USE_CASE)
     private readonly getAllAppointmentsUSeCase: GetAllAppointmentsUSeCase,
   ) {}
 
