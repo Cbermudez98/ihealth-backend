@@ -1,50 +1,50 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ScheduleController } from './infrastructure/controller/schedule.controller';
 import { ScheduleService } from './infrastructure/service/schedule.service';
 import { ScheduleSeeder } from 'src/seeds/schedule.seeder';
 import { IScheduleService } from './domain/service/ISchedule.service';
 import { GetScheduleUseCase } from './application/getSchedules/GetSchedule.useCase';
 import { CreateScheduleUseCase } from './application/createSchedule/CreateSchedule.useCase';
-import { RoleService } from '../role/infrastructure/service/role.service';
-import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
-import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Role } from '../role/infrastructure/entity/role.entity';
 import { Schedule } from './infrastructure/entity/Schedule.entity';
-import { AppointmentService } from '../appointment/infrastructure/service/appointment/appointment.service';
 import { IAppointmentService } from '../appointment/domain/services/IAppointment.service';
+import { SharedModule } from 'src/shared/shared.module';
+import { AppointmentModule } from '../appointment/appointment.module';
+import { CONSTANTS } from 'src/common/constants/constants';
 import { Appointment } from '../appointment/infrastructure/entity/appointment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role, Schedule, Appointment])],
+  imports: [
+    TypeOrmModule.forFeature([Role, Schedule, Appointment]),
+    SharedModule,
+    forwardRef(() => AppointmentModule),
+  ],
   controllers: [ScheduleController],
   providers: [
     {
-      provide: 'ScheduleService',
+      provide: CONSTANTS.PROVIDERS.SCHEDULE_SERVICE,
       useClass: ScheduleService,
     },
     {
-      provide: 'AppointmentService',
-      useClass: AppointmentService,
-    },
-    {
-      provide: 'CreateScheduleUseCase',
+      provide: CONSTANTS.USE_CASES.CREATE_SCHEDULE_USE_CASE,
       useFactory: (scheduleService: IScheduleService) =>
         new CreateScheduleUseCase(scheduleService),
-      inject: ['ScheduleService'],
+      inject: [CONSTANTS.PROVIDERS.SCHEDULE_SERVICE],
     },
     {
-      provide: 'GetScheduleUseCase',
+      provide: CONSTANTS.USE_CASES.GET_SCHEDULE_USE_CASE,
       useFactory: (
         scheduleService: IScheduleService,
         appointmentService: IAppointmentService,
       ) => new GetScheduleUseCase(scheduleService, appointmentService),
-      inject: ['ScheduleService', 'AppointmentService'],
+      inject: [
+        CONSTANTS.PROVIDERS.SCHEDULE_SERVICE,
+        CONSTANTS.PROVIDERS.APPOINTMENT_SERVICE,
+      ],
     },
     ScheduleSeeder,
-    RoleService,
-    JwtAuthGuard,
-    JwtProvider,
   ],
+  exports: [CONSTANTS.PROVIDERS.SCHEDULE_SERVICE],
 })
 export class ScheduleModule {}

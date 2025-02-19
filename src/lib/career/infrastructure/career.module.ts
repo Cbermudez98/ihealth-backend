@@ -7,26 +7,28 @@ import { GetAllCareerUseCase } from '../application/getAllCareer/GetAllCareer.us
 import { ICareerService } from '../domain/service/ICareer.service';
 import { GetCareerUseCase } from '../application/getCareer/GetCareer.useCase';
 import { CareerSeeder } from 'src/seeds/career.seeder';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Module({
   controllers: [CareerController],
   imports: [TypeOrmModule.forFeature([Career])],
   providers: [
     {
-      provide: 'CareerService',
+      provide: CONSTANTS.PROVIDERS.CAREER_SERVICE,
       useClass: CareerService,
     },
     {
-      provide: 'GetAllCareerUseCase',
+      provide: CONSTANTS.USE_CASES.GET_ALL_CAREER_USE_CASE,
       useFactory: (service: ICareerService) => new GetAllCareerUseCase(service),
-      inject: ['CareerService'],
+      inject: [CONSTANTS.PROVIDERS.CAREER_SERVICE],
     },
     {
-      provide: 'GetCareerUseCase',
+      provide: CONSTANTS.USE_CASES.GET_CAREER_USE_CASE,
       useFactory: (service: ICareerService) => new GetCareerUseCase(service),
-      inject: ['CareerService'],
+      inject: [CONSTANTS.PROVIDERS.CAREER_SERVICE],
     },
     CareerSeeder,
   ],
+  exports: [CONSTANTS.PROVIDERS.CAREER_SERVICE],
 })
 export class CareerModule {}

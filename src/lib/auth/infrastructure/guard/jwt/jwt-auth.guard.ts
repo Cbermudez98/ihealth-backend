@@ -1,4 +1,4 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable } from '@nestjs/common';
 import { SetMetadata } from '@nestjs/common';
 import { Request } from 'express';
 import { ForbiddenError } from '../../../../common/domain/errors/ForbiddenError';
@@ -10,7 +10,9 @@ export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 
 @Injectable()
 export class JwtAuthGuard {
-  constructor(private readonly jwtProvider: JwtProvider) {}
+  constructor(
+    @Inject('JwtProvider') private readonly jwtProvider: JwtProvider,
+  ) {}
 
   canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();

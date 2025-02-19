@@ -1,4 +1,6 @@
 import {
+  forwardRef,
+  Inject,
   Injectable,
   RequestTimeoutException,
   UnprocessableEntityException,
@@ -14,12 +16,15 @@ import { IRole } from '../../../role/domain/interfaces/IRole';
 import { RoleService } from '../../../role/infrastructure/service/role.service';
 import { ROLES } from 'src/common/constants/roles.enum';
 import { name } from 'ejs';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 @Injectable()
 export class UserService implements IUserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @Inject(CONSTANTS.PROVIDERS.CAREER_SERVICE)
     private readonly careerService: CareerService,
+    @Inject(CONSTANTS.PROVIDERS.ROLE_SERVICE)
     private readonly roleService: RoleService,
   ) {}
 

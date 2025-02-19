@@ -8,49 +8,46 @@ import { CreateReasonUseCase } from './application/createReason/CreateReason.use
 import { GetReasonUseCase } from './application/getReason/GetReason.useCase';
 import { GetReasonsUseCase } from './application/getReasons/GetReasons.useCase';
 import { UpdateReasonUseCase } from './application/updateReason/UpdateReason.useCase';
-import { RoleService } from '../role/infrastructure/service/role.service';
-import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
-import { JwtProvider } from './../../shared/providers/jwt.provider/jwt.provider';
 import { Role } from '../role/infrastructure/entity/role.entity';
 import { ReasonAndCauseSeeder } from './../../seeds/reasonAndCauses.seeder';
 import { Cause } from '../cause/infrastructure/entity/cause.entity';
+import { CONSTANTS } from 'src/common/constants/constants';
+import { SharedModule } from 'src/shared/shared.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Reason, Role, Cause])],
+  imports: [TypeOrmModule.forFeature([Reason, Role, Cause]), SharedModule],
   controllers: [ReasonController],
   providers: [
     {
-      provide: 'ReasonService',
+      provide: CONSTANTS.PROVIDERS.REASON_SERVICE,
       useClass: ReasonService,
     },
     {
-      provide: 'GetReasonsUseCase',
+      provide: CONSTANTS.USE_CASES.GET_REASONS_USE_CASE,
       useFactory: (reasonService: IReasonService) =>
         new GetReasonsUseCase(reasonService),
-      inject: ['ReasonService'],
+      inject: [CONSTANTS.PROVIDERS.REASON_SERVICE],
     },
     {
-      provide: 'CreateReasonUseCase',
+      provide: CONSTANTS.USE_CASES.CREATE_REASON_USE_CASE,
       useFactory: (reasonService: IReasonService) =>
         new CreateReasonUseCase(reasonService),
-      inject: ['ReasonService'],
+      inject: [CONSTANTS.PROVIDERS.REASON_SERVICE],
     },
     {
-      provide: 'GetReasonUseCase',
+      provide: CONSTANTS.USE_CASES.GET_REASON_USE_CASE,
       useFactory: (reasonService: IReasonService) =>
         new GetReasonUseCase(reasonService),
-      inject: ['ReasonService'],
+      inject: [CONSTANTS.PROVIDERS.REASON_SERVICE],
     },
     {
-      provide: 'UpdateReasonUseCase',
+      provide: CONSTANTS.USE_CASES.UPDATE_REASON_USE_CASE,
       useFactory: (reasonService: IReasonService) =>
         new UpdateReasonUseCase(reasonService),
-      inject: ['ReasonService'],
+      inject: [CONSTANTS.PROVIDERS.REASON_SERVICE],
     },
-    RoleService,
-    JwtAuthGuard,
-    JwtProvider,
     ReasonAndCauseSeeder,
   ],
+  exports: [CONSTANTS.PROVIDERS.REASON_SERVICE],
 })
 export class ReasonModule {}
