@@ -33,6 +33,7 @@ export default class TypeOrmConfig {
         Auth,
         StudentDetail,
         User,
+        Document,
         Direction,
         Career,
         Role,
