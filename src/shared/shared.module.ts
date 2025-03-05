@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MailModule } from './mail/mail.module';
 import { HashProvider } from './providers/hash.provider/hash.provider';
 import { JwtProvider } from './providers/jwt.provider/jwt.provider';
-import { JwtService } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { IcsProvider } from './providers/ics.provider/ics.provider';
 import { MailService } from './mail/mail.service';
 import { CONSTANTS } from 'src/common/constants/constants';
@@ -16,7 +16,7 @@ const providers = [
 ];
 
 @Module({
-  imports: [MailModule],
+  imports: [MailModule, JwtModule],
   providers: [...providers],
   exports: [...providers.map((provide) => provide.provide)],
 })
