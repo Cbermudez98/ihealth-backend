@@ -15,7 +15,14 @@ const providers = [
 ];
 
 @Module({
-  imports: [MailModule],
+  imports: [
+    MailModule,
+    JwtModule.register({
+      global: true,
+      secret: '1234567890',
+      signOptions: { expiresIn: '24h' },
+    }),
+  ],
   providers: [...providers, JwtService],
   exports: [...providers.map((provide) => provide.provide), JwtService],
 })
