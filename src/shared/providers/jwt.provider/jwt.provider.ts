@@ -7,7 +7,9 @@ export class JwtProvider implements IJwtService {
   constructor(private readonly jwtService: JwtService) {}
 
   signToken(payload: Record<string, any>): string {
-    return this.jwtService.sign(payload, {});
+    return this.jwtService.sign(payload, {
+      secret: '123123123123',
+    });
   }
 
   verifyToken(token: string): Record<string, any> {
