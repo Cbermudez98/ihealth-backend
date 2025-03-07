@@ -16,7 +16,7 @@ const providers = [
 ];
 
 @Module({
-  imports: [MailModule, JwtModule],
+  imports: [MailModule],
   providers: [...providers],
   exports: [...providers.map((provide) => provide.provide)],
 })
