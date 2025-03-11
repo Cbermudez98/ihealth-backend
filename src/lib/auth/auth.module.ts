@@ -28,7 +28,7 @@ import { CONSTANTS } from 'src/common/constants/constants';
       inject: [
         CONSTANTS.PROVIDERS.HASH_PROVIDER,
         CONSTANTS.PROVIDERS.AUTH_SERVICE,
-        CONSTANTS.PROVIDERS.JWT_SERVICE,
+        CONSTANTS.PROVIDERS.JWT_PROVIDER,
       ],
     },
   ],

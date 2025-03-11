@@ -16,6 +16,7 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
+  console.log('Hello world');
   await app.listen(3000);
 }
 bootstrap();

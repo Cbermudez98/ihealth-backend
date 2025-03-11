@@ -13,6 +13,9 @@ services:
       - ${DATABASE_PORT}:3306
     volumes:
       - ./db-data:/var/lib/mysql
+    networks:
+      - app-network
+
   redis:
     image: redis
     restart: always
@@ -24,3 +27,34 @@ services:
       - ${REDIS_PORT}:6379
     depends_on:
       - my_sql
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+      DATABASE_HOST: my_sql
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      REDIS_HOST: redis
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    depends_on:
+      - my_sql
+      - redis
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge

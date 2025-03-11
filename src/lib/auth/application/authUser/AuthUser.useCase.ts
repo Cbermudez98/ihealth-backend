@@ -35,6 +35,7 @@ export class AuthUserUseCase {
         role: userAuth.user.role.name,
       });
     } catch (error) {
+      console.log('🚀  ~ AuthUserUseCase ~ run ~ error:', error);
       throw new InternalServerError('Error generating token');
     }
     return {

@@ -19,11 +19,12 @@ import { SharedModule } from 'src/shared/shared.module';
 import { CareerModule } from '../career/infrastructure/career.module';
 import { CONSTANTS } from 'src/common/constants/constants';
 import { RoleModule } from '../role/role.module';
+import { Document } from './infrastructure/entity/document.entity';
 
 @Module({
   controllers: [UserController],
   imports: [
-    TypeOrmModule.forFeature([User, Career, Role, Menu]),
+    TypeOrmModule.forFeature([User, Career, Role, Menu, Document]),
     MailModule,
     forwardRef(() => SharedModule),
     forwardRef(() => CareerModule),

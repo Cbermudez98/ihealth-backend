@@ -12,11 +12,6 @@ import { typeOrmConfigAsync } from 'src/core/typeorm/type-orm';
       validationSchema: environmentSchema,
     }),
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
-    JwtModule.register({
-      global: true,
-      secret: '1234567890',
-      signOptions: { expiresIn: '24h' },
-    }),
   ],
 })
 export class CoreModule {}
