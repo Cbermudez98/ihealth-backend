@@ -17,3 +17,10 @@ export enum MAIL {
   LOCATION = 'Fundacion Universitaria Colombo Internacional',
   URL = 'Online',
 }
+
+export enum DOCUMENT {
+  CC = 'C.C',
+  TI = 'T.I',
+  CE = 'C.E',
+  PA = 'P.A',
+}

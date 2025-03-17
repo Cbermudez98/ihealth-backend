@@ -1,4 +1,10 @@
-import { IsInt, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { IAuthCreate } from '../../../auth/domain/interfaces/IAuth';
 import { IDirectionCreate } from '../../domain/interfaces/IDirection';
 import { IStudentDetailCreate } from '../../domain/interfaces/IStudentDetail';
@@ -9,6 +15,8 @@ import { DirectionDto } from './direction.dto';
 import { StudentDetailDto } from './student-detail.dto';
 import { IRoleAssign } from '../../../role/domain/interfaces/IRole';
 import { RoleDto } from '../../../role/infrastructure/dtos/role.dto';
+import { IDocumentUser } from '../../domain/interfaces/IDocument';
+import { DocumentDto } from './document.dto';
 
 export class UserDto implements IUserCreate {
   @IsNotEmpty()
@@ -42,6 +50,10 @@ export class UserDto implements IUserCreate {
   direction: IDirectionCreate;
 
   @IsNotEmpty()
+  @IsNumber()
+  document_number: number;
+
+  @IsNotEmpty()
   @ValidateNested()
   @Type(() => StudentDetailDto)
   student_detail: IStudentDetailCreate;
@@ -50,4 +62,9 @@ export class UserDto implements IUserCreate {
   @ValidateNested()
   @Type(() => RoleDto)
   role: IRoleAssign;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => DocumentDto)
+  document: IDocumentUser;
 }
