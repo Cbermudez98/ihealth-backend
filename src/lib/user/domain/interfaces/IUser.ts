@@ -15,6 +15,7 @@ import {
   IStudentDetailUpdateDto,
 } from './IStudentDetail';
 import { IAppointment } from './../../../appointment/domain/interfaces/IAppointment';
+import { IDocumentUser } from './IDocument';
 
 export interface IUser {
   id: number;
@@ -39,6 +40,7 @@ export interface IUserCreate
   direction: IDirectionCreate;
   student_detail: IStudentDetailCreate;
   role: IRoleAssign;
+  document: IDocumentUser;
 }
 
 export interface IUserUpdate

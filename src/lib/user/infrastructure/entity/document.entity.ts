@@ -16,6 +16,6 @@ export class Document implements IDocument {
   @Column()
   name: string;
 
-  @OneToMany(() => User, (user) => user.documents)
+  @OneToMany(() => User, (user) => user.document)
   users: User[];
 }

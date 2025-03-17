@@ -17,6 +17,7 @@ import { Menu } from 'src/lib/menu/infrastructure/entity/menu.entity';
 import { Appointment } from 'src/lib/appointment/infrastructure/entity/appointment.entity';
 import { Schedule } from 'src/lib/schedule/infrastructure/entity/Schedule.entity';
 import { Status } from 'src/lib/appointment/infrastructure/entity/status.entity';
+import { Document } from 'src/lib/user/infrastructure/entity/document.entity';
 
 export default class TypeOrmConfig {
   static getOrmConfig(config: ConfigService): TypeOrmModuleOptions {

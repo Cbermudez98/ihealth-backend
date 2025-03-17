@@ -40,6 +40,9 @@ export class User implements IUser {
   @Column({ length: 1 })
   gender: string;
 
+  @Column({ unique: true })
+  Document: string;
+
   @OneToOne(() => Auth, { cascade: true })
   @JoinColumn()
   auth: IAuth;
@@ -59,5 +62,6 @@ export class User implements IUser {
   appointments: IAppointment[];
 
   @ManyToOne(() => Document, (document) => document.users)
-  documents: Document;
+  @JoinColumn()
+  document: Document;
 }
