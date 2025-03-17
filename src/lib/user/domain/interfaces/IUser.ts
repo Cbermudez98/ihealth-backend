@@ -15,6 +15,7 @@ import {
   IStudentDetailUpdateDto,
 } from './IStudentDetail';
 import { IAppointment } from './../../../appointment/domain/interfaces/IAppointment';
+import { IDocument, IDocumentUser } from './IDocument';
 
 export interface IUser {
   id: number;
@@ -28,17 +29,26 @@ export interface IUser {
   student_detail: IStudentDetail;
   role: IRole;
   appointments: IAppointment[];
+  document: IDocument;
+  document_number: number;
 }
 
 export interface IUserCreate
   extends Omit<
     IUser,
-    'id' | 'direction' | 'auth' | 'student_detail' | 'role' | 'appointments'
+    | 'id'
+    | 'direction'
+    | 'auth'
+    | 'student_detail'
+    | 'role'
+    | 'appointments'
+    | 'document'
   > {
   auth: IAuthCreate;
   direction: IDirectionCreate;
   student_detail: IStudentDetailCreate;
   role: IRoleAssign;
+  document: IDocumentUser;
 }
 
 export interface IUserUpdate

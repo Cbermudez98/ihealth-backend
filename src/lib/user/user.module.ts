@@ -19,11 +19,13 @@ import { SharedModule } from 'src/shared/shared.module';
 import { CareerModule } from '../career/infrastructure/career.module';
 import { CONSTANTS } from 'src/common/constants/constants';
 import { RoleModule } from '../role/role.module';
+import { Document } from './infrastructure/entity/document.entity';
+import { DocumentSeeder } from 'src/seeds/document.seeder';
 
 @Module({
   controllers: [UserController],
   imports: [
-    TypeOrmModule.forFeature([User, Career, Role, Menu]),
+    TypeOrmModule.forFeature([User, Career, Role, Menu, Document]),
     MailModule,
     forwardRef(() => SharedModule),
     forwardRef(() => CareerModule),
@@ -74,6 +76,7 @@ import { RoleModule } from '../role/role.module';
         new GetAllUsersUseCase(userService),
       inject: [CONSTANTS.PROVIDERS.USER_SERVICE],
     },
+    DocumentSeeder,
   ],
   exports: [CONSTANTS.PROVIDERS.USER_SERVICE],
 })

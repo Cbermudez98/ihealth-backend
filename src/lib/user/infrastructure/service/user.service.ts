@@ -17,10 +17,13 @@ import { RoleService } from '../../../role/infrastructure/service/role.service';
 import { ROLES } from 'src/common/constants/roles.enum';
 import { name } from 'ejs';
 import { CONSTANTS } from 'src/common/constants/constants';
+import { Document } from '../entity/document.entity';
 
 @Injectable()
 export class UserService implements IUserService {
   constructor(
+    @InjectRepository(Document)
+    private readonly documentRepository: Repository<Document>,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @Inject(CONSTANTS.PROVIDERS.CAREER_SERVICE)
     private readonly careerService: CareerService,
@@ -29,7 +32,7 @@ export class UserService implements IUserService {
   ) {}
 
   async create(userDto: IUserCreate): Promise<IUser> {
-    console.log('🚀  ~ UserService ~ create ~ userDto:', userDto);
+    // console.log('🚀  ~ UserService ~ create ~ userDto:', userDto);
     let user: User | undefined;
     let career: Career | undefined;
     try {
@@ -45,6 +48,19 @@ export class UserService implements IUserService {
     } catch (error) {
       throw error;
     }
+
+    let document: Document | undefined;
+
+    document = await this.documentRepository.findOne({
+      where: { id: userDto.document.id },
+    });
+    if (!document) {
+      throw new UnprocessableEntityException('Document not found');
+    }
+    console.log(document);
+
+    user.document = document;
+    console.log(user);
 
     let role: IRole | undefined;
 
