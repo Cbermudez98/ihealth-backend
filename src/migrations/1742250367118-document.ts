@@ -1,17 +1,17 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Document1742247114117 implements MigrationInterface {
-  name = 'Document1742247114117';
+export class Document1742250367118 implements MigrationInterface {
+  name = 'Document1742250367118';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `CREATE TABLE \`document\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `ALTER TABLE \`person\` ADD \`Document\` varchar(255) NOT NULL`,
+      `ALTER TABLE \`person\` ADD \`document_number\` int NOT NULL`,
     );
     await queryRunner.query(
-      `ALTER TABLE \`person\` ADD UNIQUE INDEX \`IDX_ecc4b8bbcdf638c0c4ea7cedef\` (\`Document\`)`,
+      `ALTER TABLE \`person\` ADD UNIQUE INDEX \`IDX_db97007c3e3f308f96689e2a4e\` (\`document_number\`)`,
     );
     await queryRunner.query(
       `ALTER TABLE \`person\` ADD \`documentId\` int NULL`,
@@ -29,9 +29,11 @@ export class Document1742247114117 implements MigrationInterface {
       `ALTER TABLE \`person\` DROP COLUMN \`documentId\``,
     );
     await queryRunner.query(
-      `ALTER TABLE \`person\` DROP INDEX \`IDX_ecc4b8bbcdf638c0c4ea7cedef\``,
+      `ALTER TABLE \`person\` DROP INDEX \`IDX_db97007c3e3f308f96689e2a4e\``,
     );
-    await queryRunner.query(`ALTER TABLE \`person\` DROP COLUMN \`Document\``);
+    await queryRunner.query(
+      `ALTER TABLE \`person\` DROP COLUMN \`document_number\``,
+    );
     await queryRunner.query(`DROP TABLE \`document\``);
   }
 }

@@ -1,4 +1,10 @@
-import { IsInt, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { IAuthCreate } from '../../../auth/domain/interfaces/IAuth';
 import { IDirectionCreate } from '../../domain/interfaces/IDirection';
 import { IStudentDetailCreate } from '../../domain/interfaces/IStudentDetail';
@@ -42,6 +48,10 @@ export class UserDto implements IUserCreate {
   @ValidateNested()
   @Type(() => DirectionDto)
   direction: IDirectionCreate;
+
+  @IsNotEmpty()
+  @IsNumber()
+  document_number: number;
 
   @IsNotEmpty()
   @ValidateNested()

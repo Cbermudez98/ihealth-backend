@@ -5,8 +5,4 @@ export class DocumentDto implements IDocumentUser {
   @IsNotEmpty()
   @IsNumber()
   id: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  document: number;
 }

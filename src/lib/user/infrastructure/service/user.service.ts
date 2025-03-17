@@ -32,7 +32,7 @@ export class UserService implements IUserService {
   ) {}
 
   async create(userDto: IUserCreate): Promise<IUser> {
-    console.log('🚀  ~ UserService ~ create ~ userDto:', userDto);
+    // console.log('🚀  ~ UserService ~ create ~ userDto:', userDto);
     let user: User | undefined;
     let career: Career | undefined;
     try {
@@ -57,8 +57,10 @@ export class UserService implements IUserService {
     if (!document) {
       throw new UnprocessableEntityException('Document not found');
     }
+    console.log(document);
 
     user.document = document;
+    console.log(user);
 
     let role: IRole | undefined;
 
