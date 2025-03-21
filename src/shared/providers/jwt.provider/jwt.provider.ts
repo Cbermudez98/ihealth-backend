@@ -17,6 +17,8 @@ export class JwtProvider implements IJwtService {
   }
 
   verifyToken(token: string): Record<string, any> {
-    return this.jwtService.verify(token);
+    return this.jwtService.verify(token, {
+      secret: this.config.get<string>('JWT_SECRET_KEY'),
+    });
   }
 }
