@@ -4,6 +4,7 @@ import { Request } from 'express';
 import { ForbiddenError } from '../../../../common/domain/errors/ForbiddenError';
 import { JwtProvider } from '../../../../../shared/providers/jwt.provider/jwt.provider';
 import { KEYS } from 'src/common/constants/keys';
+import { CONSTANTS } from 'src/common/constants/constants';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -11,7 +12,8 @@ export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 @Injectable()
 export class JwtAuthGuard {
   constructor(
-    @Inject('JwtProvider') private readonly jwtProvider: JwtProvider,
+    @Inject(CONSTANTS.PROVIDERS.JWT_PROVIDER)
+    private readonly jwtProvider: JwtProvider,
   ) {}
 
   canActivate(context: ExecutionContext) {
