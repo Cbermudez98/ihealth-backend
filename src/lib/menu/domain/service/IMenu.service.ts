@@ -8,4 +8,5 @@ export class IMenuService {
   updateItems: (id: number, menuData: IMenuUpdate) => Promise<IMenu>; //Hecho
   getMenuById: (id: IMenu['id']) => Promise<IMenu | null>; //Hecho
   deleteMenu: (id: IMenu['id']) => Promise<void>;
+  getAllMenus: () => Promise<IMenu[]>;
 }
