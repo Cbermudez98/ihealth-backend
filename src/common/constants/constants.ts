@@ -39,6 +39,7 @@ export namespace CONSTANTS {
     UPDATE_MENU_USE_CASE = 'UpdateMenuUseCase',
     GET_MENU_BY_ID_USE_CASE = 'GetMenuByIDCaseUse',
     DELETE_MENU_USE_CASE = 'DeleteMenuUseCase',
+    GET_ALL_MENU_USE_CASE = 'GetAllMenuUseCase',
     CREATE_APPOINTMENT_USE_CASE = 'CreateAppointmentUseCase',
     CURRENT_APPOINTMENT_USE_CASE = 'CurrentAppointmentUseCase',
     GET_HISTORY_APPOINTMENT_USE_CASE = 'GetHistoryAppointmentUseCase',
