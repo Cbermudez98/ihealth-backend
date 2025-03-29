@@ -50,8 +50,8 @@ export class UserDto implements IUserCreate {
   direction: IDirectionCreate;
 
   @IsNotEmpty()
-  @IsNumber()
-  document_number: number;
+  @IsString()
+  document_number: string;
 
   @IsNotEmpty()
   @ValidateNested()

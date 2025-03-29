@@ -30,7 +30,7 @@ export interface IUser {
   role: IRole;
   appointments: IAppointment[];
   document: IDocument;
-  document_number: number;
+  document_number: string;
 }
 
 export interface IUserCreate
