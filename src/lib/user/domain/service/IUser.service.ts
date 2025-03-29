@@ -1,3 +1,4 @@
+import { IDocumentBase } from '../interfaces/IDocument';
 import { IUser, IUserCreate, IUserUpdate } from '../interfaces/IUser';
 
 export interface IUserService {
@@ -6,4 +7,5 @@ export interface IUserService {
   update: (id: IUser['id'], userToUpdate: IUserUpdate) => Promise<boolean>;
   getPsychologist: () => Promise<IUser[]>;
   getAll: () => Promise<IUser[]>;
+  getDocuments: () => Promise<IDocumentBase[]>;
 }
