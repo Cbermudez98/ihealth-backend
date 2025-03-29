@@ -41,7 +41,7 @@ export class User implements IUser {
   gender: string;
 
   @Column({ unique: true })
-  document_number: number;
+  document_number: string;
 
   @OneToOne(() => Auth, { cascade: true })
   @JoinColumn()
