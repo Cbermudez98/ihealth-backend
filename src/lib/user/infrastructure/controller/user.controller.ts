@@ -26,6 +26,7 @@ import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
 import { GetPsychologistUseCase } from '../../application/getPsychologist/GetPsychologist.useCase';
 import { GetAllUsersUseCase } from '../../application/getAllUsers/GetAllUsers.useCase';
 import { CONSTANTS } from 'src/common/constants/constants';
+import { GetDocumentsUseCase } from '../../application/getDocuments/GetDocuments.useCase';
 
 @Controller('user')
 export class UserController {
@@ -40,6 +41,8 @@ export class UserController {
     private readonly getPsychologistUseCase: GetPsychologistUseCase,
     @Inject(CONSTANTS.USE_CASES.GET_ALL_USER_USE_CASE)
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
+    @Inject(CONSTANTS.USE_CASES.GET_USER_DOCUMENTS_USE_CASE)
+    private readonly getDocumentsUseCase: GetDocumentsUseCase,
   ) {}
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -74,6 +77,16 @@ export class UserController {
     return ResponseAdapter.set(
       HttpStatus.OK,
       await this.getAllUsersUseCase.run(),
+      HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
+      true,
+    );
+  }
+
+  @Get('documents')
+  public async getDocuments() {
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      await this.getDocumentsUseCase.run(),
       HTTP_RESPONSE_MESSAGE.HTTP_200_OK,
       true,
     );

@@ -21,6 +21,7 @@ import { CONSTANTS } from 'src/common/constants/constants';
 import { RoleModule } from '../role/role.module';
 import { Document } from './infrastructure/entity/document.entity';
 import { DocumentSeeder } from 'src/seeds/document.seeder';
+import { GetDocumentsUseCase } from './application/getDocuments/GetDocuments.useCase';
 
 @Module({
   controllers: [UserController],
@@ -74,6 +75,12 @@ import { DocumentSeeder } from 'src/seeds/document.seeder';
       provide: CONSTANTS.USE_CASES.GET_ALL_USER_USE_CASE,
       useFactory: (userService: IUserService) =>
         new GetAllUsersUseCase(userService),
+      inject: [CONSTANTS.PROVIDERS.USER_SERVICE],
+    },
+    {
+      provide: CONSTANTS.USE_CASES.GET_USER_DOCUMENTS_USE_CASE,
+      useFactory: (userService: IUserService) =>
+        new GetDocumentsUseCase(userService),
       inject: [CONSTANTS.PROVIDERS.USER_SERVICE],
     },
     DocumentSeeder,
