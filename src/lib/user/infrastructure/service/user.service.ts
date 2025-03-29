@@ -18,6 +18,7 @@ import { ROLES } from 'src/common/constants/roles.enum';
 import { name } from 'ejs';
 import { CONSTANTS } from 'src/common/constants/constants';
 import { Document } from '../entity/document.entity';
+import { IDocumentBase } from '../../domain/interfaces/IDocument';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -215,5 +216,9 @@ export class UserService implements IUserService {
     } catch (error) {
       throw new RequestTimeoutException('Could not get all Users');
     }
+  }
+
+  async getDocuments(): Promise<IDocumentBase[]> {
+    return await this.documentRepository.find();
   }
 }
