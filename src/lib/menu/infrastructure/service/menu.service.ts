@@ -58,6 +58,19 @@ export class MenuService implements IMenuService {
     });
   }
 
+  async getAllMenus(): Promise<Menu[]> {
+    try {
+      return await this.menuRepository.find({
+        relations: {
+          roles: true,
+        },
+      });
+    } catch (error) {
+      console.error('Error retrieving all menus:', error);
+      throw new RequestTimeoutException('Error retrieving all menus');
+    }
+  }
+
   async createItem(menuDto: IMenuAdd): Promise<IMenu> {
     console.log('🚀 ~ MenuService ~ create ~ menuDto:', menuDto);
 

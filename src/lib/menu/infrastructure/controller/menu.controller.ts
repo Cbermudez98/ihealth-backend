@@ -30,6 +30,7 @@ import { Roles } from 'src/lib/role/infrastructure/decorator/role.decorator';
 import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
 import { KEYS } from 'src/common/constants/keys';
 import { CONSTANTS } from 'src/common/constants/constants';
+import { GetAllMenuUseCase } from '../../application/getAllMenusCaseUse/GetAllMenus.useCase';
 import { MenuUpdateDto } from '../dtos/menu-update.dto';
 
 @Controller('menu')
@@ -43,6 +44,8 @@ export class MenuController {
     private readonly updateMenuUseCase: UpdateMenuUseCase,
     @Inject(CONSTANTS.USE_CASES.DELETE_MENU_USE_CASE)
     private readonly deleteMenuUseCase: DeleteMenuUseCase,
+    @Inject(CONSTANTS.USE_CASES.GET_ALL_MENU_USE_CASE)
+    private readonly getAllMenuUseCase: GetAllMenuUseCase,
   ) {}
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -86,6 +89,20 @@ export class MenuController {
   public async getMenus(@Req() request: Request) {
     const jwt_payload: ITokenPayload = request[KEYS.USER];
     const menus = await this.getMenuUseCase.run(jwt_payload.role);
+
+    return ResponseAdapter.set(
+      HttpStatus.OK,
+      menus,
+      'Menus retrieved successfully',
+      true,
+    );
+  }
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
+  @Get('all')
+  public async getAllMenus(@Req() request: Request) {
+    const jwt_payload: ITokenPayload = request[KEYS.USER];
+    const menus = await this.getAllMenuUseCase.run(jwt_payload.role);
 
     return ResponseAdapter.set(
       HttpStatus.OK,

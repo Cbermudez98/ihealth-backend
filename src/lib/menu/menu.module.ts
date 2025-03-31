@@ -15,6 +15,7 @@ import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
 import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
 import { SharedModule } from 'src/shared/shared.module';
 import { CONSTANTS } from 'src/common/constants/constants';
+import { GetAllMenuUseCase } from './application/getAllMenusCaseUse/GetAllMenus.useCase';
 
 @Module({
   controllers: [MenuController],
@@ -34,6 +35,12 @@ import { CONSTANTS } from 'src/common/constants/constants';
       provide: CONSTANTS.USE_CASES.ADD_ITEM_MENU_USE_CASE,
       useFactory: (menuService: IMenuService) =>
         new AddItemUseCase(menuService),
+      inject: [CONSTANTS.PROVIDERS.MENU_SERVICE],
+    },
+    {
+      provide: CONSTANTS.USE_CASES.GET_ALL_MENU_USE_CASE,
+      useFactory: (menuService: IMenuService) =>
+        new GetAllMenuUseCase(menuService),
       inject: [CONSTANTS.PROVIDERS.MENU_SERVICE],
     },
     {
