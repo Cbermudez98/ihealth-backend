@@ -13,6 +13,7 @@ import {
   Req,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { GetMenuUseCase } from '../../application/getMenuCaseUse/GetMenu.useCase';
 import { MenuDto } from '../dtos/menu.dto';
@@ -30,6 +31,7 @@ import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
 import { KEYS } from 'src/common/constants/keys';
 import { CONSTANTS } from 'src/common/constants/constants';
 import { GetAllMenuUseCase } from '../../application/getAllMenusCaseUse/GetAllMenus.useCase';
+import { MenuUpdateDto } from '../dtos/menu-update.dto';
 
 @Controller('menu')
 export class MenuController {
@@ -67,8 +69,8 @@ export class MenuController {
   @Roles(ROLES.ADMIN)
   @Patch(':menuId')
   public async updateMenu(
-    @Param('menuId') menuId: number,
-    @Body() menuDto: IMenuUpdate,
+    @Param('menuId', ParseIntPipe) menuId: number,
+    @Body() menuDto: MenuUpdateDto,
     @Req() req: Request,
   ) {
     const updatedMenu = await this.updateMenuUseCase.run(menuId, menuDto);
