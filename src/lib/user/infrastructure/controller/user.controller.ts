@@ -103,6 +103,19 @@ export class UserController {
     );
   }
 
+  @Post('psychologists')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
+  public async createPsychologist(@Body() psychologistDto: UserDto) {
+    const newPsychologist = await this.createUserUseCase.run(psychologistDto);
+    return ResponseAdapter.set(
+      HttpStatus.CREATED,
+      newPsychologist,
+      HTTP_RESPONSE_MESSAGE.HTTP_201_CREATED,
+      true,
+    );
+  }
+
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
   @Patch()

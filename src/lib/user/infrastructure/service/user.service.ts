@@ -221,4 +221,35 @@ export class UserService implements IUserService {
   async getDocuments(): Promise<IDocumentBase[]> {
     return await this.documentRepository.find();
   }
+
+  async createPsychologist(userDto: IUserCreate): Promise<IUser> {
+    let user: User;
+
+    try {
+      user = this.userRepository.create(userDto);
+    } catch (error) {
+      throw new RequestTimeoutException('Cannot create psychologist');
+    }
+
+    const document = await this.documentRepository.findOne({
+      where: { id: userDto.document.id },
+    });
+
+    if (!document) {
+      throw new UnprocessableEntityException('Document not found');
+    }
+
+    const role = await this.roleService.get(userDto.role.id);
+
+    user.role = role;
+    user.document = document;
+
+    try {
+      user = await this.userRepository.save(user);
+    } catch (error) {
+      throw new RequestTimeoutException('Error saving psychologist');
+    }
+
+    return user;
+  }
 }

@@ -22,6 +22,7 @@ import { RoleModule } from '../role/role.module';
 import { Document } from './infrastructure/entity/document.entity';
 import { DocumentSeeder } from 'src/seeds/document.seeder';
 import { GetDocumentsUseCase } from './application/getDocuments/GetDocuments.useCase';
+import { CreatePsychologistUseCase } from './application/createPsychologist/createPsychologist.useCase';
 
 @Module({
   controllers: [UserController],
@@ -50,6 +51,21 @@ import { GetDocumentsUseCase } from './application/getDocuments/GetDocuments.use
         CONSTANTS.PROVIDERS.MAIL_SERVICE,
       ],
     },
+    {
+      provide: CONSTANTS.USE_CASES.CREATE_PSYCHOLOGIST_USE_CASE,
+      useFactory: (
+        userService: IUserService,
+        hashProvider: IHashProvider,
+        mailerService: IMailerService,
+      ) =>
+        new CreatePsychologistUseCase(userService, hashProvider, mailerService),
+      inject: [
+        CONSTANTS.PROVIDERS.USER_SERVICE,
+        CONSTANTS.PROVIDERS.HASH_PROVIDER,
+        CONSTANTS.PROVIDERS.MAIL_SERVICE,
+      ],
+    },
+
     {
       provide: CONSTANTS.USE_CASES.UPDATE_USER_USE_CASE,
       useFactory: (userService: IUserService, hashProvider: IHashProvider) =>
