@@ -20,6 +20,7 @@ import {
 import { IICs, IICsService } from 'src/lib/common/domain/services/IICs.service';
 import { MAIL } from 'src/common/constants/keys';
 import { DateTime } from 'luxon';
+import { IFilterSchedule } from 'src/lib/schedule/domain/interfaces/ISchedule';
 
 export class CreateAppointmentUseCase {
   constructor(
@@ -48,6 +49,20 @@ export class CreateAppointmentUseCase {
       date.setDate(date.getDate() + 1);
       console.log('🚀  ~ CreateAppointmentUseCase ~ run ~ date:', date);
       createAppointmentDto.date = date;
+
+      const dateString = createAppointmentDto.date.toISOString().split('T')[0];
+      const dayOfWeek = new Date(createAppointmentDto.date).getDay();
+      const filter: IFilterSchedule = {
+        date: dateString,
+        day: dayOfWeek.toString(),
+      };
+      const appointments =
+        await this.appointmentService.getAppointmentsByDate(filter);
+      if (appointments.length > 0) {
+        throw new FoundError(
+          'The schedule conflicts with an existing appointment',
+        );
+      }
 
       const scheduleTook = await this.scheduleService.scheduleHasBeenTaken(
         createAppointmentDto.schedule,
