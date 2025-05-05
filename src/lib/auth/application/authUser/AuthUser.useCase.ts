@@ -31,7 +31,7 @@ export class AuthUserUseCase {
     console.log('Role', userAuth.user.role);
     try {
       token = this.jwtService.signToken({
-        id: userAuth.user.id,
+        id: userAuth.id,
         role: userAuth.user.role.name,
       });
     } catch (error) {
