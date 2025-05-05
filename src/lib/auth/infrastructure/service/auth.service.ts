@@ -15,10 +15,6 @@ export class AuthService implements IAuthService {
   ) {}
 
   async validateUser(email: string): Promise<IAuth> {
-    try {
-    } catch (error) {
-      console.log('error', error);
-    }
     return await this.authRepository.findOne({
       where: { email },
       relations: ['user', 'user.role'],
