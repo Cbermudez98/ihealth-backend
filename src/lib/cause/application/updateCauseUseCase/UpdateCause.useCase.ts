@@ -1,4 +1,4 @@
-import { NotCreatedError } from 'src/lib/common/domain/errors/NotCreatedError';
+import { NotCreatedError } from '../../../../lib/common/domain/errors/NotCreatedError';
 import { ICause, ICauseUpdate } from '../../domain/interfaces/ICause';
 import { ICauseService } from '../../domain/service/ICause.service';
 

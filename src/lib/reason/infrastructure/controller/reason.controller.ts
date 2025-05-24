@@ -22,7 +22,7 @@ import { JwtAuthGuard } from './../../../auth/infrastructure/guard/jwt/jwt-auth.
 import { RoleGuard } from './../../..//auth/infrastructure/guard/role/role.guard';
 import { ROLES } from '../../../../common/constants/roles.enum';
 import { Roles } from './../../../role/infrastructure/decorator/role.decorator';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../../../common/constants/constants';
 
 @Controller('reason')
 export class ReasonController {

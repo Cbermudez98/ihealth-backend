@@ -1,9 +1,9 @@
 import { Body, Controller, HttpStatus, Inject, Post } from '@nestjs/common';
 import { AuthUserUseCase } from '../../application/authUser/AuthUser.useCase';
 import { AuthDto } from '../dtos/auth.dto';
-import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
-import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { ResponseAdapter } from '../../../../common/response-adapter/response.adapter';
+import { HTTP_RESPONSE_MESSAGE } from '../../../../common/constants/http-message';
+import { CONSTANTS } from '../../../../common/constants/constants';
 
 @Controller('auth')
 export class AuthController {

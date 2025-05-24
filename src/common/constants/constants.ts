@@ -19,6 +19,7 @@ export namespace CONSTANTS {
 
   export enum USE_CASES {
     CREATE_USER_USE_CASE = 'CreateUserUseCase',
+    CREATE_PSYCHOLOGIST_USE_CASE = 'CreatePsychologistUseCase',
     GET_USER_DOCUMENTS_USE_CASE = 'GetDocumentsUseCase',
     UPDATE_USER_USE_CASE = 'UpdateUserUseCase',
     GET_USER_USE_CASE = 'GetUserUseCase',

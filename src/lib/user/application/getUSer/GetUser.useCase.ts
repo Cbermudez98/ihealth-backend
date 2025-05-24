@@ -1,4 +1,4 @@
-import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
+import { NotFoundError } from '../../../../lib/common/domain/errors/NotFoundErrors';
 import { IUser } from '../../domain/interfaces/IUser';
 import { IUserService } from '../../domain/service/IUser.service';
 

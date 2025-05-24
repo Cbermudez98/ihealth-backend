@@ -1,3 +1,4 @@
+import { Document } from '../../../../lib/user/infrastructure/entity/document.entity';
 import { Repository } from 'typeorm';
 import { UserService } from './user.service';
 import { User } from '../entity/user.entity';
@@ -77,6 +78,10 @@ describe('UserService', () => {
     age: 20,
     code: 198297418712,
     gender: 'M',
+    document: {
+      id: 1,
+    },
+    document_number: '123456789',
     auth: {
       email: 'rawad.munosromero@unicolombo.edu.co',
       password: 'Jane123*',
@@ -104,6 +109,10 @@ describe('UserService', () => {
     age: 20,
     code: 198297418712,
     gender: 'M',
+    document: {
+      id: 1,
+    },
+    document_number: '123456789',
     auth: {
       email: 'rawad.munosromero@unicolombo.edu.co',
       password: '1234567890',

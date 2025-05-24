@@ -12,9 +12,9 @@ import { RoleService } from '../role/infrastructure/service/role.service';
 import { GetMenuByIDCaseUse } from './application/getMenuByIDCaseUse/GetMenuByID.useCase';
 import { DeleteMenuUseCase } from './application/deleteMenuCaseUse/DeleteMenu.useCase';
 import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt/jwt-auth.guard';
-import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
-import { SharedModule } from 'src/shared/shared.module';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { JwtProvider } from '../../shared/providers/jwt.provider/jwt.provider';
+import { SharedModule } from '../../shared/shared.module';
+import { CONSTANTS } from '../../common/constants/constants';
 import { GetAllMenuUseCase } from './application/getAllMenusCaseUse/GetAllMenus.useCase';
 
 @Module({

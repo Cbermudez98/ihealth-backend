@@ -11,8 +11,8 @@ import { UpdateReasonUseCase } from './application/updateReason/UpdateReason.use
 import { Role } from '../role/infrastructure/entity/role.entity';
 import { ReasonAndCauseSeeder } from './../../seeds/reasonAndCauses.seeder';
 import { Cause } from '../cause/infrastructure/entity/cause.entity';
-import { CONSTANTS } from 'src/common/constants/constants';
-import { SharedModule } from 'src/shared/shared.module';
+import { CONSTANTS } from '../../common/constants/constants';
+import { SharedModule } from '../../shared/shared.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Reason, Role, Cause]), SharedModule],

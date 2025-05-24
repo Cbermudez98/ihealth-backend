@@ -8,7 +8,7 @@ import {
 import { IMenuDto } from '../../domain/interfaces/IMenu';
 import { Role } from '../../../role/infrastructure/entity/role.entity';
 import { Type } from 'class-transformer';
-import { RoleDto } from 'src/lib/role/infrastructure/dtos/role.dto';
+import { RoleDto } from '../../../../lib/role/infrastructure/dtos/role.dto';
 
 export class MenuDto implements IMenuDto {
   @IsNotEmpty()

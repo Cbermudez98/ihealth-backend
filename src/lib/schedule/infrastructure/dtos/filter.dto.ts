@@ -8,7 +8,7 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { DAYS } from 'src/common/constants/keys';
+import { DAYS } from '../../../../common/constants/keys';
 import { IFilterSchedule } from '../../domain/interfaces/ISchedule';
 import { Type } from 'class-transformer';
 

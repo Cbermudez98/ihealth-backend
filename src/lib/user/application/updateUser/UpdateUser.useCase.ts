@@ -1,7 +1,7 @@
-import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
+import { NotFoundError } from '../../../../lib/common/domain/errors/NotFoundErrors';
 import { IUser, IUserUpdate } from '../../domain/interfaces/IUser';
 import { IUserService } from '../../domain/service/IUser.service';
-import { IHashProvider } from 'src/lib/common/domain/services/IHash.service';
+import { IHashProvider } from '../../../../lib/common/domain/services/IHash.service';
 
 export class UpdateUserUseCase {
   constructor(

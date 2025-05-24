@@ -7,7 +7,7 @@ import { IUserCreate } from '../../domain/interfaces/IUser';
 describe('User use cases test', () => {
   const service: IUserService = {
     create: jest.fn(),
-  };
+  } as any;
 
   const serviceHash: IHashProvider = {
     compare: jest.fn(),
@@ -49,7 +49,7 @@ describe('User use cases test', () => {
     role: {
       id: 1,
     },
-  };
+  } as any;
 
   it('Should create User', async () => {
     await createUserUseCase.run(data);
