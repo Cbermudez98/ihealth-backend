@@ -21,9 +21,9 @@ import { UpdateStatusAppointmentUseCase } from './application/updateStatusAppoin
 import { IMailerService } from '../common/domain/services/IMailer.service';
 import { IICsService } from '../common/domain/services/IICs.service';
 import { GetAllAppointmentsUSeCase } from './application/GetAllAppointmentsUseCase/getAllAppointments.useCase';
-import { SharedModule } from 'src/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { UserModule } from '../user/user.module';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../common/constants/constants';
 import { CauseModule } from '../cause/cause.module';
 import { ReasonModule } from '../reason/reason.module';
 import { ScheduleModule } from '../schedule/schedule.module';

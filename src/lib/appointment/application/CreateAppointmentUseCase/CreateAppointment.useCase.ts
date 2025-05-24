@@ -5,20 +5,23 @@ import {
 } from '../../domain/interfaces/IAppointment';
 import { IUser } from '../../../user/domain/interfaces/IUser';
 import { IStatusService } from '../../domain/services/IStatus.service';
-import { ICauseService } from 'src/lib/cause/domain/service/ICause.service';
-import { IReasonService } from 'src/lib/reason/domain/service/IReason.service';
-import { IScheduleService } from 'src/lib/schedule/domain/service/ISchedule.service';
+import { ICauseService } from '../../../../lib/cause/domain/service/ICause.service';
+import { IReasonService } from '../../../../lib/reason/domain/service/IReason.service';
+import { IScheduleService } from '../../../../lib/schedule/domain/service/ISchedule.service';
 import { IAppointmentService } from '../../domain/services/IAppointment.service';
-import { FoundError } from 'src/lib/common/domain/errors/FoundError';
-import { DateUtil } from 'src/lib/common/domain/utils/date';
-import { BadRequestError } from 'src/lib/common/domain/errors/BadRequestError';
+import { FoundError } from '../../../../lib/common/domain/errors/FoundError';
+import { DateUtil } from '../../../../lib/common/domain/utils/date';
+import { BadRequestError } from '../../../../lib/common/domain/errors/BadRequestError';
 import {
   IMail,
   IMailerService,
   TEMPLATE_MAIL,
-} from 'src/lib/common/domain/services/IMailer.service';
-import { IICs, IICsService } from 'src/lib/common/domain/services/IICs.service';
-import { MAIL } from 'src/common/constants/keys';
+} from '../../../../lib/common/domain/services/IMailer.service';
+import {
+  IICs,
+  IICsService,
+} from '../../../../lib/common/domain/services/IICs.service';
+import { MAIL } from '../../../../common/constants/keys';
 import { DateTime } from 'luxon';
 
 export class CreateAppointmentUseCase {

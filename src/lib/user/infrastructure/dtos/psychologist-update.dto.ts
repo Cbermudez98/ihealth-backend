@@ -1,11 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { PsychologistDto } from './psychologist.dto';
 
-export class PsychologistUpdateDto {
-  @IsOptional()
-  @IsString()
-  professional_license?: string;
-
-  @IsOptional()
-  @IsString()
-  specialty?: string;
-}
+export class PsychologistUpdateDto extends PartialType(PsychologistDto) {}

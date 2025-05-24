@@ -1,8 +1,4 @@
-import { IUser } from './IUser';
+import { IUserCreate } from './IUser';
 
-export interface IPsychologist {
-  id: number;
-  professional_license: string;
-  specialty: string;
-  user: IUser;
-}
+export interface IPsychologistCreate
+  extends Omit<IUserCreate, 'student_detail' | 'role'> {}

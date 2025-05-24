@@ -1,4 +1,4 @@
-import { Menu } from 'src/lib/menu/infrastructure/entity/menu.entity';
+import { Menu } from '../../../../lib/menu/infrastructure/entity/menu.entity';
 import { IUser } from '../../../user/domain/interfaces/IUser';
 
 export interface IRole {

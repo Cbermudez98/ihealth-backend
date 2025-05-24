@@ -8,9 +8,9 @@ import { MoreThan, Repository } from 'typeorm';
 import { Schedule } from '../entity/Schedule.entity';
 import { IScheduleService } from '../../domain/service/ISchedule.service';
 import { ISchedule, IScheduleCreate } from '../../domain/interfaces/ISchedule';
-import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
-import { Appointment } from 'src/lib/appointment/infrastructure/entity/appointment.entity';
-import { DateUtil } from 'src/lib/common/domain/utils/date';
+import { NotFoundError } from '../../../../lib/common/domain/errors/NotFoundErrors';
+import { Appointment } from '../../../../lib/appointment/infrastructure/entity/appointment.entity';
+import { DateUtil } from '../../../../lib/common/domain/utils/date';
 
 @Injectable()
 export class ScheduleService implements IScheduleService {

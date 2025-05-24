@@ -6,8 +6,8 @@ import { CareerService } from './service/career.service';
 import { GetAllCareerUseCase } from '../application/getAllCareer/GetAllCareer.useCase';
 import { ICareerService } from '../domain/service/ICareer.service';
 import { GetCareerUseCase } from '../application/getCareer/GetCareer.useCase';
-import { CareerSeeder } from 'src/seeds/career.seeder';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CareerSeeder } from '../../../seeds/career.seeder';
+import { CONSTANTS } from '../../../common/constants/constants';
 
 @Module({
   controllers: [CareerController],

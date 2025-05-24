@@ -1,12 +1,13 @@
 import { Controller, Get, HttpStatus, Inject } from '@nestjs/common';
-import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
+import { ResponseAdapter } from '../../../../common/response-adapter/response.adapter';
 import { GetAllRolesUseCase } from '../../application/getAllRoles/GetAllRoles.useCase';
-import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
+import { HTTP_RESPONSE_MESSAGE } from '../../../../common/constants/http-message';
+import { CONSTANTS } from '../../../../common/constants/constants';
 
 @Controller('roles')
 export class RoleController {
   constructor(
-    @Inject('GetAllRolesUseCase')
+    @Inject(CONSTANTS.USE_CASES.GET_ALL_ROLES_USE_CASE)
     private readonly getAllRolesUseCase: GetAllRolesUseCase,
   ) {}
   @Get()

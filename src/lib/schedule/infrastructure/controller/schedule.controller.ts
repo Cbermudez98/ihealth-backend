@@ -17,8 +17,8 @@ import { JwtAuthGuard } from './../../../auth/infrastructure/guard/jwt/jwt-auth.
 import { RoleGuard } from './../../../auth/infrastructure/guard/role/role.guard';
 import { CreateScheduleDto } from '../dtos/schedule.dto';
 import { FilterScheduleDto } from '../dtos/filter.dto';
-import { DAYS } from 'src/common/constants/keys';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { DAYS } from '../../../../common/constants/keys';
+import { CONSTANTS } from '../../../../common/constants/constants';
 
 @Controller('schedule')
 export class ScheduleController {

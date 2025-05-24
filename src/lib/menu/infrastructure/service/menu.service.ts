@@ -8,7 +8,7 @@ import { IMenuService } from '../../domain/service/IMenu.service';
 import { IMenu, IMenuAdd } from '../../domain/interfaces/IMenu';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Menu } from '../entity/menu.entity';
-import { Role } from 'src/lib/role/infrastructure/entity/role.entity';
+import { Role } from '../../../../lib/role/infrastructure/entity/role.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

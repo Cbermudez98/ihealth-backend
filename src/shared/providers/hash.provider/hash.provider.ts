@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { genSaltSync, compareSync, hashSync } from 'bcrypt';
-import { IHashProvider } from 'src/lib/common/domain/services/IHash.service';
+import { IHashProvider } from '../../../lib/common/domain/services/IHash.service';
 
 @Injectable()
 export class HashProvider implements IHashProvider {

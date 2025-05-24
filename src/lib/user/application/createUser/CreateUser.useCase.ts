@@ -1,4 +1,4 @@
-import { IHashProvider } from 'src/lib/common/domain/services/IHash.service';
+import { IHashProvider } from '../../../../lib/common/domain/services/IHash.service';
 import { IUser, IUserCreate } from '../../domain/interfaces/IUser';
 import { IUserService } from '../../domain/service/IUser.service';
 import {

@@ -1,6 +1,6 @@
 import { Injectable, RequestTimeoutException } from '@nestjs/common';
 import { ICauseService } from '../../domain/service/ICause.service';
-import { IReason } from 'src/lib/reason/domain/interfaces/IReason';
+import { IReason } from '../../../../lib/reason/domain/interfaces/IReason';
 import {
   ICauseCreate,
   ICause,

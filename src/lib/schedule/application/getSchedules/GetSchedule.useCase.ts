@@ -1,4 +1,4 @@
-import { IAppointmentService } from 'src/lib/appointment/domain/services/IAppointment.service';
+import { IAppointmentService } from '../../../../lib/appointment/domain/services/IAppointment.service';
 import { IScheduleService } from '../../domain/service/ISchedule.service';
 import { IFilterSchedule } from '../../domain/interfaces/ISchedule';
 

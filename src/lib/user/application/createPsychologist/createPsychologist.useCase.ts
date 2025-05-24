@@ -1,10 +1,11 @@
-import { IHashProvider } from 'src/lib/common/domain/services/IHash.service';
+import { IHashProvider } from '../../../../lib/common/domain/services/IHash.service';
 import { IUser, IUserCreate } from '../../domain/interfaces/IUser';
 import { IUserService } from '../../domain/service/IUser.service';
 import {
   IMailerService,
   TEMPLATE_MAIL,
-} from 'src/lib/common/domain/services/IMailer.service';
+} from '../../../../lib/common/domain/services/IMailer.service';
+import { IPsychologistCreate } from '../../domain/interfaces/IPsychologist';
 
 export class CreatePsychologistUseCase {
   constructor(
@@ -13,7 +14,7 @@ export class CreatePsychologistUseCase {
     private readonly mailerService: IMailerService,
   ) {}
 
-  async run(data: IUserCreate): Promise<IUser> {
+  async run(data: IPsychologistCreate): Promise<IUser> {
     const hashedPassword = this.hashProvider.encrypt(data.auth.password);
     data.auth.password = hashedPassword;
 

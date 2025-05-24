@@ -21,15 +21,15 @@ import { AddItemUseCase } from '../../application/addItemCaseUse/AddItem.useCase
 import { UpdateMenuUseCase } from '../../application/updateCaseUse/UpdateMenu.useCase';
 
 import { IMenuUpdate } from '../../domain/interfaces/IMenu';
-import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
+import { ResponseAdapter } from '../../../../common/response-adapter/response.adapter';
 import { DeleteMenuUseCase } from '../../application/deleteMenuCaseUse/DeleteMenu.useCase';
-import { JwtAuthGuard } from 'src/lib/auth/infrastructure/guard/jwt/jwt-auth.guard';
-import { RoleGuard } from 'src/lib/auth/infrastructure/guard/role/role.guard';
-import { ROLES } from 'src/common/constants/roles.enum';
-import { Roles } from 'src/lib/role/infrastructure/decorator/role.decorator';
-import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
-import { KEYS } from 'src/common/constants/keys';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { JwtAuthGuard } from '../../../../lib/auth/infrastructure/guard/jwt/jwt-auth.guard';
+import { RoleGuard } from '../../../../lib/auth/infrastructure/guard/role/role.guard';
+import { ROLES } from '../../../../common/constants/roles.enum';
+import { Roles } from '../../../../lib/role/infrastructure/decorator/role.decorator';
+import { ITokenPayload } from '../../../../lib/auth/infrastructure/interfaces/IToken';
+import { KEYS } from '../../../../common/constants/keys';
+import { CONSTANTS } from '../../../../common/constants/constants';
 import { GetAllMenuUseCase } from '../../application/getAllMenusCaseUse/GetAllMenus.useCase';
 import { MenuUpdateDto } from '../dtos/menu-update.dto';
 

@@ -5,7 +5,7 @@ import { JwtProvider } from './providers/jwt.provider/jwt.provider';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { IcsProvider } from './providers/ics.provider/ics.provider';
 import { MailService } from './mail/mail.service';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../common/constants/constants';
 
 const providers = [
   { provide: CONSTANTS.PROVIDERS.HASH_PROVIDER, useClass: HashProvider },
