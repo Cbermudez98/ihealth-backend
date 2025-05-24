@@ -1,7 +1,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { ScheduleController } from './infrastructure/controller/schedule.controller';
 import { ScheduleService } from './infrastructure/service/schedule.service';
-import { ScheduleSeeder } from 'src/seeds/schedule.seeder';
+import { ScheduleSeeder } from '../../seeds/schedule.seeder';
 import { IScheduleService } from './domain/service/ISchedule.service';
 import { GetScheduleUseCase } from './application/getSchedules/GetSchedule.useCase';
 import { CreateScheduleUseCase } from './application/createSchedule/CreateSchedule.useCase';
@@ -9,9 +9,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Role } from '../role/infrastructure/entity/role.entity';
 import { Schedule } from './infrastructure/entity/Schedule.entity';
 import { IAppointmentService } from '../appointment/domain/services/IAppointment.service';
-import { SharedModule } from 'src/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { AppointmentModule } from '../appointment/appointment.module';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../common/constants/constants';
 import { Appointment } from '../appointment/infrastructure/entity/appointment.entity';
 
 @Module({

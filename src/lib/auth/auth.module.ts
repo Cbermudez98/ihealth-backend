@@ -7,8 +7,8 @@ import { IAuthService } from './domain/service/IAuth.service';
 import { AuthUserUseCase } from './application/authUser/AuthUser.useCase';
 import { AuthController } from './infrastructure/controller/auth.controller';
 import { IJwtService } from './domain/service/IJwt.service';
-import { SharedModule } from 'src/shared/shared.module';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { SharedModule } from '../../shared/shared.module';
+import { CONSTANTS } from '../../common/constants/constants';
 
 @Module({
   controllers: [AuthController],

@@ -2,9 +2,9 @@ import { IAuthService } from '../../domain/service/IAuth.service';
 import { AuthDto } from '../../infrastructure/dtos/auth.dto';
 import { IHashProvider } from './../../../common/domain/services/IHash.service';
 import { NotFoundError } from './../../../common/domain/errors/NotFoundErrors';
-import { ForbiddenError } from 'src/lib/common/domain/errors/ForbiddenError';
+import { ForbiddenError } from '../../../../lib/common/domain/errors/ForbiddenError';
 import { IJwtService } from '../../domain/service/IJwt.service';
-import { InternalServerError } from 'src/lib/common/domain/errors/InternalServerError';
+import { InternalServerError } from '../../../../lib/common/domain/errors/InternalServerError';
 import { IAccessToken } from '../../domain/interfaces/IAccessToken';
 import { IAuth } from '../../domain/interfaces/IAuth';
 
@@ -31,7 +31,7 @@ export class AuthUserUseCase {
     console.log('Role', userAuth.user.role);
     try {
       token = this.jwtService.signToken({
-        id: userAuth.user.id,
+        id: userAuth.id,
         role: userAuth.user.role.name,
       });
     } catch (error) {

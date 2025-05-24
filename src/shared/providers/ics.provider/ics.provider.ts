@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import ical from 'ical-generator';
-import { IICs, IICsService } from 'src/lib/common/domain/services/IICs.service';
+import {
+  IICs,
+  IICsService,
+} from '../../../lib/common/domain/services/IICs.service';
 
 @Injectable()
 export class IcsProvider implements IICsService {

@@ -1,4 +1,4 @@
-import { IUser } from 'src/lib/user/domain/interfaces/IUser';
+import { IUser } from '../../../../lib/user/domain/interfaces/IUser';
 import { IAppointmentService } from '../../domain/services/IAppointment.service';
 
 export class CurrentAppointmentUseCase {

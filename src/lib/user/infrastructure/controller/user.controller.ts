@@ -12,7 +12,7 @@ import {
 import { CreateUserUseCase } from '../../application/createUser/CreateUser.useCase';
 import { UserDto } from '../dtos/user.dto';
 import { ResponseAdapter } from './../../../../common/response-adapter/response.adapter';
-import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
+import { HTTP_RESPONSE_MESSAGE } from '../../../../common/constants/http-message';
 import { UserUpdateDto } from '../dtos/user-update.dto';
 import { JwtAuthGuard } from './../../../auth/infrastructure/guard/jwt/jwt-auth.guard';
 import { Roles } from './../../../role/infrastructure/decorator/role.decorator';
@@ -21,12 +21,14 @@ import { RoleGuard } from './../../../auth/infrastructure/guard/role/role.guard'
 import { UpdateUserUseCase } from '../../application/updateUser/UpdateUser.useCase';
 import { GetUserUseCase } from '../../application/getUSer/GetUser.useCase';
 import { Request } from 'express';
-import { KEYS } from 'src/common/constants/keys';
-import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
+import { KEYS } from '../../../../common/constants/keys';
+import { ITokenPayload } from '../../../../lib/auth/infrastructure/interfaces/IToken';
 import { GetPsychologistUseCase } from '../../application/getPsychologist/GetPsychologist.useCase';
 import { GetAllUsersUseCase } from '../../application/getAllUsers/GetAllUsers.useCase';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../../../common/constants/constants';
 import { GetDocumentsUseCase } from '../../application/getDocuments/GetDocuments.useCase';
+import { PsychologistDto } from '../dtos/psychologist.dto';
+import { CreatePsychologistUseCase } from '../../application/createPsychologist/createPsychologist.useCase';
 
 @Controller('user')
 export class UserController {
@@ -43,6 +45,8 @@ export class UserController {
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
     @Inject(CONSTANTS.USE_CASES.GET_USER_DOCUMENTS_USE_CASE)
     private readonly getDocumentsUseCase: GetDocumentsUseCase,
+    @Inject(CONSTANTS.USE_CASES.CREATE_PSYCHOLOGIST_USE_CASE)
+    private readonly createPsychologistUseCase: CreatePsychologistUseCase,
   ) {}
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -103,9 +107,23 @@ export class UserController {
     );
   }
 
+  @Post('psychologists')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(ROLES.ADMIN)
+  public async createPsychologist(@Body() psychologistDto: PsychologistDto) {
+    const newPsychologist =
+      await this.createPsychologistUseCase.run(psychologistDto);
+    return ResponseAdapter.set(
+      HttpStatus.CREATED,
+      newPsychologist,
+      HTTP_RESPONSE_MESSAGE.HTTP_201_CREATED,
+      true,
+    );
+  }
+
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLES.USER, ROLES.ADMIN, ROLES.COORDINATOR)
-  @Patch()
+  @Patch('psychologists/:id')
   public async updateUser(@Body() user: UserUpdateDto, @Req() req: Request) {
     const token: ITokenPayload = req[KEYS.USER] as ITokenPayload;
     return ResponseAdapter.set(

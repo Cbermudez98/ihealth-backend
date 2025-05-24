@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Schedule } from '../lib/schedule/infrastructure/entity/Schedule.entity'; // Asegúrate de importar la entidad correctamente
 import { IScheduleCreate } from '../lib/schedule/domain/interfaces/ISchedule';
-import { DAYS } from 'src/common/constants/keys';
+import { DAYS } from '../common/constants/keys';
 
 @Injectable()
 export class ScheduleSeeder implements OnModuleInit {

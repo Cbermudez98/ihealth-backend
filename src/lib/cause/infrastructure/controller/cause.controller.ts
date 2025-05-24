@@ -10,18 +10,18 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ROLES } from 'src/common/constants/roles.enum';
+import { ROLES } from '../../../../common/constants/roles.enum';
 import { JwtAuthGuard } from './../../../auth/infrastructure/guard/jwt/jwt-auth.guard';
 import { RoleGuard } from './../../../auth/infrastructure/guard/role/role.guard';
 import { Roles } from './../../../role/infrastructure/decorator/role.decorator';
 import { CauseDto } from '../dtos/cause.dto';
-import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
+import { ResponseAdapter } from '../../../../common/response-adapter/response.adapter';
 import { CreateCauseUseCase } from '../../application/createCauseUseCase/CreateCause.useCase';
-import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
+import { HTTP_RESPONSE_MESSAGE } from '../../../../common/constants/http-message';
 import { CauseUpdateDto } from '../dtos/cause-update.dto';
 import { UpdateCauseUseCase } from '../../application/updateCauseUseCase/UpdateCause.useCase';
 import { GetCauseByReasonUseCase } from '../../application/getCauseByReasonUseCase/GetCause.useCase';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../../../common/constants/constants';
 
 @Controller('cause')
 export class CauseController {

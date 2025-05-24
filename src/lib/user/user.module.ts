@@ -5,7 +5,7 @@ import { User } from './infrastructure/entity/user.entity';
 import { UserService } from './infrastructure/service/user.service';
 import { IUserService } from './domain/service/IUser.service';
 import { CreateUserUseCase } from './application/createUser/CreateUser.useCase';
-import { MailModule } from 'src/shared/mail/mail.module';
+import { MailModule } from '../../shared/mail/mail.module';
 import { IHashProvider } from '../common/domain/services/IHash.service';
 import { IMailerService } from '../common/domain/services/IMailer.service';
 import { Career } from '../career/infrastructure/entity/career.entity';
@@ -15,13 +15,14 @@ import { GetUserUseCase } from './application/getUSer/GetUser.useCase';
 import { Menu } from '../menu/infrastructure/entity/menu.entity';
 import { GetPsychologistUseCase } from './application/getPsychologist/GetPsychologist.useCase';
 import { GetAllUsersUseCase } from './application/getAllUsers/GetAllUsers.useCase';
-import { SharedModule } from 'src/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { CareerModule } from '../career/infrastructure/career.module';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../common/constants/constants';
 import { RoleModule } from '../role/role.module';
 import { Document } from './infrastructure/entity/document.entity';
-import { DocumentSeeder } from 'src/seeds/document.seeder';
+import { DocumentSeeder } from '../../seeds/document.seeder';
 import { GetDocumentsUseCase } from './application/getDocuments/GetDocuments.useCase';
+import { CreatePsychologistUseCase } from './application/createPsychologist/createPsychologist.useCase';
 
 @Module({
   controllers: [UserController],
@@ -50,6 +51,21 @@ import { GetDocumentsUseCase } from './application/getDocuments/GetDocuments.use
         CONSTANTS.PROVIDERS.MAIL_SERVICE,
       ],
     },
+    {
+      provide: CONSTANTS.USE_CASES.CREATE_PSYCHOLOGIST_USE_CASE,
+      useFactory: (
+        userService: IUserService,
+        hashProvider: IHashProvider,
+        mailerService: IMailerService,
+      ) =>
+        new CreatePsychologistUseCase(userService, hashProvider, mailerService),
+      inject: [
+        CONSTANTS.PROVIDERS.USER_SERVICE,
+        CONSTANTS.PROVIDERS.HASH_PROVIDER,
+        CONSTANTS.PROVIDERS.MAIL_SERVICE,
+      ],
+    },
+
     {
       provide: CONSTANTS.USE_CASES.UPDATE_USER_USE_CASE,
       useFactory: (userService: IUserService, hashProvider: IHashProvider) =>

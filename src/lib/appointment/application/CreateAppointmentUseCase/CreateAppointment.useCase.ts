@@ -5,20 +5,23 @@ import {
 } from '../../domain/interfaces/IAppointment';
 import { IUser } from '../../../user/domain/interfaces/IUser';
 import { IStatusService } from '../../domain/services/IStatus.service';
-import { ICauseService } from 'src/lib/cause/domain/service/ICause.service';
-import { IReasonService } from 'src/lib/reason/domain/service/IReason.service';
-import { IScheduleService } from 'src/lib/schedule/domain/service/ISchedule.service';
+import { ICauseService } from '../../../../lib/cause/domain/service/ICause.service';
+import { IReasonService } from '../../../../lib/reason/domain/service/IReason.service';
+import { IScheduleService } from '../../../../lib/schedule/domain/service/ISchedule.service';
 import { IAppointmentService } from '../../domain/services/IAppointment.service';
-import { FoundError } from 'src/lib/common/domain/errors/FoundError';
-import { DateUtil } from 'src/lib/common/domain/utils/date';
-import { BadRequestError } from 'src/lib/common/domain/errors/BadRequestError';
+import { FoundError } from '../../../../lib/common/domain/errors/FoundError';
+import { DateUtil } from '../../../../lib/common/domain/utils/date';
+import { BadRequestError } from '../../../../lib/common/domain/errors/BadRequestError';
 import {
   IMail,
   IMailerService,
   TEMPLATE_MAIL,
-} from 'src/lib/common/domain/services/IMailer.service';
-import { IICs, IICsService } from 'src/lib/common/domain/services/IICs.service';
-import { MAIL } from 'src/common/constants/keys';
+} from '../../../../lib/common/domain/services/IMailer.service';
+import {
+  IICs,
+  IICsService,
+} from '../../../../lib/common/domain/services/IICs.service';
+import { MAIL } from '../../../../common/constants/keys';
 import { DateTime } from 'luxon';
 import { IFilterSchedule } from 'src/lib/schedule/domain/interfaces/ISchedule';
 
@@ -97,30 +100,32 @@ export class CreateAppointmentUseCase {
         '🚀  ~ CreateAppointmentUseCase ~ run ~ appointment:',
         appointment,
       );
+      const baseDate = DateTime.fromJSDate(appointment.date, {
+        zone: 'America/Bogota',
+      });
 
-      let startDate = new Date(
-        appointment.date.toISOString().split('T')[0] +
-          ' ' +
-          appointment.schedule.start_time,
-      );
+      const [startHour, startMinute] = appointment.schedule.start_time
+        .split(':')
+        .map(Number);
+      const [endHour, endMinute] = appointment.schedule.end_time
+        .split(':')
+        .map(Number);
 
-      let endDate = new Date(
-        appointment.date.toISOString().split('T')[0] +
-          ' ' +
-          appointment.schedule.end_time,
-      );
-      if (process.env.NODE_ENV !== 'dev') {
-        startDate.getTime() + startDate.getTimezoneOffset() * 60000;
-        startDate.setHours(startDate.getHours() + 5);
-        endDate.getTime() + startDate.getTimezoneOffset() * 60000;
-        endDate.setHours(endDate.getHours() + 5);
-      }
+      const startDate = baseDate.set({
+        hour: startHour,
+        minute: startMinute,
+        second: 0,
+        millisecond: 0,
+      });
+
+      const endDate = baseDate.set({
+        hour: endHour,
+        minute: endMinute,
+        second: 0,
+        millisecond: 0,
+      });
 
       await this.appointmentService.create(appointment);
-      console.log({
-        startDate,
-        endDate,
-      });
 
       const ics: IICs = {
         startDate: startDate.toString(),
@@ -144,7 +149,9 @@ export class CreateAppointmentUseCase {
         },
         context: {
           doctorName: `${appointment.psychologist.name} ${appointment.psychologist.last_name}`,
-          appointmentDate: startDate.toDateString(),
+          appointmentDate: startDate
+            .setLocale('es')
+            .toFormat('cccc, dd LLL yyyy'),
           appointmentTime: `${appointment.schedule.start_time} - ${appointment.schedule.end_time}`,
         },
       };
