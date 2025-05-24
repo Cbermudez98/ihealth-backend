@@ -15,4 +15,9 @@ describe('HashProvider', () => {
   it('should be defined', () => {
     expect(provider).toBeDefined();
   });
+
+  it('Should encrypt the string', () => {
+    const encrypted = provider.encrypt('hello world');
+    expect(encrypted).toBeDefined();
+  });
 });
