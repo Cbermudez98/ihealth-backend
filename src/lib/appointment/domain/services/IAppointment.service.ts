@@ -1,7 +1,7 @@
-import { IUser } from 'src/lib/user/domain/interfaces/IUser';
+import { IUser } from '../../../../lib/user/domain/interfaces/IUser';
 import { IAppointment, IAppointmentSave } from '../interfaces/IAppointment';
 import { IStatus } from '../interfaces/IStatus';
-import { IFilterSchedule } from 'src/lib/schedule/domain/interfaces/ISchedule';
+import { IFilterSchedule } from '../../../../lib/schedule/domain/interfaces/ISchedule';
 
 export interface IAppointmentService {
   create: (appointment: IAppointmentSave) => Promise<IAppointment>;

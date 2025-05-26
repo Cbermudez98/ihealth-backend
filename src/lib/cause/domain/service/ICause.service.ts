@@ -1,4 +1,4 @@
-import { IReason } from 'src/lib/reason/domain/interfaces/IReason';
+import { IReason } from '../../../../lib/reason/domain/interfaces/IReason';
 import { ICause, ICauseCreate, ICauseUpdate } from '../interfaces/ICause';
 
 export interface ICauseService {

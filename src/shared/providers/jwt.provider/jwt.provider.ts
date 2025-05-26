@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { IJwtService } from 'src/lib/auth/domain/service/IJwt.service';
+import { IJwtService } from '../../../lib/auth/domain/service/IJwt.service';
 
 @Injectable()
 export class JwtProvider implements IJwtService {

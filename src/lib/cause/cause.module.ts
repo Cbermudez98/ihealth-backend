@@ -1,6 +1,6 @@
 import { RoleService } from './../role/infrastructure/service/role.service';
 import { JwtAuthGuard } from './../auth/infrastructure/guard/jwt/jwt-auth.guard';
-import { JwtProvider } from 'src/shared/providers/jwt.provider/jwt.provider';
+import { JwtProvider } from '../../shared/providers/jwt.provider/jwt.provider';
 import { Module } from '@nestjs/common';
 import { CauseController } from './infrastructure/controller/cause.controller';
 import { CauseService } from './infrastructure/service/cause.service';
@@ -12,8 +12,8 @@ import { Reason } from '../reason/infrastructure/entity/reason.entity';
 import { UpdateCauseUseCase } from './application/updateCauseUseCase/UpdateCause.useCase';
 import { GetCauseByReasonUseCase } from './application/getCauseByReasonUseCase/GetCause.useCase';
 import { Role } from '../role/infrastructure/entity/role.entity';
-import { SharedModule } from 'src/shared/shared.module';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { SharedModule } from '../../shared/shared.module';
+import { CONSTANTS } from '../../common/constants/constants';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Cause, Reason, Role]), SharedModule],

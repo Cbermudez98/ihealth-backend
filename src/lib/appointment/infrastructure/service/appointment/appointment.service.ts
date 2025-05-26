@@ -1,4 +1,4 @@
-import { IAppointment } from 'src/lib/appointment/domain/interfaces/IAppointment';
+import { IAppointment } from '../../../../../lib/appointment/domain/interfaces/IAppointment';
 import { IAppointmentService } from './../../../domain/services/IAppointment.service';
 import {
   HttpException,
@@ -10,11 +10,14 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Appointment } from '../../entity/appointment.entity';
 import { Between, In, Or, Repository } from 'typeorm';
-import { IUser } from 'src/lib/user/domain/interfaces/IUser';
-import { IStatus, STATUS } from 'src/lib/appointment/domain/interfaces/IStatus';
-import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
-import { IFilterSchedule } from 'src/lib/schedule/domain/interfaces/ISchedule';
-import { DateUtil } from 'src/lib/common/domain/utils/date';
+import { IUser } from '../../../../../lib/user/domain/interfaces/IUser';
+import {
+  IStatus,
+  STATUS,
+} from '../../../../../lib/appointment/domain/interfaces/IStatus';
+import { NotFoundError } from '../../../../../lib/common/domain/errors/NotFoundErrors';
+import { IFilterSchedule } from '../../../../../lib/schedule/domain/interfaces/ISchedule';
+import { DateUtil } from '../../../../../lib/common/domain/utils/date';
 
 @Injectable()
 export class AppointmentService implements IAppointmentService {

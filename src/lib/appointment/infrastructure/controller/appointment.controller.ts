@@ -13,19 +13,19 @@ import {
 } from '@nestjs/common';
 import { CreateAppointmentUseCase } from '../../application/CreateAppointmentUseCase/CreateAppointment.useCase';
 import { AppointmentCreateDto } from '../dtos/appointment.dto';
-import { ResponseAdapter } from 'src/common/response-adapter/response.adapter';
-import { HTTP_RESPONSE_MESSAGE } from 'src/common/constants/http-message';
-import { JwtAuthGuard } from 'src/lib/auth/infrastructure/guard/jwt/jwt-auth.guard';
-import { RoleGuard } from 'src/lib/auth/infrastructure/guard/role/role.guard';
-import { Roles } from 'src/lib/role/infrastructure/decorator/role.decorator';
-import { ROLES } from 'src/common/constants/roles.enum';
+import { ResponseAdapter } from '../../../../common/response-adapter/response.adapter';
+import { HTTP_RESPONSE_MESSAGE } from '../../../../common/constants/http-message';
+import { JwtAuthGuard } from '../../../../lib/auth/infrastructure/guard/jwt/jwt-auth.guard';
+import { RoleGuard } from '../../../../lib/auth/infrastructure/guard/role/role.guard';
+import { Roles } from '../../../../lib/role/infrastructure/decorator/role.decorator';
+import { ROLES } from '../../../../common/constants/roles.enum';
 import { CurrentAppointmentUseCase } from '../../application/CurrentAppointmentUseCase/getCurrentAppointment.useCase';
-import { ITokenPayload } from 'src/lib/auth/infrastructure/interfaces/IToken';
-import { KEYS } from 'src/common/constants/keys';
+import { ITokenPayload } from '../../../../lib/auth/infrastructure/interfaces/IToken';
+import { KEYS } from '../../../../common/constants/keys';
 import { GetHistoryAppointmentUseCase } from '../../application/GetHistoryAppopointmentUseCase/getHistoryAppointment.useCase';
 import { UpdateStatusAppointmentUseCase } from '../../application/updateStatusAppointment/updateStatusAppointment.useCase';
 import { GetAllAppointmentsUSeCase } from '../../application/GetAllAppointmentsUseCase/getAllAppointments.useCase';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../../../common/constants/constants';
 
 @Controller('appointment')
 export class AppointmentController {

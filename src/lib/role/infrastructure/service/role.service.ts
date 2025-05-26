@@ -18,6 +18,14 @@ export class RoleService implements IRoleService {
     }
   }
 
+  async getByName(name: IRole['name']): Promise<IRole> {
+    try {
+      return await this.roleRepository.findOneBy({ name });
+    } catch (error) {
+      throw new RequestTimeoutException('Role not found');
+    }
+  }
+
   async getAll(): Promise<IRole[]> {
     try {
       return await this.roleRepository.find();

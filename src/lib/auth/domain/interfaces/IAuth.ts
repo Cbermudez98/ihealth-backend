@@ -1,4 +1,4 @@
-import { IUser } from 'src/lib/user/domain/interfaces/IUser';
+import { IUser } from '../../../../lib/user/domain/interfaces/IUser';
 
 export interface IAuth {
   id: number;

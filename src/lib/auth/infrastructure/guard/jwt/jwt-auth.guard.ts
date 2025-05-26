@@ -3,8 +3,8 @@ import { SetMetadata } from '@nestjs/common';
 import { Request } from 'express';
 import { ForbiddenError } from '../../../../common/domain/errors/ForbiddenError';
 import { JwtProvider } from '../../../../../shared/providers/jwt.provider/jwt.provider';
-import { KEYS } from 'src/common/constants/keys';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { KEYS } from '../../../../../common/constants/keys';
+import { CONSTANTS } from '../../../../../common/constants/constants';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);

@@ -1,4 +1,4 @@
-import { NotFoundError } from 'src/lib/common/domain/errors/NotFoundErrors';
+import { NotFoundError } from '../../../../lib/common/domain/errors/NotFoundErrors';
 import { IUserService } from '../../domain/service/IUser.service';
 
 export class GetDocumentsUseCase {

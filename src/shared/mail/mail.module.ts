@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MailController } from './mail.controller';
 import { MailService } from './mail.service';
 import { BullModule } from '@nestjs/bull';
-import { mailBullConfig } from 'src/config/mail';
+import { mailBullConfig } from '../../config/mail';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailQueue } from './mail.queue';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';

@@ -14,11 +14,12 @@ import { CareerService } from '../../../career/infrastructure/service/career.ser
 import { Career } from '../../../career/infrastructure/entity/career.entity';
 import { IRole } from '../../../role/domain/interfaces/IRole';
 import { RoleService } from '../../../role/infrastructure/service/role.service';
-import { ROLES } from 'src/common/constants/roles.enum';
+import { ROLES } from '../../../../common/constants/roles.enum';
 import { name } from 'ejs';
-import { CONSTANTS } from 'src/common/constants/constants';
+import { CONSTANTS } from '../../../../common/constants/constants';
 import { Document } from '../entity/document.entity';
 import { IDocumentBase } from '../../domain/interfaces/IDocument';
+import { IPsychologistCreate } from '../../domain/interfaces/IPsychologist';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -165,11 +166,11 @@ export class UserService implements IUserService {
           },
         },
         relations: {
-          auth: false,
+          auth: true,
           appointments: false,
-          direction: false,
+          direction: true,
           student_detail: false,
-          role: false,
+          role: true,
         },
       });
     } catch (error) {
@@ -221,5 +222,36 @@ export class UserService implements IUserService {
 
   async getDocuments(): Promise<IDocumentBase[]> {
     return await this.documentRepository.find();
+  }
+
+  async createPsychologist(userDto: IPsychologistCreate): Promise<IUser> {
+    let user: User;
+    try {
+      user = this.userRepository.create(userDto);
+    } catch (error) {
+      throw new RequestTimeoutException('Cannot create psychologist');
+    }
+
+    const document = await this.documentRepository.findOne({
+      where: { id: userDto.document.id },
+    });
+
+    if (!document) {
+      throw new UnprocessableEntityException('Document not found');
+    }
+    const role = await this.roleService.getByName(ROLES.COORDINATOR);
+
+    user.role = role;
+    user.document = document;
+
+    try {
+      user = await this.userRepository.save(user);
+    } catch (error) {
+      console.log(error);
+
+      throw new RequestTimeoutException('Error saving psychologist');
+    }
+
+    return user;
   }
 }
