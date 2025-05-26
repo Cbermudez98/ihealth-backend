@@ -23,7 +23,12 @@ describe('GetPsychologistUseCase', () => {
         age: 0,
         code: 0,
         gender: '',
-        auth: undefined,
+        auth: {
+          id: 10,
+          email: 'john@example.com',
+          password: 'secret',
+          user: null,
+        },
         direction: undefined,
         student_detail: undefined,
         role: undefined,
@@ -32,11 +37,13 @@ describe('GetPsychologistUseCase', () => {
         document_number: '',
       },
     ];
+
     userService.getPsychologist.mockResolvedValue(fakeData);
 
     const result = await getPsychologistUseCase.run();
 
     expect(userService.getPsychologist).toHaveBeenCalled();
-    expect(result).toEqual(fakeData);
+    expect(result[0].auth?.password).toBeNull();
+    expect(result[0].name).toBe('John Doe');
   });
 });

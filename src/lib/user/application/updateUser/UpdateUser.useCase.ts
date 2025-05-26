@@ -14,11 +14,11 @@ export class UpdateUserUseCase {
       throw new NotFoundError('Error user not found');
     }
 
-    if (userUpdateDto?.auth?.password) {
-      userUpdateDto.auth.password = this.hashProvider.encrypt(
-        userUpdateDto.auth.password,
-      );
+    if (userUpdateDto?.auth) {
+      delete userUpdateDto.auth.email;
+      delete userUpdateDto.auth.password;
     }
+
     await this.userService.update(id, userUpdateDto);
     return true;
   }

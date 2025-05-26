@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { PsychologistDto } from './psychologist.dto';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { AuthDto } from '../../../auth/infrastructure/dtos/auth.dto';
 
-export class PsychologistUpdateDto extends PartialType(PsychologistDto) {}
+export class UpdateAuthDto extends OmitType(PartialType(AuthDto), [
+  'email',
+  'password',
+]) {}
