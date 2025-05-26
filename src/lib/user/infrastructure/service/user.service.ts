@@ -106,6 +106,7 @@ export class UserService implements IUserService {
         },
       });
     } catch (error) {
+      console.log('Error at line 109 user.service.ts', error);
       throw new RequestTimeoutException('Error querying user');
     }
     return user;
